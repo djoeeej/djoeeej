@@ -1,7 +1,0 @@
-# One product page per store, to learn which stores allow automated checks
-https://www.walmart.com/ip/Mainstays-Tatum-Twin-Sleeper-Loveseat-Beige/9315169932
-https://www.article.com/product/27056/sven-88-tufted-sofa-stone-gray
-https://www.amazon.com/Pillow-Decorative-Cushion-Livingroom-Bedroom/dp/B07JN8B66M
-https://www.target.com/s/threshold+accent+chair
-https://www.dwr.com/living-lounge-chairs/eames-lounge-chair/6649.html?lang=en_US
-https://www.ikea.com/us/en/p/kivik-sofa-with-chaise-tibbleby-beige-gray-s79440586/

@@ -19,11 +19,11 @@ async function targets() {
     return readFileSync(file, 'utf8').split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'))
       .map((url, i) => ({ id: `url-${i + 1}`, url }));
   }
-  const { allProducts, shopUrl } = await import('../js/catalog.js');
-  return allProducts().map((p) => ({ id: p.id, url: shopUrl(p), name: p.name }));
+  const { allLinks } = await import('../js/catalog.js');
+  return allLinks();
 }
 
-const BLOCK_WORDS = /access denied|just a moment|are you a robot|captcha|pardon our interruption|request blocked|bot detection|verify you are human/i;
+const BLOCK_WORDS = /access denied|robot or human|just a moment|are you a robot|captcha|pardon our interruption|request blocked|bot detection|verify you are human/i;
 
 async function inspect(page, t) {
   const r = { ...t, status: 0, finalUrl: '', title: '', price: null, size: '', result: 'BROKEN', note: '' };
@@ -57,11 +57,17 @@ async function inspect(page, t) {
       const meta = document.querySelector('meta[property="product:price:amount"], meta[itemprop="price"]');
       if (!out.price && meta) out.price = meta.getAttribute('content');
       out.text = document.body ? document.body.innerText.slice(0, 200000) : '';
+      // Size text is often in collapsed panels that innerText skips.
+      const raw = document.body ? document.body.textContent.replace(/\s+/g, ' ') : '';
+      const sm = raw.match(/(overall dimensions|product size|dimensions|measurements)[:\s]{0,4}.{0,200}/i);
+      out.sizeText = sm ? sm[0] : '';
+      out.h1 = document.querySelector('h1')?.textContent.trim().replace(/\s+/g, ' ').slice(0, 140) ?? '';
       return out;
     });
     r.price = data.price;
     const m = data.text.match(/(overall|dimensions?|measurements?|width)[^\n]{0,12}\n?[^\n]{0,160}/i);
-    r.size = m ? m[0].replace(/\s+/g, ' ').slice(0, 160) : '';
+    r.size = (m ? m[0] : data.sizeText).replace(/\s+/g, ' ').slice(0, 160);
+    r.h1 = data.h1;
     if (!data.price) {
       const pm = data.text.match(/\$\s?\d[\d,]*(\.\d\d)?/);
       if (pm) r.price = `page ${pm[0]}`;
@@ -71,6 +77,9 @@ async function inspect(page, t) {
     else if (r.status >= 200 && r.status < 400) {
       r.result = 'OK';
       if (/not found|no longer available|page can.t be found|404/i.test(r.title)) { r.result = 'BROKEN'; r.note = 'page says not found'; }
+      // A product page that redirects to a page without the product number was probably discontinued.
+      const ids = new URL(t.url).pathname.match(/\d{5,}/g) ?? [];
+      if (r.result === 'OK' && ids.length && !ids.some((n) => r.finalUrl.includes(n))) { r.result = 'MOVED'; r.note = `redirected to ${r.finalUrl}`; }
     } else r.note = `HTTP ${r.status}`;
   } catch (e) {
     r.note = e.message.split('\n')[0].slice(0, 120);
@@ -92,11 +101,13 @@ await Promise.all(Array.from({ length: 4 }, async () => {
     const t = queue.shift();
     const r = await inspect(page, t);
     results.push(r);
-    console.log(`${r.result.padEnd(7)} ${String(r.status).padEnd(4)} ${r.id} | ${r.title} | ${r.price ?? '-'} | ${r.size} | ${r.url}${r.note ? ` | ${r.note}` : ''}`);
+    console.log(`${r.result.padEnd(7)} ${String(r.status).padEnd(4)} ${r.id} | ${r.h1 || r.title} | ${r.price ?? '-'} | ${r.size} | ${r.url}${r.note ? ` | ${r.note}` : ''}`);
+    // One machine-readable line per link, so the report can be rebuilt from the job log.
+    console.log(`JSON ${JSON.stringify({ id: r.id, url: r.url, result: r.result, status: r.status, price: r.price, title: r.h1 || r.title, finalUrl: r.finalUrl })}`);
   }
 }));
 await browser.close();
 const count = (k) => results.filter((r) => r.result === k).length;
-console.log(`\nSUMMARY ok=${count('OK')} blocked=${count('BLOCKED')} broken=${count('BROKEN')} total=${results.length}`);
+console.log(`\nSUMMARY ok=${count('OK')} moved=${count('MOVED')} blocked=${count('BLOCKED')} broken=${count('BROKEN')} total=${results.length}`);
 if (opt('--json')) writeFileSync(opt('--json'), JSON.stringify({ checked: new Date().toISOString(), results }, null, 2));
-process.exitCode = count('BROKEN') ? 1 : 0;
+process.exitCode = count('BROKEN') + count('MOVED') ? 1 : 0;

@@ -26,12 +26,7 @@ jobs:
           npm init -y > /dev/null
           npm install playwright@1.56.1
           npx playwright install --with-deps chromium
-      - name: Probe one page per store
-        if: hashFiles('roomwise/tools/probe-urls.txt') != ''
-        working-directory: roomwise/tools
-        run: xvfb-run -a node check-links.mjs --headed --file probe-urls.txt --json probe-report.json || true
       - name: Check every product link
-        if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[probe]')
         working-directory: roomwise/tools
         run: xvfb-run -a node check-links.mjs --headed --json link-report.json
       - uses: actions/upload-artifact@v4
