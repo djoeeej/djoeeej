@@ -1,0 +1,45 @@
+# Plakatonas 2026 — "Half a flag says nothing."
+
+Poster for **Plakatonas: International Social Inclusion** (Klaipėda). Deadline 9 October 2026, send to plakatonas@kvk.lt.
+
+| File | What it is |
+|---|---|
+| `Plakatonas_2026_Half-a-flag_A2_print.pdf` | **The entry.** A2 print PDF |
+| `Plakatonas_2026_Half-a-flag_preview.jpg` | Optional on-screen preview (RGB, 150 dpi, trimmed) |
+| `make_poster.py` | Builds both files: `python3 make_poster.py` |
+| `preflight.py` | Checks the PDF against the competition's technical rules |
+| `fonts/` | Bricolage Grotesque, IBM Plex Mono and IBM Plex Serif (all SIL Open Font License) |
+
+## The idea
+
+In the International Code of Signals, **flag K (Kilo)** is half yellow and half blue, and it means
+**"I wish to communicate with you."** Every ship in the port of Klaipėda reads it the same way,
+whatever country it comes from.
+
+The poster sews the flag together from a half *from Klaipėda* and a half *from everywhere else*.
+Neither half means anything on its own. The red thread holding them together is the first hello.
+The call to action: **Be the other half. / Būk kita pusė.**
+
+Klaipėda also appears in:
+- the coordinates in the header;
+- a coastal-profile drawing like the ones on nautical charts. It shows the lighthouse, the port cranes and the Smiltynė dunes on the Curonian Spit, with a ship coming in flying K.
+
+Everything on the poster is drawn from scratch, so no third-party images are used (rule 5.2).
+
+## Technical checklist (rules 3.1–3.9)
+
+`python3 preflight.py` reports:
+
+- Trim 420 × 594 mm (A2 portrait); media 425 × 599 mm, i.e. 2.5 mm bleed on every side, with TrimBox and BleedBox set
+- All text at least 5 mm inside the trim (the design margin is 30 mm)
+- CMYK only: no RGB, no spot/Pantone colours; maximum total ink 202%
+- Fonts embedded
+- Fully vector, no raster images, so the 300 dpi rule is met at any size
+- Smallest text 8.5 pt (minimum 7 pt). All text below 40 pt is 100% black only
+- Thinnest line 0.22 mm (minimum 0.08 mm)
+
+## Before sending
+
+- [ ] Have a native speaker check the Lithuanian lines: *Pusė vėliavos nieko nesako.*, *pusė iš Klaipėdos*, *pusė iš viso pasaulio*, *raudona gija: pirmasis labas*, *Būk kita pusė.*
+- [ ] Check the official rules' section on AI use, and declare AI assistance if the rules ask for it
+- [ ] Put your name(s) and institution in the email (the poster itself carries no names)
