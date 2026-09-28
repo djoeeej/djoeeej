@@ -292,7 +292,7 @@ export const slotsFor = (roomType) => SLOTS[roomType];
 function rank(list, slot, ctx) {
   const picks = stylePicks(ctx.style);
   // Basic: the cheapest piece that fits wins, and a style favourite only wins if it costs about the same.
-  const cheap = ctx.tier === 'basic';
+  const cheap = ctx.tier === 'basic' && slot.cat !== 'sofa';
   const floorPrice = Math.min(...list.map((p) => p.price));
   const score = (p) => {
     let s = 0;
@@ -382,14 +382,20 @@ export function planRoom({ roomType, R, tier, style = null, purpose = 'home', op
       const need = layer === 'windows' ? windows.length * product.perWindow : slot.count(host);
       const qty = Math.max(1, Math.ceil(need / perUnit));
       const finish = finishFor(slot.key, product);
-      const item = makeItem(slot, layer, product, finish, [], qty, { owned, addonsOff, windows: windows.length });
+      // Four cushions look designed in two colours: a calm pair in front of a pair in the accent colour.
+      let altFinish = null;
+      if (slot.cat === 'pillows' && qty >= 2 && product.finishes.length > 1) {
+        altFinish = style ? styleFinish(product, style, 'main') : (finish + 1) % product.finishes.length;
+        if (altFinish === finish) altFinish = (finish + 1) % product.finishes.length;
+      }
+      const item = makeItem(slot, layer, product, finish, [], qty, { owned, addonsOff, windows: windows.length, altFinish });
       item.host = slot.host ?? null;
       items.push(item);
       if (host) {
         const c1 = product.finishes[finish].color;
-        const alt = product.finishes.length > 1 ? product.finishes[(finish + 1) % product.finishes.length].color : c1;
+        const alt = altFinish != null ? product.finishes[altFinish].color : c1;
         const d = (dress[slot.host] ??= {});
-        if (slot.cat === 'pillows') d.pillows = { key: slot.key, colors: need >= 4 ? [c1, c1, alt, alt] : [c1, c1], fabric: product.model.main };
+        if (slot.cat === 'pillows') d.pillows = { key: slot.key, colors: need >= 4 ? [alt, alt, c1, c1] : [c1, c1], fabric: product.model.main };
         if (slot.cat === 'throw') d.throw = { key: slot.key, color: c1, knit: product.model.main === 'knit' };
         if (slot.cat === 'bedding') d.bedding = { key: slot.key, color: c1 };
         if (slot.cat === 'towels') d.towels = { key: slot.key, color: c1 };
@@ -455,17 +461,19 @@ export function planRoom({ roomType, R, tier, style = null, purpose = 'home', op
   };
 }
 
-function makeItem(slot, layer, product, finish, instances, qty, { owned, addonsOff, windows }) {
+function makeItem(slot, layer, product, finish, instances, qty, { owned, addonsOff, windows, altFinish = null }) {
   const isOwned = owned.includes(slot.key) || product.existing;
+  const fp = (i) => product.finishes[i]?.price ?? product.price;
+  const unit = altFinish != null ? (fp(finish) + fp(altFinish)) / 2 : fp(finish);
   const addons = product.addons.map((a) => {
     const n = a.perWindow ? windows : a.id.includes('bulb') ? Math.ceil(Math.max(1, instances.length) / 2) : qty;
     const on = !isOwned && !addonsOff.includes(`${slot.key}|${a.id}`);
     return { ...a, qty: n, on, total: on ? a.price * n : 0 };
   });
   return {
-    key: slot.key, cat: slot.cat, layer, product, finish, instances, qty,
-    unitPrice: product.finishes[finish]?.price ?? product.price, owned: isOwned && !product.existing, existing: product.existing,
-    price: isOwned ? 0 : (product.finishes[finish]?.price ?? product.price) * qty,
+    key: slot.key, cat: slot.cat, layer, product, finish, altFinish, instances, qty,
+    unitPrice: unit, owned: isOwned && !product.existing, existing: product.existing,
+    price: isOwned ? 0 : unit * qty,
     addons, addonTotal: addons.reduce((s, a) => s + a.total, 0),
   };
 }

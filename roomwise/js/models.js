@@ -214,7 +214,7 @@ B.accentChair = (k, w, d, h) => {
   const base = k.add(new THREE.CylinderGeometry(r * 0.94, r * 0.9, seatH - 0.12 - 0.12, 40), fab, 0, 0.12 + (seatH - 0.24) / 2, 0);
   base.scale.z = d / w;
   const prof = [[r - 0.09, 0], [r, 0], [r + 0.005, h - 0.12 - 0.05], [r - 0.03, h - 0.12], [r - 0.08, h - 0.13], [r - 0.09, h - 0.2], [r - 0.09, 0]];
-  const back = k.add(new THREE.LatheGeometry(prof.map(([a, b]) => V2(a, b)), 48, Math.PI * 0.72, Math.PI * 1.56), fab, 0, 0.12, 0);
+  const back = k.add(new THREE.LatheGeometry(prof.map(([a, b]) => V2(a, b)), 48, Math.PI * 0.22, Math.PI * 1.56), fab, 0, 0.12, 0);
   back.scale.z = d / w;
   back.geometry.computeVertexNormals();
   const cush = k.soft(w * 0.78, 0.14, d * 0.72, fab, 0, seatH - 0.05, d * 0.06, { r: 0.06, puff: { y: 0.02 }, wrinkle: 0.003 });
@@ -1039,7 +1039,9 @@ function optimize(root) {
       grp.add(mesh);
     }
   }
-  root.traverse((o) => { if (o.isGroup && o !== root && !o.userData.key && !o.children.length) o.removeFromParent(); });
+  const empty = [];
+  root.traverse((o) => { if (o.isGroup && o !== root && !o.userData.key && !o.children.length) empty.push(o); });
+  empty.forEach((o) => o.removeFromParent());
 }
 
 export function buildModel(product, finishIndex = 0, opts = {}) {

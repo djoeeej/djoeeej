@@ -442,6 +442,204 @@ export const VERIFIED = {
   },
   "https://www.dwr.com/lighting-table-lamps/tolomeo-parchment-shade-lamp/2514057.html?lang=en_US": {
    "r": "BLOCKED"
+  },
+  "https://www.ikea.com/us/en/p/glostad-sofa-knisa-dark-gray-40595942/": {
+   "r": "OK",
+   "p": 199
+  },
+  "https://www.ikea.com/us/en/p/gladom-tray-table-black-50411990/": {
+   "r": "OK",
+   "p": 19.99
+  },
+  "https://www.ikea.com/us/en/p/gladom-tray-table-dark-gray-green-70578451/": {
+   "r": "OK",
+   "p": 24.99
+  },
+  "https://www.ikea.com/us/en/p/gladom-tray-table-white-70337819/": {
+   "r": "OK",
+   "p": 19.99
+  },
+  "https://www.ikea.com/us/en/p/gladom-tray-table-light-blue-10534002/": {
+   "r": "OK",
+   "p": 24.99
+  },
+  "https://www.ikea.com/us/en/p/naesinge-extendable-table-dark-brown-stained-beech-veneer-70587498/": {
+   "r": "OK",
+   "p": 279.99
+  },
+  "https://www.ikea.com/us/en/p/naesinge-extendable-table-white-00587492/": {
+   "r": "OK",
+   "p": 229.99
+  },
+  "https://www.ikea.com/us/en/p/sandsberg-chair-white-10605424/": {
+   "r": "OK",
+   "p": 15
+  },
+  "https://www.ikea.com/us/en/p/sandsberg-chair-black-30605423/": {
+   "r": "OK",
+   "p": 15
+  },
+  "https://www.ikea.com/us/en/p/sandsberg-chair-blue-80605425/": {
+   "r": "OK",
+   "p": 15
+  },
+  "https://www.ikea.com/us/en/p/skogsta-chair-acacia-70544866/": {
+   "r": "OK",
+   "p": 70
+  },
+  "https://www.ikea.com/us/en/p/skogsta-chair-black-50544867/": {
+   "r": "OK",
+   "p": 70
+  },
+  "https://www.ikea.com/us/en/p/knarrevik-nightstand-black-20569977/": {
+   "r": "OK",
+   "p": 14.99
+  },
+  "https://www.ikea.com/us/en/p/storklinta-nightstand-white-with-1-drawer-30561155/": {
+   "r": "OK",
+   "p": 59.99
+  },
+  "https://www.ikea.com/us/en/p/rast-6-drawer-dresser-pine-00582164/": {
+   "r": "OK",
+   "p": 129.99
+  },
+  "https://www.ikea.com/us/en/p/storklinta-6-drawer-dresser-white-anchor-unlock-function-60561248/": {
+   "r": "OK",
+   "p": 249.99
+  },
+  "https://www.ikea.com/us/en/p/storklinta-6-drawer-dresser-oak-effect-anchor-unlock-function-00561246/": {
+   "r": "OK",
+   "p": 279.99
+  },
+  "https://www.ikea.com/us/en/p/storklinta-6-drawer-dresser-dark-brown-oak-effect-anchor-unlock-function-50561244/": {
+   "r": "OK",
+   "p": 279.99
+  },
+  "https://www.ikea.com/us/en/p/rakkestad-wardrobe-with-2-doors-black-brown-40586805/": {
+   "r": "OK",
+   "p": 199.99
+  },
+  "https://www.ikea.com/us/en/p/ringsta-skaftet-floor-lamp-white-nickel-plated-s59387448/": {
+   "r": "OK",
+   "p": 64.99
+  },
+  "https://www.ikea.com/us/en/p/gullsudare-pendant-lamp-shade-white-handmade-80583616/": {
+   "r": "OK",
+   "p": 9.99
+  },
+  "https://www.ikea.com/us/en/p/strala-cord-set-white-90371505/": {
+   "r": "OK",
+   "p": 17.99
+  },
+  "https://www.ikea.com/us/en/p/sinnerlig-pendant-lamp-bamboo-handmade-70315030/": {
+   "r": "OK",
+   "p": 99.99
+  },
+  "https://www.ikea.com/us/en/p/tiphede-rug-flatwoven-natural-black-40559166/": {
+   "r": "OK",
+   "p": 39.99
+  },
+  "https://www.ikea.com/us/en/p/lohals-rug-flatwoven-natural-50277393/": {
+   "r": "OK",
+   "p": 129.99
+  },
+  "https://www.ikea.com/us/en/p/toftbo-bath-mat-gray-white-melange-20610279/": {
+   "r": "OK",
+   "p": 9.99
+  },
+  "https://www.ikea.com/us/en/p/toftbo-bath-mat-beige-60610263/": {
+   "r": "OK",
+   "p": 9.99
+  },
+  "https://www.ikea.com/us/en/p/toftbo-bath-mat-anthracite-00610275/": {
+   "r": "OK",
+   "p": 9.99
+  },
+  "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-monstera-10615244/": {
+   "r": "OK",
+   "p": 49.99
+  },
+  "https://www.ikea.com/us/en/p/pjaetteryd-picture-forest-fairy-tale-30614130/": {
+   "r": "OK",
+   "p": 29.99
+  },
+  "https://www.ikea.com/us/en/p/nissedal-mirror-black-20503774/": {
+   "r": "OK",
+   "p": 69.99
+  },
+  "https://www.ikea.com/us/en/p/nissedal-mirror-white-90503775/": {
+   "r": "OK",
+   "p": 69.99
+  },
+  "https://www.ikea.com/us/en/p/hemnes-shelf-unit-white-30217654/": {
+   "r": "OK",
+   "p": 159.99
+  },
+  "https://www.ikea.com/us/en/p/hemnes-shelf-unit-gray-20349004/": {
+   "r": "OK",
+   "p": 149.99
+  },
+  "https://www.ikea.com/us/en/p/gurli-cushion-cover-unbleached-20598729/": {
+   "r": "OK",
+   "p": 4.99
+  },
+  "https://www.target.com/p/luxenhome-solid-wood-natural-4-rung-59-inch-tall-blanket-ladder-brown/-/A-93849592": {
+   "r": "OK"
+  },
+  "https://www.ikea.com/us/en/p/gurli-cushion-cover-dark-gray-30598781/": {
+   "r": "OK",
+   "p": 7.99
+  },
+  "https://www.target.com/p/scarlett-luggage-rack-cappuccino-winsome/-/A-54260830": {
+   "r": "OK"
+  },
+  "https://www.ikea.com/us/en/p/gurli-cushion-cover-yellow-00598787/": {
+   "r": "OK",
+   "p": 7.99
+  },
+  "https://www.ikea.com/us/en/p/gurli-cushion-cover-black-50598761/": {
+   "r": "OK",
+   "p": 4.99
+  },
+  "https://www.ikea.com/us/en/p/gurli-cushion-cover-red-80598769/": {
+   "r": "OK",
+   "p": 4.99
+  },
+  "https://www.ikea.com/us/en/p/vitmossa-throw-gray-90304889/": {
+   "r": "OK",
+   "p": 2.99
+  },
+  "https://www.ikea.com/us/en/p/vallkrassing-throw-off-white-20570928/": {
+   "r": "OK",
+   "p": 19.99
+  },
+  "https://www.ikea.com/us/en/p/vallkrassing-throw-light-gray-brown-70570940/": {
+   "r": "OK",
+   "p": 19.99
+  },
+  "https://www.ikea.com/us/en/p/vallkrassing-throw-gray-green-00570934/": {
+   "r": "OK",
+   "p": 19.99
+  },
+  "https://www.ikea.com/us/en/p/vallkrassing-throw-light-blue-gray-30570942/": {
+   "r": "OK",
+   "p": 19.99
+  },
+  "https://www.ikea.com/us/en/p/ginstmott-curtains-1-pair-beige-with-heading-tape-00603005/": {
+   "r": "OK",
+   "p": 29.99
+  },
+  "https://www.ikea.com/us/en/p/ginstmott-curtains-1-pair-white-with-heading-tape-20603009/": {
+   "r": "OK",
+   "p": 29.99
+  },
+  "https://www.ikea.com/us/en/p/ginstmott-curtains-1-pair-dark-gray-with-heading-tape-60603007/": {
+   "r": "OK",
+   "p": 29.99
+  },
+  "https://www.ikea.com/us/en/p/vilborg-room-darkening-curtains-1-pair-beige-with-heading-tape-00297553/": {
+   "r": "OK",
+   "p": 69.99
   }
  }
 };

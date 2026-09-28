@@ -13,6 +13,8 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
+import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
 import { buildModel } from './models.js';
 import { buildRoom } from './room.js';
 import { windowView } from './textures.js';
@@ -162,6 +164,9 @@ export class Stage {
     scene.add(this.shell, this.furniture, this.fx, this.photoFx, this.views);
     this.hemi = new THREE.HemisphereLight('#f6f4ef', '#9c8a74', 0.9);
     scene.add(this.hemi);
+    RectAreaLightUniformsLib.init();
+    this.windowLights = new THREE.Group();
+    scene.add(this.windowLights);
     this.sun = new THREE.DirectionalLight('#fff1dc', 2.6);
     this.sun.castShadow = true;
     this.sun.shadow.mapSize.set(this.mobile ? 1024 : 2048, this.mobile ? 1024 : 2048);
@@ -304,6 +309,15 @@ export class Stage {
       m.lookAt(c);
       this.views.add(m);
     }
+    // Soft daylight from each window opening (and the path tracer's main light source).
+    this.windowLights.clear();
+    for (const o of windows) {
+      const n = WALL_NORMAL[o.wall], c = openingCentre(o, this.R);
+      const l = new THREE.RectAreaLight('#eef3ff', 0, o.a1 - o.a0, o.y1 - o.y0);
+      l.position.copy(c).addScaledVector(n, -0.02);
+      l.lookAt(c.clone().addScaledVector(n, -1));
+      this.windowLights.add(l);
+    }
     const win = windows[0];
     if (win) {
       const n = WALL_NORMAL[win.wall], c = openingCentre(win, this.R);
@@ -343,10 +357,10 @@ export class Stage {
   applyMood(animate = true) {
     const evening = this.mood === 'evening';
     const to = {
-      sun: evening ? 0 : 2.6, hemi: evening ? 0.1 : 0.9, env: evening ? 0.1 : 0.45, lamp: evening ? 1 : 0,
+      sun: evening ? 0 : 2.6, hemi: evening ? 0.1 : 0.7, env: evening ? 0.1 : 0.4, lamp: evening ? 1 : 0, win: evening ? 0.15 : 2.5,
       exposure: evening ? 1.35 : 1.15, view: evening ? 0.16 : 1,
     };
-    const from = { sun: this.sun.intensity, hemi: this.hemi.intensity, env: this.scene.environmentIntensity, lamp: this.lampLevel ?? 0, exposure: this.renderer.toneMappingExposure, view: this.viewLevel ?? 1 };
+    const from = { sun: this.sun.intensity, hemi: this.hemi.intensity, env: this.scene.environmentIntensity, lamp: this.lampLevel ?? 0, exposure: this.renderer.toneMappingExposure, view: this.viewLevel ?? 1, win: this.winLevel ?? 0 };
     const set = (t) => {
       const v = (k) => from[k] + (to[k] - from[k]) * t;
       this.sun.intensity = v('sun');
@@ -354,6 +368,8 @@ export class Stage {
       this.scene.environmentIntensity = v('env');
       this.renderer.toneMappingExposure = v('exposure');
       this.lampLevel = v('lamp');
+      this.winLevel = v('win');
+      this.windowLights.children.forEach((l) => { l.intensity = this.winLevel; l.color.set(evening ? '#6d7fa8' : '#eef3ff'); });
       this.viewLevel = v('view');
       this.views.children.forEach((m) => m.material.color.setScalar(this.viewLevel).lerp(new THREE.Color('#1c2740'), (1 - this.viewLevel) * 0.8));
       for (const e of this.items.values()) this.lightEntry(e);
@@ -877,29 +893,40 @@ export class Stage {
 
   // Renders until `samples` are reached, calling onProgress(0..1). Resolves with a PNG data URL,
   // or null if cancelled (camera moved, view changed).
-  async realPhoto({ samples = this.mobile ? 48 : 128, onProgress } = {}) {
+  async realPhoto({ samples = this.mobile ? 64 : 200, onProgress } = {}) {
     if (!['room', 'walk', 'photo'].includes(this.mode) || !this.R) return null;
     this.cancelRealPhoto();
     const token = (this.ptToken = {});
     this.clearSelection();
     this.tweens.step(performance.now() + 1000);
-    const [{ WebGLPathTracer }, sky] = await Promise.all([import('three-gpu-pathtracer'), this.loadSky()]);
+    const [{ WebGLPathTracer, DenoiseMaterial }, sky] = await Promise.all([import('three-gpu-pathtracer'), this.loadSky()]);
     if (token !== this.ptToken) return null;
     this.ptBusy = true;
     const cam = this.mode === 'photo' ? this.photoCamera : this.camera;
     this.updateVisibility();
-    const saved = { env: this.scene.environment, envI: this.scene.environmentIntensity, bg: this.scene.background, bgI: this.scene.backgroundIntensity };
+    const saved = { env: this.scene.environment, envI: this.scene.environmentIntensity, bg: this.scene.background, bgI: this.scene.backgroundIntensity, exp: this.renderer.toneMappingExposure, sun: this.sun.intensity };
+    // A path tracer only lights the room through its windows, like a camera does, so give it
+    // a brighter sky and exposure, as a photographer would for an interior.
+    const evening = this.mood === 'evening';
+    this.renderer.toneMappingExposure = saved.exp * (evening ? 1.6 : 1.9);
+    this.sun.intensity = saved.sun * 2.2;
     const hideFx = [this.fx, this.photoFx, this.views].map((g) => [g, g.visible]);
     hideFx.forEach(([g]) => { g.visible = false; });
     this.scene.environment = sky;
-    this.scene.environmentIntensity = this.mood === 'evening' ? 0.25 : 1;
+    this.scene.environmentIntensity = evening ? 0.3 : 1.8;
+    // Soft daylight from each window, like the diffuse light a photographer relies on indoors.
+    const winSaved = this.windowLights.children.map((l) => l.intensity);
+    this.windowLights.children.forEach((l) => { l.intensity = evening ? 0.4 : 5; });
     if (this.mode === 'walk') { this.scene.background = sky; this.scene.backgroundIntensity = this.scene.environmentIntensity; }
     const restore = () => {
+      this.windowLights.children.forEach((l, i) => { l.intensity = winSaved[i]; });
       hideFx.forEach(([g, v]) => { g.visible = v; });
       this.scene.environment = saved.env;
       this.scene.environmentIntensity = saved.envI;
       this.scene.background = saved.bg;
       this.scene.backgroundIntensity = saved.bgI ?? 1;
+      this.renderer.toneMappingExposure = saved.exp;
+      this.sun.intensity = saved.sun;
       this.ptBusy = false;
       this.dirty = true;
     };
@@ -920,7 +947,18 @@ export class Stage {
         await new Promise((r) => requestAnimationFrame(r));
       }
       if (token !== this.ptToken) { restore(); return null; }
+      // Final frame through the path tracer's edge-aware denoiser.
+      this.denoiser ??= new FullScreenQuad(new DenoiseMaterial({ sigma: 4, kSigma: 1, threshold: this.mobile ? 0.14 : 0.08 }));
+      const plain = pt.renderToCanvasCallback;
+      pt.renderToCanvasCallback = (target, renderer) => {
+        this.denoiser.material.map = target.texture;
+        const ac = renderer.autoClear;
+        renderer.autoClear = false;
+        this.denoiser.render(renderer);
+        renderer.autoClear = ac;
+      };
       pt.renderSample();
+      pt.renderToCanvasCallback = plain;
       const url = this.renderer.domElement.toDataURL('image/png');
       restore();
       this.ptToken = null;

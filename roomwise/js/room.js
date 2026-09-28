@@ -289,8 +289,9 @@ function addTreatment(kind, { walls, R, feature, color, trim, mat }) {
       for (const [s0, s1] of spans) {
         geos.push(wallBox(spec, s0, s1, railY, railY + 0.04, -0.022, 0));
         if (kind === 'beadboard') {
-          geos.push(wallBox(spec, s0, s1, 0.1, railY, -0.01, 0));
-          for (let a = s0 + 0.1; a < s1; a += 0.1) geos.push(wallBox(spec, a - 0.004, a + 0.004, 0.1, railY, -0.012, -0.009));
+          // Tongue-and-groove boards: 10 cm boards with a shadow gap between them.
+          geos.push(wallBox(spec, s0, s1, 0.1, railY, -0.004, 0));
+          for (let a = s0; a < s1 - 0.02; a += 0.1) geos.push(wallBox(spec, a + 0.003, Math.min(s1, a + 0.097), 0.1, railY, -0.012, -0.004));
           continue;
         }
         const count = Math.max(1, Math.round((s1 - s0) / 0.95));

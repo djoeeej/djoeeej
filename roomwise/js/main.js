@@ -623,7 +623,9 @@ function renderShop() {
       const f = it.product.finishes[it.finish];
       return [
         el('div', { class: `shop-row${it.owned ? ' is-owned' : ''}` },
-          el('span', {}, it.product.name, el('span', { class: 'n' }, `${it.product.finishes.length > 1 ? `, ${f.name}` : ''}${it.qty > 1 ? ` × ${it.qty}` : ''}`), statusTag(url)),
+          el('span', {}, it.product.name, el('span', { class: 'n' }, it.altFinish != null
+            ? `, ${it.qty / 2} × ${it.product.finishes[it.altFinish].name} and ${it.qty / 2} × ${f.name}`
+            : `${it.product.finishes.length > 1 ? `, ${f.name}` : ''}${it.qty > 1 ? ` × ${it.qty}` : ''}`), statusTag(url)),
           el('span', { class: 'num' }, it.owned ? 'Owned' : fmtMoney(it.price)),
           shopLink(url, `Shop ${it.product.name} at ${storeName(st)}`)),
         ...it.addons.map((a) => el('div', { class: `shop-row shop-row--addon${a.on ? '' : ' is-off'}` },
