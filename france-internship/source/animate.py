@@ -165,6 +165,7 @@ def process_slide(xml: bytes, transition: str) -> bytes:
 
 def main(src, dst):
     zin = zipfile.ZipFile(src)
+    last = max(int(m.group(1)) for m in (re.match(r"ppt/slides/slide(\d+)\.xml$", f) for f in zin.namelist()) if m)
     with zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
         for item in zin.infolist():
             data = zin.read(item.filename)
@@ -172,7 +173,7 @@ def main(src, dst):
             if m:
                 n = int(m.group(1))
                 # dark slides (first/last) fade; content slides push in from the right
-                if n in (1, 13):
+                if n in (1, last):
                     tr = '<p:transition spd="slow"><p:fade/></p:transition>'
                 else:
                     tr = '<p:transition spd="med"><p:push dir="l"/></p:transition>'
