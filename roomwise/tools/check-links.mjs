@@ -94,18 +94,23 @@ const ctx = await browser.newContext({
   userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
 });
 const results = [];
-const queue = [...list];
-await Promise.all(Array.from({ length: 4 }, async () => {
+// Some stores rate-limit: check their links one at a time, slowly, in their own queue.
+const SLOW = /dwr\.com|walmart\.com/;
+const queue = list.filter((t) => !SLOW.test(t.url));
+const slow = list.filter((t) => SLOW.test(t.url));
+const worker = (q, pause) => async () => {
   const page = await ctx.newPage();
-  while (queue.length) {
-    const t = queue.shift();
+  while (q.length) {
+    const t = q.shift();
+    if (pause) await page.waitForTimeout(pause);
     const r = await inspect(page, t);
     results.push(r);
     console.log(`${r.result.padEnd(7)} ${String(r.status).padEnd(4)} ${r.id} | ${r.h1 || r.title} | ${r.price ?? '-'} | ${r.size} | ${r.url}${r.note ? ` | ${r.note}` : ''}`);
     // One machine-readable line per link, so the report can be rebuilt from the job log.
     console.log(`JSON ${JSON.stringify({ id: r.id, url: r.url, result: r.result, status: r.status, price: r.price, title: r.h1 || r.title, finalUrl: r.finalUrl })}`);
   }
-}));
+};
+await Promise.all([...Array.from({ length: 4 }, () => worker(queue, 0)()), worker(slow, 9000)()]);
 await browser.close();
 const count = (k) => results.filter((r) => r.result === k).length;
 console.log(`\nSUMMARY ok=${count('OK')} moved=${count('MOVED')} blocked=${count('BLOCKED')} broken=${count('BROKEN')} total=${results.length}`);

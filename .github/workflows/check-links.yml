@@ -26,6 +26,10 @@ jobs:
           npm init -y > /dev/null
           npm install playwright@1.56.1
           npx playwright install --with-deps chromium
+      - name: Discover current product pages
+        if: hashFiles('roomwise/tools/discover.txt') != ''
+        working-directory: roomwise/tools
+        run: xvfb-run -a node discover.mjs discover.txt --headed || true
       - name: Check every product link
         working-directory: roomwise/tools
         run: xvfb-run -a node check-links.mjs --headed --json link-report.json

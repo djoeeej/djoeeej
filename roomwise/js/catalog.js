@@ -74,7 +74,7 @@ function add(o) {
     unit: o.unit ?? null, // e.g. 'set of 2', 'pair', 'panel'
     perWindow: o.perWindow ?? 1, // curtain panels needed per window
     existing: o.store === 'existing',
-    finishes: (o.finishes ?? [['Standard', '#cccccc']]).map(([name, color, url]) => ({ name, color, url: url ?? null })),
+    finishes: (o.finishes ?? [['Standard', '#cccccc']]).map(([name, color, url, price]) => ({ name, color, url: url ?? null, price: price ?? null })),
     addons: (o.addons ?? []).map((a) => ({ qty: 1, default: true, ...a })),
     tags: o.tags ?? [],
     model: { kind: o.kind ?? o.cat, v: o.look ?? o.tier, ...(o.model ?? {}) },
@@ -93,9 +93,9 @@ const U = {
 };
 
 // Frequently used add-ons.
-const BULB = { id: 'ikea-solhetta-bulb', name: 'SOLHETTA LED bulb E26 450 lm, 2-pack', store: 'ikea', price: 4.99, url: U.ikea('solhetta-led-bulb-e26-450-lumen-globe-opal-10591479'), why: 'Bulbs are sold separately. Warm 2700K keeps the room cosy.' };
-const INSERTS = { id: 'ikea-fjadrar-insert', name: 'FJÄDRAR inner cushion 20x20", 2', store: 'ikea', price: 19.98, url: U.ikea('fjaedrar-inner-cushion-off-white-60262188'), why: 'Feather inserts make cheap covers look full and plump.' };
-const ROD = { id: 'ikea-racka-rod', name: 'RÄCKA curtain rod set, 47-83"', store: 'ikea', price: 14.99, url: U.ikea('raecka-curtain-rod-combination-white-s59929243'), why: 'Mount it high and wide: windows look bigger.', perWindow: true };
+const BULB = { id: 'ikea-solhetta-bulb', name: 'SOLHETTA LED bulb E26 450 lm', store: 'ikea', price: 2.49, url: U.ikea('solhetta-led-bulb-e26-450-lumen-globe-opal-10591479'), why: 'Bulbs are sold separately. Warm 2700K keeps the room cosy.' };
+const INSERTS = { id: 'ikea-fjadrar-insert', name: 'FJÄDRAR inner cushion 20x20", 2', store: 'ikea', price: 24, url: U.ikea('fjaedrar-inner-cushion-off-white-60262188'), why: 'Feather inserts make cheap covers look full and plump.' };
+const ROD = { id: 'ikea-racka-rod', name: 'RÄCKA curtain rod set, 47-83"', store: 'ikea', price: 15, url: U.ikea('raecka-curtain-rod-combination-white-s59929243'), why: 'Mount it high and wide: windows look bigger.', perWindow: true };
 const ROD_BLACK = { ...ROD, id: 'ikea-racka-rod-black', name: 'RÄCKA curtain rod set, black, 47-83"', url: U.ikea('raecka-curtain-rod-combination-black-s99929241') };
 
 // =====================================================================================
@@ -104,7 +104,7 @@ const ROD_BLACK = { ...ROD, id: 'ikea-racka-rod-black', name: 'RÄCKA curtain ro
 const b = (o) => add({ tier: 'basic', ...o });
 
 // ---- seating ----
-b({ id: 'ikea-glostad-loveseat', cat: 'sofa', name: 'GLOSTAD loveseat', store: 'ikea', price: 149, dims: [176, 81, 75],
+b({ id: 'ikea-glostad-loveseat', cat: 'sofa', name: 'GLOSTAD loveseat', store: 'ikea', price: 169, dims: [176, 81, 75],
   material: 'Knisa polyester fabric, polyurethane foam, solid wood frame',
   why: 'IKEA\'s cheapest sofa and one of its best-sellers: 8 screws to assemble, light enough to move alone.', rating: [4.5, 630],
   url: U.ikea('glostad-loveseat-knisa-dark-gray-70489011'),
@@ -122,21 +122,21 @@ b({ id: 'walmart-tatum-sleeper', cat: 'sofa', name: 'Mainstays Tatum twin sleepe
   url: U.walmart('Mainstays-Tatum-Twin-Sleeper-Loveseat-Dark-Gray/2566202369'),
   finishes: [['Dark gray', '#4e5155', U.walmart('Mainstays-Tatum-Twin-Sleeper-Loveseat-Dark-Gray/2566202369')], ['Beige', '#c8b99f', U.walmart('Mainstays-Tatum-Twin-Sleeper-Loveseat-Beige/9315169932')], ['Black', '#262626', U.walmart('Mainstays-Tatum-Twin-Sleeper-Loveseat-Black/1843310558')]],
   model: { main: 'fabric', seats: 2, arm: 'rolled', legs: 'block' }, tags: ['sleeps', 'airbnb', 'compact'] });
-b({ id: 'ikea-friheten-sleeper', cat: 'sofa', name: 'FRIHETEN sleeper sofa', store: 'ikea', price: 549, dims: [230, 105, 66],
+b({ id: 'ikea-friheten-sleeper', cat: 'sofa', name: 'FRIHETEN sleeper sofa', store: 'ikea', price: 899, dims: [230, 105, 66],
   material: 'Skiftebo polyester, pull-out 55x80" bed, storage under the seat',
   why: 'Turns into a full-size bed in seconds and hides bedding underneath: a favourite for guest rooms and Airbnbs.',
   url: U.ikea('friheten-sleeper-sofa-skiftebo-dark-gray-90341151'),
   finishes: [['Skiftebo dark gray', '#505356', U.ikea('friheten-sleeper-sofa-skiftebo-dark-gray-90341151')], ['Faringe light gray', '#b5b3ad', U.ikea('friheten-sleeper-sofa-faringe-light-gray-40551231')]],
   model: { main: 'fabric', seats: 3, arm: 'track', base: 'plinth', back: 'tight' }, tags: ['sleeps', 'airbnb'] });
-b({ id: 'ikea-poang', cat: 'armchair', name: 'POÄNG armchair', store: 'ikea', price: 129, dims: [68, 82, 100],
+b({ id: 'ikea-poang', cat: 'armchair', name: 'POÄNG armchair', store: 'ikea', price: 149, dims: [68, 82, 100],
   material: 'Layer-glued bent birch, Knisa cushion',
   why: 'In the range for over 40 years. The springy bentwood frame makes it the comfiest cheap reading chair.',
   url: U.ikea('poaeng-armchair-birch-veneer-knisa-light-beige-s59305928'),
-  finishes: [['Birch / Knisa light beige', '#d9cdb5', U.ikea('poaeng-armchair-birch-veneer-knisa-light-beige-s59305928')], ['Birch / Hillared dark blue', '#34405a', U.ikea('poaeng-armchair-birch-veneer-hillared-dark-blue-s99305926')], ['Birch / Knisa black', '#2c2c2c', U.ikea('poaeng-armchair-birch-veneer-knisa-black-s79305927')]],
+  finishes: [['Birch / Knisa light beige', '#d9cdb5', U.ikea('poaeng-armchair-birch-veneer-knisa-light-beige-s59305928')], ['Birch / Hillared dark blue', '#34405a', U.ikea('poaeng-armchair-birch-veneer-hillared-dark-blue-s99305926'), 249], ['Birch / Knisa black', '#2c2c2c', U.ikea('poaeng-armchair-birch-veneer-knisa-black-s79305927')]],
   kind: 'poang', model: { main: 'fabric' } });
 
 // ---- tables ----
-b({ id: 'ikea-lack-coffee', cat: 'coffeeTable', name: 'LACK coffee table', store: 'ikea', price: 29.99, dims: [118, 78, 45],
+b({ id: 'ikea-lack-coffee', cat: 'coffeeTable', name: 'LACK coffee table', store: 'ikea', price: 49.99, dims: [118, 78, 45],
   material: 'Honeycomb board, foil finish, shelf underneath',
   why: 'The shelf hides remotes and magazines. $30 and rated 4.5 by over 4,000 people.', rating: [4.5, 4072],
   url: U.ikea('lack-coffee-table-black-brown-00104291'),
@@ -148,13 +148,25 @@ b({ id: 'ikea-gladom', cat: 'sideTable', name: 'GLADOM tray table', store: 'ikea
   url: U.ikea('gladom-tray-table-dark-green-10330670'),
   finishes: [['Dark green', '#34463a', U.ikea('gladom-tray-table-dark-green-10330670')], ['Pale pink', '#e2c3b7', U.ikea('gladom-tray-table-pale-pink-10519407')], ['Red', '#9a3027', U.ikea('gladom-tray-table-red-00533649')]],
   kind: 'trayTable', model: { main: 'paint' } });
-b({ id: 'ikea-micke', cat: 'desk', name: 'MICKE desk', store: 'ikea', price: 79.99, dims: [105, 50, 75],
+b({ id: 'ikea-micke', cat: 'desk', name: 'MICKE desk', store: 'ikea', price: 109.99, dims: [105, 50, 75],
   material: 'Particleboard, honeycomb paper filling, cable outlet at the back',
   why: 'Hides the cables and has a drawer: the go-to small-space desk.',
   url: U.ikea('micke-desk-white-80213074'),
-  finishes: [['White', '#ecebe6', U.ikea('micke-desk-white-80213074')], ['White / anthracite', '#4a4c4f', U.ikea('micke-desk-white-anthracite-10489839')]],
+  finishes: [['White', '#ecebe6', U.ikea('micke-desk-white-80213074')], ['White / anthracite', '#4a4c4f', U.ikea('micke-desk-white-anthracite-10489839'), 84.99]],
   model: { main: 'laminate' } });
-b({ id: 'ikea-sandsberg', cat: 'diningTable', name: 'SANDSBERG table', store: 'ikea', price: 59.99, dims: [110, 67, 75],
+b({ id: 'ikea-flintan', cat: 'officeChair', name: 'FLINTAN office chair', store: 'ikea', price: 69.99, dims: [67, 67, 108],
+  material: 'Mesh back, lumbar support, washable seat cover',
+  why: 'Lumbar support, automatic tilt tension and a washable cover for the price of a dinner out.',
+  url: U.ikea('flintan-office-chair-black-90489029'),
+  finishes: [['Black', '#262626', U.ikea('flintan-office-chair-black-90489029')], ['Beige', '#d8cbb4', U.ikea('flintan-office-chair-beige-00492205')]],
+  model: { main: 'fabric', v: 'basic' } });
+b({ id: 'ikea-flintan-arms', cat: 'officeChair', name: 'FLINTAN office chair with armrests', store: 'ikea', price: 119.99, dims: [67, 67, 108],
+  material: 'Mesh back, lumbar support, removable seat cover',
+  why: 'Ergonomic basics (lumbar support, armrests, tilt lock) for under $100.',
+  url: U.ikea('flintan-office-chair-with-armrests-beige-s49424465'),
+  finishes: [['Beige', '#d8cbb4', U.ikea('flintan-office-chair-with-armrests-beige-s49424465')], ['Black', '#262626', U.ikea('flintan-office-chair-with-armrests-black-s29424471')]],
+  model: { main: 'fabric', v: 'basic' } });
+b({ id: 'ikea-sandsberg', cat: 'diningTable', name: 'SANDSBERG table', store: 'ikea', price: 69.99, dims: [110, 67, 75],
   material: 'Melamine top, powder-coated steel frame',
   why: 'Seats four in a small kitchen or studio for the price of one takeaway dinner for four.',
   url: U.ikea('sandsberg-table-black-s29420393'), finishes: [['Black', '#262626']],
@@ -165,23 +177,23 @@ b({ id: 'ikea-ekedalen', cat: 'diningTable', name: 'EKEDALEN extendable table', 
   url: U.ikea('ekedalen-extendable-table-white-70340807'),
   finishes: [['White', '#ecebe6', U.ikea('ekedalen-extendable-table-white-70340807')], ['Brown', '#5b4031', U.ikea('ekedalen-extendable-table-brown-90340769')]],
   model: { main: 'laminate', seats: 6 } });
-b({ id: 'ikea-teodores', cat: 'diningChair', name: 'TEODORES chair', store: 'ikea', price: 29.99, dims: [46, 54, 81],
+b({ id: 'ikea-teodores', cat: 'diningChair', name: 'TEODORES chair', store: 'ikea', price: 55, dims: [46, 54, 81],
   material: 'Moulded polypropylene, powder-coated steel legs',
   why: 'Stackable, wipe-clean and strong: ideal for families and rentals.',
   url: U.ikea('teodores-chair-white-30486156'), finishes: [['White', '#eeeeea']],
   kind: 'shellChair', model: { main: 'paint' } });
 
 // ---- storage ----
-b({ id: 'ikea-lack-tv', cat: 'mediaUnit', name: 'LACK TV unit', store: 'ikea', price: 29.99, dims: [90, 36, 45],
+b({ id: 'ikea-lack-tv', cat: 'mediaUnit', name: 'LACK TV unit', store: 'ikea', price: 24.99, dims: [90, 36, 45],
   material: 'Honeycomb board, cable opening at the back',
   why: 'Holds a TV up to 32" and tidies the cables through the back.',
   url: U.ikea('lack-tv-unit-white-90631400'), finishes: [['White', '#ecebe6']],
   model: { main: 'laminate' } });
-b({ id: 'ikea-billy', cat: 'bookcase', name: 'BILLY bookcase', store: 'ikea', price: 69.99, dims: [80, 28, 202],
+b({ id: 'ikea-billy', cat: 'bookcase', name: 'BILLY bookcase', store: 'ikea', price: 89, dims: [80, 28, 202],
   material: 'Particleboard, 4 adjustable shelves',
   why: 'The world\'s best-selling bookcase. Each shelf holds 66 lb.',
-  url: U.ikea('billy-bookcase-white-00263850'),
-  finishes: [['White', '#ecebe6', U.ikea('billy-bookcase-white-00263850')], ['Oak effect', '#c7a47a', U.ikea('billy-bookcase-oak-effect-10508932')], ['Black oak effect', '#2e2925', U.ikea('billy-bookcase-black-oak-effect-40477340')]],
+  url: U.ikea('billy-bookcase-white-20522046'),
+  finishes: [['White', '#ecebe6', U.ikea('billy-bookcase-white-20522046')], ['Oak effect', '#c7a47a', U.ikea('billy-bookcase-oak-effect-10508932')], ['Black oak effect', '#2e2925', U.ikea('billy-bookcase-black-oak-effect-40477340')]],
   model: { main: 'laminate' } });
 b({ id: 'ikea-kullen-2', cat: 'nightstand', name: 'KULLEN 2-drawer chest', store: 'ikea', price: 39.99, dims: [35, 40, 49],
   material: 'Particleboard, foil finish',
@@ -200,33 +212,33 @@ b({ id: 'ikea-rakkestad', cat: 'wardrobe', name: 'RAKKESTAD wardrobe with 2 door
   model: { main: 'laminate' } });
 
 // ---- beds ----
-b({ id: 'ikea-malm-bed', cat: 'bed', name: 'MALM bed frame, Queen', store: 'ikea', price: 229, dims: [166, 211, 100],
+b({ id: 'ikea-malm-bed', cat: 'bed', name: 'MALM bed frame, Queen', store: 'ikea', price: 249, dims: [166, 211, 100],
   material: 'Particleboard, oak veneer or white foil; slats and mid-beam included',
   why: 'IKEA\'s best-known bed: clean on all sides, so it can float in the room or sit against a wall.',
   url: U.ikea('malm-bed-frame-white-s19931605'), finishes: [['White', '#ecebe6']],
   model: { main: 'laminate', head: 'wood' },
-  addons: [{ id: 'ikea-asbygda-queen', name: 'ÅSBYGDA foam mattress, Queen', store: 'ikea', price: 199, url: U.ikea('asbygda-foam-mattress-firm-white-10481503'), why: 'The bed has no mattress. This firm foam one has a washable cover.' }] });
+  addons: [{ id: 'ikea-asbygda-queen', name: 'ÅSBYGDA foam mattress, Queen', store: 'ikea', price: 249, url: U.ikea('asbygda-foam-mattress-firm-white-10481503'), why: 'The bed has no mattress. This firm foam one has a washable cover.' }] });
 
 // ---- lighting ----
-b({ id: 'ikea-arstid-floor', cat: 'floorLamp', name: 'ÅRSTID floor lamp', store: 'ikea', price: 49.99, dims: [36, 36, 155],
+b({ id: 'ikea-arstid-floor', cat: 'floorLamp', name: 'ÅRSTID floor lamp', store: 'ikea', price: 89.99, dims: [36, 36, 155],
   material: 'Nickel-plated steel, pleated fabric shade',
   why: 'One of IKEA\'s most loved lamps: the fabric shade softens the light for evenings.',
   url: U.ikea('arstid-floor-lamp-nickel-plated-white-50163867'),
   finishes: [['Nickel / white', '#b9bcbf', U.ikea('arstid-floor-lamp-nickel-plated-white-50163867')], ['Brass / white', '#b8925a', U.ikea('arstid-floor-lamp-brass-white-60321324')]],
   model: { main: 'metal', lamp: 'stem' }, addons: [BULB] });
-b({ id: 'ikea-arstid-table', cat: 'tableLamp', name: 'ÅRSTID table lamp', store: 'ikea', price: 29.99, dims: [22, 22, 55],
+b({ id: 'ikea-arstid-table', cat: 'tableLamp', name: 'ÅRSTID table lamp', store: 'ikea', price: 39.99, dims: [22, 22, 55],
   material: 'Brass-colour steel, pleated fabric shade',
   why: 'Classic bedside lamp with a pull switch.',
   url: U.ikea('arstid-table-lamp-brass-white-80321380'),
   finishes: [['Brass / white', '#b8925a', U.ikea('arstid-table-lamp-brass-white-80321380')], ['Nickel / white', '#b9bcbf', U.ikea('arstid-table-lamp-nickel-plated-white-60280639')]],
   model: { main: 'metal', lamp: 'stick', v: 'luxury' }, addons: [BULB] });
-b({ id: 'ikea-tertial', cat: 'deskLamp', name: 'TERTIAL work lamp', store: 'ikea', price: 14.99, dims: [18, 40, 50],
+b({ id: 'ikea-tertial', cat: 'deskLamp', name: 'TERTIAL work lamp', store: 'ikea', price: 19.99, dims: [18, 40, 50],
   material: 'Steel, adjustable arm and head, clamps to the desk',
   why: 'An IKEA classic since 1998: aim the light exactly where you work.',
   url: U.ikea('tertial-work-lamp-dark-gray-20355434'),
   finishes: [['Dark gray', '#3d3f42', U.ikea('tertial-work-lamp-dark-gray-20355434')], ['Light blue', '#9fb7c9', U.ikea('tertial-work-lamp-light-blue-70504295')]],
   kind: 'tableLamp', model: { main: 'blackMetal', lamp: 'task' }, addons: [BULB] });
-b({ id: 'ikea-misterhult', cat: 'ceilingLight', name: 'MISTERHULT pendant lamp 18"', store: 'ikea', price: 59.99, dims: [45, 45, 38],
+b({ id: 'ikea-misterhult', cat: 'ceilingLight', name: 'MISTERHULT pendant lamp 18"', store: 'ikea', price: 149.99, dims: [45, 45, 38],
   material: 'Hand-woven bamboo',
   why: 'Hand-woven, so every one is unique. It throws a beautiful pattern of light on the ceiling. Rated 4.7.', rating: [4.7, null],
   url: U.ikea('misterhult-pendant-lamp-bamboo-handmade-40441025'), finishes: [['Bamboo', '#c9a878']],
@@ -259,7 +271,7 @@ b({ id: 'ikea-lindbyn-50', cat: 'mirror', name: 'LINDBYN mirror 19⅝"', store: 
   why: 'Approved for bathrooms. Rated 4.7 by 1,500 people.', rating: [4.7, 1505],
   url: U.ikea('lindbyn-mirror-black-30590450'), finishes: [['Black', '#262626']],
   model: { main: 'blackMetal', shape: 'round' } });
-b({ id: 'ikea-lindbyn-80', cat: 'mirror', name: 'LINDBYN mirror 31½"', store: 'ikea', price: 59.99, dims: [80, 3, 80],
+b({ id: 'ikea-lindbyn-80', cat: 'mirror', name: 'LINDBYN mirror 31½"', store: 'ikea', price: 79.99, dims: [80, 3, 80],
   material: 'Recycled aluminium frame, safety film',
   why: 'A big round mirror bounces light around and makes the room feel larger.',
   url: U.ikea('lindbyn-mirror-black-60507204'), finishes: [['Black', '#262626']],
@@ -318,7 +330,7 @@ b({ id: 'ikea-hannalena', cat: 'curtains', name: 'HANNALENA room-darkening curta
   why: 'Blocks most light so guests sleep in. The #1 Airbnb bedroom complaint is light.',
   url: U.ikea('hannalena-room-darkening-curtains-1-pair-gray-90410875'), finishes: [['Gray', '#9a9b98']],
   model: { main: 'linen' }, addons: [ROD], tags: ['airbnb', 'bedroom'] });
-b({ id: 'ikea-vagsjon', cat: 'towels', name: 'VÅGSJÖN towel set', store: 'ikea', price: 24.99,
+b({ id: 'ikea-vagsjon', cat: 'towels', name: 'VÅGSJÖN towel set', store: 'ikea', price: 25.96,
   material: '100% cotton terry, 400 g/m²',
   why: 'Soft, absorbent and cheap enough to keep a spare set for guests.',
   url: U.ikea('vagsjoen-hand-bath-towel-set-s39505985'), finishes: [['Light beige', '#e2d6c1'], ['White', '#f5f3ef']],
@@ -330,35 +342,35 @@ b({ id: 'ikea-vagsjon', cat: 'towels', name: 'VÅGSJÖN towel set', store: 'ikea
 const l = (o) => add({ tier: 'luxury', ...o });
 const A = U.article;
 
-l({ id: 'article-sven-loveseat', cat: 'sofa', name: 'Sven 72" tufted loveseat', store: 'article', price: 1199, dims: [183, 98, 86],
+l({ id: 'article-sven-loveseat', cat: 'sofa', name: 'Sven 72" tufted loveseat', store: 'article', price: 1099, dims: [183, 97, 86],
   material: 'Polyester-acrylic tested to 50,000 rubs, Pirelli webbing, solid wood legs',
   why: 'The compact version of Article\'s best-selling sofa: all the comfort in less space.',
   url: A(27057, 'sven-72-tufted-loveseat-stone-gray'),
-  finishes: [['Stone gray', '#8f8f8a', A(27057, 'sven-72-tufted-loveseat-stone-gray')], ['Biscuit cream', '#ddd2bf', A(27067, 'sven-72-tufted-loveseat-biscuit-cream')], ['Plush Pacific ginger velvet', '#b8703f', A(24831, 'sven-72-tufted-velvet-loveseat-plush-pacific-ginger')]],
+  finishes: [['Stone gray', '#8f8f8a', A(27057, 'sven-72-tufted-loveseat-stone-gray')], ['Biscuit cream', '#ddd2bf', A(27067, 'sven-72-tufted-loveseat-biscuit-cream')], ['Plush Pacific ginger velvet', '#b8703f', A(24831, 'sven-72-tufted-velvet-loveseat-plush-pacific-ginger'), 1199]],
   model: { main: 'fabric', seats: 2, seat: 'bench', back: 'cushion', bolsters: true, arm: 'track', legs: 'taper' }, tags: ['compact'] });
-l({ id: 'article-sven-sofa', cat: 'sofa', name: 'Sven 88" tufted sofa', store: 'article', price: 1499, dims: [224, 98, 86],
+l({ id: 'article-sven-sofa', cat: 'sofa', name: 'Sven 88" tufted sofa', store: 'article', price: 1299, dims: [224, 97, 86],
   material: 'Polyester-acrylic tested to 50,000 rubs, Pirelli webbing, solid wood legs',
   why: 'Article\'s most popular sofa for 10 years: tufted bench seat, round bolsters, mid-century lines.',
   url: A(27056, 'sven-88-tufted-sofa-stone-gray'),
-  finishes: [['Stone gray', '#8f8f8a', A(27056, 'sven-88-tufted-sofa-stone-gray')], ['Biscuit cream', '#ddd2bf', A(27069, 'sven-88-tufted-sofa-biscuit-cream')], ['Fir green', '#3f5446', A(27068, 'sven-88-tufted-sofa-fir-green')], ['Plush Pacific green velvet', '#2f5a52', A(24751, 'sven-88-tufted-velvet-sofa-plush-pacific-green')]],
+  finishes: [['Stone gray', '#8f8f8a', A(27056, 'sven-88-tufted-sofa-stone-gray')], ['Biscuit cream', '#ddd2bf', A(27069, 'sven-88-tufted-sofa-biscuit-cream')], ['Fir green', '#3f5446', A(27068, 'sven-88-tufted-sofa-fir-green')], ['Plush Pacific green velvet', '#2f5a52', A(24751, 'sven-88-tufted-velvet-sofa-plush-pacific-green'), 1399]],
   model: { main: 'fabric', seats: 3, seat: 'bench', back: 'cushion', bolsters: true, arm: 'track', legs: 'taper' } });
-l({ id: 'article-gabriola-chair', cat: 'armchair', name: 'Gabriola 34" lounge chair', store: 'article', price: 499, dims: [86, 84, 76],
+l({ id: 'article-gabriola-chair', cat: 'armchair', name: 'Gabriola 34" lounge chair', store: 'article', price: 499, dims: [86, 88, 81],
   material: 'Bouclé on a solid wood frame',
   why: 'Curvy bouclé is the most-wanted chair shape right now. It softens a boxy room.',
   url: A(21475, 'gabriola-34-lounge-chair-ivory-boucle'),
   finishes: [['Ivory bouclé', '#e8e1d4', A(21475, 'gabriola-34-lounge-chair-ivory-boucle')], ['Sandstone wool bouclé', '#cdb89b', A(22235, 'gabriola-34-lounge-chair-sandstone-wool-boucle')], ['Dover gray bouclé', '#9b9a96', A(21477, 'gabriola-34-lounge-chair-dover-gray-boucle')], ['Green wool bouclé', '#6d7457', A(29182, 'gabriola-34-lounge-chair-green-wool-boucle')]],
   kind: 'accentChair', model: { main: 'boucle' } });
-l({ id: 'article-amoeba-coffee', cat: 'coffeeTable', name: 'Amoeba 35.5" round coffee table', store: 'article', price: 399, dims: [90, 90, 38],
+l({ id: 'article-amoeba-coffee', cat: 'coffeeTable', name: 'Amoeba 35.5" round coffee table', store: 'article', price: 299, dims: [90, 90, 44],
   material: 'Laminated American black walnut',
   why: 'A round table is easier to walk around in a small living room, and the walnut grain is beautiful.',
   url: A(29856, 'amoeba-35-5-round-coffee-table-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood', shape: 'round' } });
-l({ id: 'article-lenia-coffee', cat: 'coffeeTable', name: 'Lenia 53.5" oval coffee table', store: 'article', price: 599, dims: [136, 68, 38],
+l({ id: 'article-lenia-coffee', cat: 'coffeeTable', name: 'Lenia 53.5" oval coffee table', store: 'article', price: 399, dims: [136, 56, 38],
   material: 'Solid black walnut',
   why: 'A surfboard-shaped oval in solid walnut: soft corners, big surface.',
   url: A(24417, 'lenia-53-5-oval-coffee-table-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood', shape: 'oval' } });
-l({ id: 'article-lenia-side', cat: 'sideTable', name: 'Lenia storage side table', store: 'article', price: 299, dims: [45, 45, 56],
+l({ id: 'article-lenia-side', cat: 'sideTable', name: 'Lenia storage side table', store: 'article', price: 349, dims: [44, 44, 56],
   material: 'Walnut, storage cubby',
   why: 'Hides the remote and a book.',
   url: A(25370, 'lenia-storage-side-table-walnut'), finishes: [['Walnut', '#6e4a2e']],
@@ -368,43 +380,43 @@ l({ id: 'article-hurley-rug', cat: 'rug', name: 'Hurley 8x10 performance rug', s
   why: 'A performance rug shrugs off spills: good for kids, pets and guests.',
   url: A(24976, 'hurley-8-x-10-performance-rug-beige-fleck'), finishes: [['Beige fleck', '#cbbba0']],
   model: { main: 'rug', pattern: 'fleck' } });
-l({ id: 'article-hira-rug', cat: 'rug', name: 'Hira 8x10 rug', store: 'article', price: 899, dims: [305, 244, 2],
+l({ id: 'article-hira-rug', cat: 'rug', name: 'Hira 8x10 rug', store: 'article', price: 999, dims: [305, 244, 2],
   material: 'Hand-made wool blend, thick loop pile',
   why: 'Soft, thick and natural ivory: it makes the room feel quiet.',
   url: A(23754, 'hira-8-x-10-rug-natural-ivory'), finishes: [['Natural ivory', '#e8e0cf']],
   model: { main: 'rug', pattern: 'beni' } });
-l({ id: 'article-jokuna-media', cat: 'mediaUnit', name: 'Jokuna 47.5" media unit', store: 'article', price: 799, dims: [121, 40, 58],
+l({ id: 'article-jokuna-media', cat: 'mediaUnit', name: 'Jokuna 47.5" media unit', store: 'article', price: 799, dims: [121, 46, 71],
   material: 'American walnut, sliding doors, cable cut-outs',
   why: 'Japandi sliding doors hide the clutter; the cable holes keep the wires out of sight.',
   url: A(18011, 'jokuna-47-5-media-unit-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood' } });
-l({ id: 'article-felix-media', cat: 'mediaUnit', name: 'Felix 72" media unit', store: 'article', price: 999, dims: [183, 43, 61],
+l({ id: 'article-felix-media', cat: 'mediaUnit', name: 'Felix 72" media unit', store: 'article', price: 1099, dims: [183, 46, 64],
   material: 'Walnut',
   why: 'Long and low: grounds a big TV wall.',
   url: A(24795, 'felix-72-media-unit-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood' } });
-l({ id: 'article-crescent-lamp', cat: 'floorLamp', name: 'Crescent floor lamp', store: 'article', price: 299, dims: [40, 40, 190],
+l({ id: 'article-crescent-lamp', cat: 'floorLamp', name: 'Crescent floor lamp', store: 'article', price: 299, dims: [38, 38, 211],
   material: 'Matte black steel, marble base, adjustable shade',
   why: 'An arching lamp lights the seat from above, so you don\'t need a ceiling light.',
   url: A(3568, 'crescent-floor-lamp-black'), finishes: [['Matte black', '#232323']],
   model: { main: 'blackMetal', lamp: 'arc', reach: 0.85 }, addons: [BULB] });
-l({ id: 'article-todd-lamp', cat: 'tableLamp', name: 'Todd table lamp', store: 'article', price: 99, dims: [25, 25, 48],
+l({ id: 'article-todd-lamp', cat: 'tableLamp', name: 'Todd table lamp', store: 'article', price: 99, dims: [20, 25, 47],
   material: 'Powder-coated steel dome',
   why: 'Scandinavian dome that directs light down onto a book.',
   url: A(24946, 'todd-table-lamp-black'), finishes: [['Black', '#232323']],
   model: { main: 'blackMetal', lamp: 'dome' }, addons: [BULB] });
-l({ id: 'article-moon-lamp', cat: 'tableLamp', name: 'Moon table lamp', store: 'article', price: 149, dims: [25, 25, 40],
+l({ id: 'article-moon-lamp', cat: 'tableLamp', name: 'Moon table lamp', store: 'article', price: 129, dims: [15, 15, 28],
   material: 'Gold-coloured metal, frosted glass globe',
   why: 'A glowing globe gives soft all-round light at the bedside.',
   url: A(18786, 'moon-table-lamp-gold'), finishes: [['Gold', '#c4a060']],
   model: { main: 'metal', lamp: 'globe' }, addons: [BULB] });
-l({ id: 'article-gemma-pendant', cat: 'ceilingLight', name: 'Gemma pendant lamp', store: 'article', price: 149, dims: [36, 36, 30],
+l({ id: 'article-gemma-pendant', cat: 'ceilingLight', name: 'Gemma pendant lamp', store: 'article', price: 199, dims: [48, 48, 37],
   material: 'Brass-coloured metal dome',
   why: 'A brass dome over the table adds a warm gleam.',
   url: A(18736, 'gemma-pendant-lamp-brass'),
   finishes: [['Brass', '#b8925a', A(18736, 'gemma-pendant-lamp-brass')], ['Black', '#232323', A(18737, 'gemma-pendant-lamp-black')], ['Green', '#3f5446', A(18738, 'gemma-pendant-lamp-green')]],
   model: { main: 'metal', light: 'dome' }, addons: [BULB] });
-l({ id: 'article-suru-pendant', cat: 'ceilingLight', name: 'Suru small pendant lamp', store: 'article', price: 199, dims: [46, 46, 40],
+l({ id: 'article-suru-pendant', cat: 'ceilingLight', name: 'Suru small pendant lamp', store: 'article', price: 199, dims: [51, 51, 28],
   material: 'Rattan woven over a metal frame',
   why: 'Island-style rattan throws dappled light: lovely in bedrooms and coastal rooms.',
   url: A(12215, 'suru-small-pendant-lamp'), finishes: [['Natural rattan', '#c9a878']],
@@ -414,12 +426,12 @@ l({ id: 'target-olive-tree', cat: 'plant', name: 'Asymmetrical faux olive tree (
   why: 'A tall olive tree fills an empty corner and looks natural in photos. No watering.',
   url: U.target('asymmetrical-olive-tree-threshold-8482-designed-with-studio-mcgee/-/A-94685925'), finishes: [['Olive / stone pot', '#d6cdbd']],
   model: { main: 'matteCeramic', leaf: 'olive' } });
-l({ id: 'article-newberry-shelf', cat: 'bookcase', name: 'Newberry wide bookcase', store: 'article', price: 549, dims: [79, 38, 178],
+l({ id: 'article-newberry-shelf', cat: 'bookcase', name: 'Newberry wide bookcase', store: 'article', price: 799, dims: [79, 38, 178],
   material: 'Walnut shelves, gunmetal steel frame',
   why: 'Open shelves feel lighter than a closed cabinet and show off books and plants.',
   url: 'https://www.article.com/product/18769/newberry-31-25-wide-bookcase-walnut', finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood', frame: 'etagere' } });
-l({ id: 'target-mcgee-canvas', cat: 'wallArt', name: '30x30" framed canvas (Threshold x Studio McGee)', store: 'target', price: 70, dims: [76, 4, 76],
+l({ id: 'target-mcgee-canvas', cat: 'wallArt', name: '30x30" framed canvas (Threshold x Studio McGee)', store: 'target', price: 78, dims: [76, 4, 76],
   material: 'Printed canvas, wood-look frame',
   why: 'A square abstract in soft tones ties the palette together.',
   url: U.target('30-34-x-30-34-beautiful-brushwork-framed-canvas-threshold-8482-designed-with-studio-mcgee/-/A-81785395'), finishes: [['Brushwork', '#b8a58a']],
@@ -429,71 +441,65 @@ l({ id: 'target-mcgee-landscape', cat: 'wallArt', name: '36x36" landscape framed
   why: 'A misty landscape adds depth, like a window to somewhere else.',
   url: U.target('36-34-x-36-34-dreary-abstract-landscape-framed-wall-canvas-threshold-8482-designed-with-studio-mcgee/-/A-79502253'), finishes: [['Landscape', '#8c9b7a']],
   model: { main: 'art', art: 'landscape' } });
-l({ id: 'article-basi-bed', cat: 'bed', name: 'Basi Queen platform bed', store: 'article', price: 999, dims: [165, 218, 76],
+l({ id: 'article-basi-bed', cat: 'bed', name: 'Basi Queen platform bed', store: 'article', price: 399, dims: [160, 211, 30],
   material: 'Walnut veneer, solid plywood, floating base',
   why: 'The hidden base makes the bed look like it floats. No box spring needed.',
   url: A(25637, 'basi-queen-bed-frame-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood', head: 'panel' },
-  addons: [{ id: 'article-leesa-studio', name: 'Leesa Studio Queen mattress', store: 'article', price: 559, url: A(23863, 'leesa-studio-queen-mattress'), why: 'Memory foam with a 120-night trial.' }] });
-l({ id: 'article-cooper-nightstand', cat: 'nightstand', name: 'Cooper 1-drawer nightstand', store: 'article', price: 299, dims: [45, 40, 55],
+  addons: [{ id: 'article-leesa-studio', name: 'Leesa Studio Queen mattress', store: 'article', price: 599, url: A(23863, 'leesa-studio-queen-mattress'), why: 'Memory foam with a 120-night trial.' }] });
+l({ id: 'article-cooper-nightstand', cat: 'nightstand', name: 'Cooper 1-drawer nightstand', store: 'article', price: 299, dims: [50, 36, 55],
   material: 'Walnut, soft-close drawer',
   why: 'Small footprint, soft-close drawer.',
   url: A(26897, 'cooper-1-drawer-nightstand-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood' } });
-l({ id: 'article-cooper-dresser', cat: 'dresser', name: 'Cooper 6-drawer double dresser', store: 'article', price: 899, dims: [150, 45, 80],
+l({ id: 'article-cooper-dresser', cat: 'dresser', name: 'Cooper 6-drawer double dresser', store: 'article', price: 999, dims: [137, 43, 86],
   material: 'Walnut, soft-close drawers',
   why: 'Apartment-sized double dresser with a matching nightstand.',
   url: A(26893, 'cooper-6-drawer-double-dresser-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood' } });
-l({ id: 'article-kouva-bench', cat: 'bench', name: 'Kouva 47" storage bench', store: 'article', price: 499, dims: [120, 40, 46],
+l({ id: 'article-kouva-bench', cat: 'bench', name: 'Kouva 47" storage bench', store: 'article', price: 499, dims: [119, 40, 49],
   material: 'Natural oak, upholstered seat, storage',
   why: 'A place to sit and put on shoes, with storage for spare blankets.',
   url: A(25779, 'kouva-47-bench-natural-oak-and-santolina-gray'), finishes: [['Natural oak / Santolina gray', '#a6a497']],
   model: { main: 'fabric' } });
-l({ id: 'article-newberry-desk', cat: 'desk', name: 'Newberry 43.25" desk', store: 'article', price: 449, dims: [110, 55, 76],
+l({ id: 'article-newberry-desk', cat: 'desk', name: 'Newberry 43.25" desk', store: 'article', price: 499, dims: [110, 51, 76],
   material: 'Walnut top, gunmetal steel frame',
   why: 'Warm walnut on a slim steel frame: big enough for a monitor, small enough for a bedroom.',
   url: A(18766, 'newberry-43-25-desk-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood' } });
-l({ id: 'ikea-markus', cat: 'officeChair', name: 'MARKUS office chair', store: 'ikea', price: 249, dims: [62, 60, 135],
+l({ id: 'ikea-markus', cat: 'officeChair', name: 'MARKUS office chair', store: 'ikea', price: 299.99, dims: [62, 60, 135],
   material: 'Mesh back, Vissle fabric, adjustable tilt and headrest',
   why: 'The most recommended budget ergonomic chair: 10-year guarantee, headrest, lockable tilt.',
   url: U.ikea('markus-office-chair-vissle-dark-gray-90289172'), finishes: [['Vissle dark gray', '#3f4144']],
   model: { main: 'fabric' } });
-l({ id: 'ikea-flintan-arms', cat: 'officeChair', name: 'FLINTAN office chair with armrests', store: 'ikea', price: 99.99, dims: [67, 67, 108],
-  material: 'Mesh back, lumbar support, removable seat cover',
-  why: 'Ergonomic basics (lumbar support, armrests, tilt lock) for under $100.',
-  url: U.ikea('flintan-office-chair-with-armrests-beige-s49424465'),
-  finishes: [['Beige', '#d8cbb4', U.ikea('flintan-office-chair-with-armrests-beige-s49424465')], ['Black', '#262626', U.ikea('flintan-office-chair-with-armrests-black-s29424471')]],
-  model: { main: 'fabric', v: 'basic' } });
-l({ id: 'article-seno-dining', cat: 'diningTable', name: 'Seno 71" dining table', store: 'article', price: 799, dims: [180, 90, 76],
+l({ id: 'article-seno-dining', cat: 'diningTable', name: 'Seno 71" dining table', store: 'article', price: 799, dims: [180, 95, 74],
   material: 'Walnut, solid wood legs',
   why: 'A classic mid-century table that seats six.',
   url: A(27599, 'seno-71-dining-table-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood', seats: 6 } });
-l({ id: 'article-nosh-chair', cat: 'diningChair', name: 'Nosh dining chair', store: 'article', price: 175, dims: [48, 53, 81], unit: 'each (sold in pairs)',
+l({ id: 'article-nosh-chair', cat: 'diningChair', name: 'Nosh dining chair', store: 'article', price: 149, dims: [51, 53, 79], unit: 'each (sold in pairs)',
   material: 'Solid walnut, textured upholstery',
   why: 'Designed to tuck snugly under the table, with real back support.',
   url: A(24358, 'nosh-dining-chair-walnut-and-chalk-gray'),
   finishes: [['Walnut / Chalk gray', '#b4b2ab', A(24358, 'nosh-dining-chair-walnut-and-chalk-gray')], ['Walnut / Hemlock green', '#4c5a4a', A(24359, 'nosh-dining-chair-walnut-and-hemlock-green')], ['Walnut / Quarry gray', '#77756f', A(24362, 'nosh-dining-chair-walnut-and-quarry-gray')]],
   kind: 'diningChair', model: { main: 'fabric' } });
-l({ id: 'article-liv-sideboard', cat: 'sideboard', name: 'Liv 58" sideboard', store: 'article', price: 1299, dims: [147, 45, 76],
+l({ id: 'article-liv-sideboard', cat: 'sideboard', name: 'Liv 58" sideboard', store: 'article', price: 1099, dims: [147, 44, 83],
   material: 'Walnut, fluted fronts, brass handles',
   why: 'Fluted walnut and brass: storage that looks like furniture, not a cupboard.',
   url: A(25750, 'liv-58-sideboard-walnut'), finishes: [['Walnut', '#6e4a2e']],
   model: { main: 'wood' } });
-l({ id: 'article-meron-mirror', cat: 'mirror', name: 'Meron round mirror', store: 'article', price: 249, dims: [76, 5, 76],
+l({ id: 'article-meron-mirror', cat: 'mirror', name: 'Meron round mirror', store: 'article', price: 249, dims: [95, 2, 95],
   material: 'Woven coconut midrib, powder-coated iron',
   why: 'A woven frame brings coastal texture to the wall.',
   url: A(13687, 'meron-round-wall-mirror-natural'), finishes: [['Natural', '#c9a878']],
   model: { main: 'jute', shape: 'round' } });
-l({ id: 'article-gabriola-pillows', cat: 'pillows', name: 'Gabriola bouclé pillow set, 2', store: 'article', price: 99, unit: 'set of 2',
+l({ id: 'article-gabriola-pillows', cat: 'pillows', name: 'Gabriola bouclé pillow set, 2', store: 'article', price: 79, unit: 'set of 2',
   material: 'Bouclé cover, down-blend insert',
   why: 'Matching bouclé cushions add texture that photographs beautifully.',
-  url: A(21473, 'gabriola-pillow-set-ivory-boucle'),
-  finishes: [['Ivory bouclé', '#e8e1d4', A(21473, 'gabriola-pillow-set-ivory-boucle')], ['Sandstone wool bouclé', '#cdb89b', A(22233, 'gabriola-pillow-set-sandstone-wool-boucle')]],
+  url: A(29757, 'gabriola-pillow-set-ivory-boucle'),
+  finishes: [['Ivory bouclé', '#e8e1d4', A(29757, 'gabriola-pillow-set-ivory-boucle')], ['Sandstone wool bouclé', '#cdb89b', A(29758, 'gabriola-pillow-set-sandstone-wool-boucle')]],
   model: { main: 'boucle' } });
-l({ id: 'article-jadara-throw', cat: 'throw', name: 'Jadara wool throw', store: 'article', price: 129,
+l({ id: 'article-jadara-throw', cat: 'throw', name: 'Jadara wool throw', store: 'article', price: 79,
   material: 'Super-soft wool blend',
   why: 'A saturated colour on the sofa arm lifts a neutral room.',
   url: A(19331, 'jadara-peacock-blue-throw'), finishes: [['Peacock blue', '#2f5f73']], model: { main: 'knit' } });
@@ -501,14 +507,14 @@ l({ id: 'target-sateen-duvet', cat: 'bedding', name: 'Washed cotton sateen duvet
   material: '250 thread count cotton sateen, OEKO-TEX certified',
   why: 'Hotel-like sheen, soft, and washable at home.',
   url: U.target('washed-cotton-sateen-duvet-cover-and-sham-set-threshold/-/A-81902448'),
-  finishes: [['White', '#f5f3ef'], ['Sage', '#a9b39b'], ['Light gray', '#c8c8c4'], ['Indigo', '#3b4a66', U.target('full-queen-washed-cotton-sateen-duvet-cover-and-sham-set-indigo-threshold-8482/-/A-89211205')]],
+  finishes: [['White', '#f5f3ef'], ['Sage', '#a9b39b'], ['Light gray', '#c8c8c4']],
   model: { main: 'linen' } });
-l({ id: 'target-linen-panel', cat: 'curtains', name: 'Light-filtering linen curtain panel (Threshold)', store: 'target', price: 35, unit: 'panel', perWindow: 2,
+l({ id: 'target-linen-panel', cat: 'curtains', name: 'Light-filtering linen curtain panel (Threshold)', store: 'target', price: 40, unit: 'panel', perWindow: 2,
   material: 'Linen-rayon blend, rod pocket and back tabs',
   why: 'Real linen texture softens the light. Buy two per window so they look full.',
   url: U.target('1pc-light-filtering-linen-window-curtain-panel-threshold/-/A-54168343'), finishes: [['Cream', '#eee8dd'], ['White', '#fbfaf6']],
   model: { main: 'linen' }, addons: [ROD_BLACK] });
-l({ id: 'target-performance-towels', cat: 'towels', name: 'Performance Plus bath towels, 6-pack (Threshold)', store: 'target', price: 50, unit: '6-pack',
+l({ id: 'target-performance-towels', cat: 'towels', name: 'Performance Plus bath towels, 6-pack (Threshold)', store: 'target', price: 57, unit: '6-pack',
   material: 'Heavyweight cotton terry, fade-resistant',
   why: 'Thick, fade-resistant towels that survive hotel-style washing.',
   url: U.target('threshold-6-pack-performance-plus-bath-towel-white/-/A-95033971'), finishes: [['White', '#f5f3ef']],
@@ -520,7 +526,7 @@ l({ id: 'target-performance-towels', cat: 'towels', name: 'Performance Plus bath
 const s = (o) => add({ tier: 'supreme', ...o });
 const D = U.dwr;
 
-s({ id: 'dwr-reid-sofa', cat: 'sofa', name: 'Reid Sofa', store: 'dwr', price: 5495, dims: [218, 94, 74],
+s({ id: 'dwr-reid-sofa', cat: 'sofa', name: 'Reid Sofa', store: 'dwr', price: 9695, dims: [218, 94, 74],
   material: 'Down- and feather-wrapped foam seat, down-blend back cushions, wide arms',
   why: 'You sink into it rather than sit on it. Designed by Bernett and Dodziuk, made to last decades.',
   url: 'https://www.dwr.com/living-sofas-sectionals/reid-sofa/476317.html?lang=en_US',
@@ -532,7 +538,7 @@ s({ id: 'dwr-reid-armchair', cat: 'armchair', name: 'Reid Armchair', store: 'dwr
   url: D('living-lounge-chairs/reid-armchair/2188'),
   finishes: [['Cognac leather', '#8a4e2b'], ['Oatmeal fabric', '#d8cfbf'], ['Olive velvet', '#5f6445']],
   model: { main: 'leather', seats: 1, arm: 'wide', base: 'legs', legs: 'metal' } });
-s({ id: 'dwr-noguchi-table', cat: 'coffeeTable', name: 'Noguchi Table (Herman Miller)', store: 'dwr', price: 2495, dims: [128, 93, 40],
+s({ id: 'dwr-noguchi-table', cat: 'coffeeTable', name: 'Noguchi Table (Herman Miller)', store: 'dwr', price: 3495, dims: [128, 93, 40],
   material: 'Solid wood interlocking base, 3/4" glass top',
   why: 'Isamu Noguchi\'s 1948 sculpture you can put your coffee on. Authentic and signed.',
   url: D('living-accent-coffee-tables/noguchi-table/6115'),
@@ -569,6 +575,11 @@ s({ id: 'dwr-tolomeo', cat: 'deskLamp', name: 'Tolomeo Desk Lamp (Artemide)', st
   why: 'Compasso d\'Oro winner: holds any position, lasts a lifetime.',
   url: D('lighting-table-lamps/tolomeo-desk-lamp/7468'), finishes: [['Aluminium', '#c7c9cb']],
   kind: 'tableLamp', model: { main: 'metal', lamp: 'task' }, addons: [BULB] });
+s({ id: 'dwr-tolomeo-parchment', cat: 'tableLamp', name: 'Tolomeo Parchment Shade Lamp (Artemide)', store: 'dwr', price: 495, dims: [32, 32, 62],
+  material: 'Polished aluminium arm, parchment-paper shade',
+  why: 'The Tolomeo engineering with a soft parchment shade: the bedside lamp designers choose.',
+  url: D('lighting-table-lamps/tolomeo-parchment-shade-lamp/2514057'), finishes: [['Aluminium / parchment', '#c7c9cb']],
+  model: { main: 'metal', lamp: 'stick' }, addons: [BULB] });
 s({ id: 'dwr-string-shelving', cat: 'bookcase', name: 'String Wall Shelving', store: 'dwr', price: 795, dims: [78, 30, 200],
   material: 'Powder-coated steel ladders, walnut shelves',
   why: 'The 1949 Swedish system: floats on the wall and grows with you.',
