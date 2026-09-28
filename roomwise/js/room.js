@@ -182,9 +182,9 @@ export function buildRoom(R, { openings = [], style = null, feature = null, curt
   // ceiling
   const ceilingMat = mat('paint', '#f6f4f0');
   ceilingMat.roughness = 1;
-  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(W, D), ceilingMat);
-  ceiling.rotation.x = Math.PI / 2;
-  ceiling.position.set(W / 2, H, D / 2);
+  // A solid slab, not a plane: a path tracer lets sky light through the back of a one-sided plane.
+  const ceiling = new THREE.Mesh(boxUV(new THREE.BoxGeometry(W + 2 * T, 0.1, D + 2 * T)), ceilingMat);
+  ceiling.position.set(W / 2, H + 0.05, D / 2);
   ceiling.receiveShadow = true;
   root.add(ceiling);
 

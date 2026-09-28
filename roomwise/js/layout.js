@@ -239,7 +239,7 @@ const SLOTS = {
     { key: 'sideboard', cat: 'sideboard', minTier: 'luxury', place: (R, d) => [[right(R, d, R.D * 0.55)], [right(R, d, R.D * 0.4)], [front(R, d)], [left(R, d, R.D * 0.6)]] },
     { key: 'armchair', cat: 'armchair', minTier: 'luxury', place: (R, d) => [[{ x: R.W - 0.2 - d.w / 2, z: R.D - 0.25 - d.d / 2, rot: -PI * 0.75 }], [{ x: 0.2 + d.w / 2, z: R.D - 0.25 - d.d / 2, rot: PI * 0.75 }]] },
     { key: 'wallArt', cat: 'wallArt', layer: 'wall', extra: ['basic'], place: (R, d, c) => artOver(R, d, c.desk, 0.62) },
-    { key: 'plant', cat: 'plant', place: (R, d) => corners(R, d) },
+    { key: 'plant', cat: 'plant', extra: ['basic'], place: (R, d) => corners(R, d) },
     { key: 'ceilingLight', cat: 'ceilingLight', layer: 'ceiling', extra: ['basic'], place: (R, d, c) => ceiling(R, d, c.desk ? c.desk.x : R.W / 2, c.desk ? c.desk.z + 0.3 : R.D / 2, 1.9) },
     CURTAINS,
   ],
@@ -251,7 +251,7 @@ const SLOTS = {
     { key: 'sideboard', cat: 'sideboard', minTier: 'luxury', place: (R, d) => [[back(R, d)], [left(R, d, R.D * 0.5)], [right(R, d, R.D * 0.5)], [front(R, d)]] },
     { key: 'ceilingLight', cat: 'ceilingLight', layer: 'ceiling', place: (R, d, c) => ceiling(R, d, c.diningTable ? c.diningTable.x : R.W / 2, c.diningTable ? c.diningTable.z : R.D / 2, 1.5) },
     { key: 'wallArt', cat: 'wallArt', layer: 'wall', place: (R, d, c) => artOver(R, d, c.sideboard, 0.3) },
-    { key: 'plant', cat: 'plant', place: (R, d) => corners(R, d) },
+    { key: 'plant', cat: 'plant', extra: ['basic'], place: (R, d) => corners(R, d) },
     { key: 'plant2', cat: 'plant', minTier: 'supreme', place: (R, d) => corners(R, d) },
     CURTAINS,
   ],
@@ -281,7 +281,7 @@ const SLOTS = {
         return o;
       },
     },
-    { key: 'plant', cat: 'plant', place: (R, d) => corners(R, d) },
+    { key: 'plant', cat: 'plant', extra: ['basic'], place: (R, d) => corners(R, d) },
     { key: 'towels', cat: 'towels', layer: 'dress', host: 'towelRack', count: () => 1 },
   ],
 };
@@ -292,7 +292,7 @@ export const slotsFor = (roomType) => SLOTS[roomType];
 function rank(list, slot, ctx) {
   const picks = stylePicks(ctx.style);
   // Basic: the cheapest piece that fits wins, and a style favourite only wins if it costs about the same.
-  const cheap = ctx.tier === 'basic' && slot.cat !== 'sofa';
+  const cheap = ctx.tier === 'basic';
   const floorPrice = Math.min(...list.map((p) => p.price));
   const score = (p) => {
     let s = 0;
@@ -304,8 +304,9 @@ function rank(list, slot, ctx) {
     if (p.tags.includes('upgrade')) s -= 50;
     return s;
   };
-  // Other tiers: the biggest piece that fits.
-  const area = (p) => (cheap ? -p.price : SIZE_FIRST.has(slot.cat) ? p.dims[0] * p.dims[1] * (slot.small ? -1 : 1) : 0);
+  // Basic: lowest price (sofas: lowest price per seat). Other tiers: the biggest piece that fits.
+  const value = (p) => (slot.cat === 'sofa' ? p.price / (p.model.seats ?? 2) : p.price);
+  const area = (p) => (cheap ? -value(p) : SIZE_FIRST.has(slot.cat) ? p.dims[0] * p.dims[1] * (slot.small ? -1 : 1) : 0);
   return list
     .map((p, i) => ({ p, i, s: score(p), a: area(p) }))
     .sort((x, y) => y.s - x.s || y.a - x.a || x.i - y.i)

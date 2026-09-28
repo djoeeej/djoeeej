@@ -29,7 +29,7 @@ function makeMaterial(kind, color, extra = {}) {
     case 'fabric': return P({ color: c, roughness: 0.95, sheen: 0.45, sheenRoughness: 0.8, sheenColor: c.clone().lerp(WHITE, 0.35), ...withNormal('linen', 0.5) });
     case 'linen': return P({ color: c, roughness: 0.93, sheen: 0.35, sheenRoughness: 0.8, sheenColor: c.clone().lerp(WHITE, 0.4), ...withNormal('linen', 0.7) });
     case 'velvet': return P({ color: c, roughness: 0.72, sheen: 1, sheenRoughness: 0.3, sheenColor: c.clone().offsetHSL(0, -0.05, 0.22), ...withNormal('velvet', 0.3) });
-    case 'boucle': return P({ color: c, roughness: 1, sheen: 0.8, sheenRoughness: 0.9, sheenColor: WHITE.clone(), ...withNormal('boucle', 1.1) });
+    case 'boucle': return P({ color: c, roughness: 1, sheen: 0.35, sheenRoughness: 0.9, sheenColor: c.clone().lerp(WHITE, 0.5), ...withNormal('boucle', 1.1) });
     case 'knit': return P({ color: c, roughness: 1, sheen: 0.6, sheenRoughness: 0.8, sheenColor: c.clone().lerp(WHITE, 0.4), ...withNormal('knit', 1.5) });
     case 'terry': return P({ color: c, roughness: 1, sheen: 0.5, sheenRoughness: 0.9, sheenColor: WHITE.clone(), ...withNormal('wool', 1.3) });
     case 'jute': return S({ color: c, roughness: 1, ...withNormal('jute', 1.4) });

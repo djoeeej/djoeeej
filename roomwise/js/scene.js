@@ -1024,8 +1024,7 @@ export class Stage {
     this.floorMesh.visible = mode !== 'photo';
     this.ceilingMesh.visible = mode === 'walk';
     this.views.visible = mode === 'walk';
-    if (this.room?.curtains) this.room.curtains.children.forEach((c) => { c.visible = mode === 'photo' ? false : !hidden.has(c.userData.wall); });
-    this.room?.root.children.forEach((c) => { if (c.userData.wall && !c.isGroup) c.visible = !hidden.has(c.userData.wall); });
+    if (this.room?.curtains) this.room.curtains.children.forEach((c) => { c.visible = mode === 'photo' ? c.userData.wall !== 'front' : !hidden.has(c.userData.wall); });
     this.fx.visible = mode !== 'photo' || !!this.selected;
     const limit = this.photoInfo ? this.photoInfo.camDist - 0.55 : Infinity;
     for (const [key, e] of this.items) {

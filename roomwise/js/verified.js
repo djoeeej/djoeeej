@@ -640,6 +640,22 @@ export const VERIFIED = {
   "https://www.ikea.com/us/en/p/vilborg-room-darkening-curtains-1-pair-beige-with-heading-tape-00297553/": {
    "r": "OK",
    "p": 69.99
+  },
+  "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-bamboo-40610607/": {
+   "r": "OK",
+   "p": 89.99
+  },
+  "https://www.ikea.com/us/en/p/fejka-artificial-potted-plant-indoor-outdoor-bird-of-paradise-70610601/": {
+   "r": "OK",
+   "p": 89.99
+  },
+  "https://www.ikea.com/us/en/p/annakajsa-room-darkening-curtains-1-pair-beige-with-heading-tape-70462790/": {
+   "r": "OK",
+   "p": 99.99
+  },
+  "https://www.ikea.com/us/en/p/annakajsa-room-darkening-curtains-1-pair-white-with-heading-tape-50642660/": {
+   "r": "OK",
+   "p": 99.99
   }
  }
 };

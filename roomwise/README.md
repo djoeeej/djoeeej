@@ -21,7 +21,7 @@ To try it on your phone, run the server on your computer and open `http://<your-
 1. **Snap**: take or upload a photo of the wall you face when you walk in. Pick the room type (living room, bedroom, studio apartment, home office, dining room or bathroom) and who it's for: your home, or an Airbnb or rental. A built-in sample room lets anyone try it without a photo.
 2. **Measure**: drag four yellow corners onto the back wall, and move the eye-level cross to where the room's edges meet. Roomwise gives the width, depth, ceiling height and floor area. Mark the **windows and doors** too: furniture keeps a 95 cm path clear in front of doors, tall pieces stay out of the light, and curtains hang on every window.
 3. **Budget**: pick a **design concept** (Japandi Calm, Modern Organic, Parisian Classic, Dark & Moody, Bright Coastal), then one of three designs priced for this exact room:
-   - **Basic**: the cheapest well-reviewed IKEA, Walmart and Target pieces that are sold today. In the sample room a whole living room comes to about $600, a dining room about $260, a home office about $300.
+   - **Basic**: the cheapest well-reviewed IKEA, Walmart and Target pieces that are sold today. In the sample room a whole living room comes to about $640, a dining room about $235, a home office about $280 and a bathroom refresh about $110.
    - **Luxury**: Article (solid walnut, bouclé, wool), styled with Target textiles.
    - **Supreme**: Design Within Reach: authentic Herman Miller, Flos, Artemide and Carl Hansen classics.
 4. **Design**: the room in 3D, every piece a real product at its real size, dressed with cushions, throws, bedding, curtains, towels and styling props so it looks lived in.
