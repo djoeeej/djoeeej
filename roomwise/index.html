@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Roomwise</title>
+<meta name="description" content="Photograph a room, get it measured, and see it designed with real furniture at three budgets.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<div class="app" id="app" data-step="snap">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 34 28" aria-hidden="true">
+        <rect x="1" y="2" width="22" height="22" rx="6" class="bm-case"/>
+        <circle cx="12" cy="13" r="5" class="bm-hub"/>
+        <path d="M23 17h10v5H23" class="bm-tape"/>
+        <path d="M26 17v2.5M29 17v2.5" class="bm-tick"/>
+      </svg>
+      <span class="brand-name">Roomwise</span>
+    </div>
+    <nav class="steps" aria-label="Steps">
+      <ol>
+        <li><button type="button" data-go="snap"><span class="step-n">1</span><span class="step-l">Snap</span></button></li>
+        <li><button type="button" data-go="measure"><span class="step-n">2</span><span class="step-l">Measure</span></button></li>
+        <li><button type="button" data-go="budget"><span class="step-n">3</span><span class="step-l">Budget</span></button></li>
+        <li><button type="button" data-go="design"><span class="step-n">4</span><span class="step-l">Design</span></button></li>
+      </ol>
+    </nav>
+    <div class="units" role="group" aria-label="Units">
+      <button type="button" data-units="metric" aria-pressed="true">m</button>
+      <button type="button" data-units="imperial" aria-pressed="false">ft</button>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="photo-layer" id="photoLayer">
+      <img id="photo" alt="The room photo">
+      <svg id="measureSvg" class="measure-svg" role="group" aria-label="Measuring marks on the photo"></svg>
+    </div>
+    <canvas id="gl" hidden aria-label="3D view of the designed room. Tap a piece of furniture to see it up close."></canvas>
+    <div class="labels" id="labels" aria-hidden="true"></div>
+    <div class="loupe" id="loupe" hidden></div>
+    <p class="stage-caption" id="stageCaption">Sample room</p>
+
+    <div class="view-bar" id="viewBar" hidden>
+      <div class="seg seg--stage" role="tablist" aria-label="View">
+        <button type="button" role="tab" data-view="room" aria-selected="true">3D room</button>
+        <button type="button" role="tab" data-view="walk" aria-selected="false">Walk-in 360°</button>
+        <button type="button" role="tab" data-view="photo" aria-selected="false">In my photo</button>
+      </div>
+    </div>
+    <div class="view-tools" id="viewTools" hidden>
+      <div class="viewpoints" id="viewpoints" hidden></div>
+      <button type="button" class="tool" id="tourBtn" aria-pressed="false">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3a7 7 0 1 1-6.6 4.7" /><path d="M3 3.5v4h4" /></svg>
+        <span id="tourLabel">Turn 360°</span>
+      </button>
+      <button type="button" class="tool tool--icon" id="resetBtn" aria-label="Reset the view">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h14M10 3v14" /><circle cx="10" cy="10" r="3.2" /></svg>
+      </button>
+    </div>
+    <p class="tap-hint" id="tapHint" hidden>Tap any piece to see it up close</p>
+
+    <div class="studio-bar" id="studioBar" hidden>
+      <div>
+        <p class="studio-name" id="studioName"></p>
+        <p class="studio-sub">Turning 360°. Drag to spin it yourself, pinch to zoom.</p>
+      </div>
+      <button type="button" class="btn btn--small" id="studioClose">Back to the room</button>
+    </div>
+    <div class="toast" id="toast" role="status" hidden><span id="toastText"></span><button type="button" class="toast-action" id="toastAction" hidden></button></div>
+    <div class="stage-error" id="stageError" hidden></div>
+  </main>
+
+  <section class="sheet" id="sheet">
+    <!-- 1. Snap -->
+    <div class="panel" data-panel="snap">
+      <h1 class="display">Photograph a room. See it measured and furnished.</h1>
+      <p class="lede">Take one photo of the wall you face when you walk in. Roomwise works out the size of the room, designs it at three budgets and links every piece to a store.</p>
+      <fieldset class="field">
+        <legend class="label">Which room is it?</legend>
+        <div class="chips" id="roomTypes" role="radiogroup" aria-label="Room type"></div>
+      </fieldset>
+      <div class="cta-row">
+        <label class="btn btn--primary" for="fileCamera">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h3l1.5-2h5L14 7h3v9H3z" /><circle cx="10" cy="11.5" r="3" /></svg>
+          Take a photo
+        </label>
+        <label class="btn" for="fileUpload">Upload a photo</label>
+      </div>
+      <button type="button" class="link-btn" id="useSample">Try it with the sample room</button>
+      <p class="error" id="snapError" role="alert" hidden></p>
+      <details class="tips">
+        <summary>How to take a photo that measures well</summary>
+        <ol>
+          <li>Stand in the doorway, or with your back against the opposite wall.</li>
+          <li>Hold the phone upright at chest height and keep it level.</li>
+          <li>Fit the whole back wall in the frame, floor to ceiling. In small rooms use the 0.5× lens.</li>
+        </ol>
+      </details>
+    </div>
+
+    <!-- 2. Measure -->
+    <div class="panel" data-panel="measure" hidden>
+      <div class="panel-head">
+        <h2>Measure the room</h2>
+        <p>Drag the four yellow corners to where the back wall meets the ceiling and the floor. Then move the eye-level cross to where the room's edges meet.</p>
+      </div>
+      <dl class="readout">
+        <div><dt>Width</dt><dd id="outW">–</dd></div>
+        <div><dt>Depth</dt><dd id="outD">–</dd></div>
+        <div><dt>Ceiling</dt><dd id="outH">–</dd></div>
+        <div><dt>Floor</dt><dd id="outA">–</dd></div>
+      </dl>
+      <div class="field">
+        <span class="label" id="refLabel">Scale the photo with one length you know</span>
+        <div class="seg" role="radiogroup" aria-labelledby="refLabel">
+          <button type="button" role="radio" data-ref="height" aria-checked="true">Ceiling height</button>
+          <button type="button" role="radio" data-ref="width" aria-checked="false">Back wall width</button>
+        </div>
+        <div class="len-input" id="refInput"></div>
+        <p class="help" id="refHelp"></p>
+      </div>
+      <details class="fine">
+        <summary>Lens and where you stood</summary>
+        <div class="field">
+          <span class="label" id="lensLabel">Lens used for the photo</span>
+          <div class="chips" id="lensChips" role="radiogroup" aria-labelledby="lensLabel"></div>
+          <p class="help" id="lensHelp"></p>
+        </div>
+        <div class="field">
+          <label class="label" for="standInput">Space between you and the wall behind you</label>
+          <div class="range-row"><input id="standInput" type="range" min="0" max="2" step="0.05"><output id="standOut" for="standInput"></output></div>
+        </div>
+        <p class="help" id="camHeight"></p>
+      </details>
+      <p class="note" id="measureNote" hidden></p>
+      <div class="panel-actions">
+        <button type="button" class="btn" data-go="snap">New photo</button>
+        <button type="button" class="btn btn--primary" data-go="budget">Choose a budget</button>
+      </div>
+    </div>
+
+    <!-- 3. Budget -->
+    <div class="panel" data-panel="budget" hidden>
+      <div class="panel-head">
+        <h2>Choose a budget</h2>
+        <p id="roomSummary"></p>
+      </div>
+      <div class="field">
+        <span class="label" id="roomTypeLabel2">Room</span>
+        <div class="chips" id="roomTypes2" role="radiogroup" aria-labelledby="roomTypeLabel2"></div>
+      </div>
+      <div class="tiers" id="tiers"></div>
+      <p class="fine-print">Totals are typical US store prices for every piece that fits your room. Wall paint is extra.</p>
+    </div>
+
+    <!-- 4. Design -->
+    <div class="panel" data-panel="design" hidden>
+      <div class="seg seg--tiers" id="tierSwitch" role="tablist" aria-label="Budget"></div>
+      <div class="total">
+        <div>
+          <p class="total-label">Estimated total</p>
+          <p class="total-value" id="total">$0</p>
+        </div>
+        <p class="total-meta" id="totalMeta"></p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Design details">
+        <button type="button" role="tab" data-tab="pieces" aria-selected="true">Pieces</button>
+        <button type="button" role="tab" data-tab="paint" aria-selected="false">Wall paint</button>
+        <button type="button" role="tab" data-tab="shop" aria-selected="false">Shopping list</button>
+      </div>
+      <div class="tab-panel" data-tabpanel="pieces">
+        <ul class="pieces" id="pieces"></ul>
+        <div class="removed" id="removed"></div>
+      </div>
+      <div class="tab-panel" data-tabpanel="paint" hidden>
+        <div class="swatches" id="swatches" role="radiogroup" aria-label="Wall colour"></div>
+        <div class="field">
+          <span class="label" id="paintTargetLabel">Paint</span>
+          <div class="seg" id="paintTarget" role="radiogroup" aria-labelledby="paintTargetLabel">
+            <button type="button" role="radio" data-target="all" aria-checked="true">All walls</button>
+            <button type="button" role="radio" data-target="accent" aria-checked="false">Back wall only</button>
+          </div>
+        </div>
+        <div class="field field--inline">
+          <label class="label" for="customPaint">Your own colour</label>
+          <input type="color" id="customPaint" value="#b2bda4">
+        </div>
+        <div class="field">
+          <label class="label" for="coverage">Repaint strength in your photo</label>
+          <input type="range" id="coverage" min="0.25" max="1.2" step="0.05" value="0.55">
+          <p class="help">Raise it if patches of old paint show. Lower it if furniture in the photo gets painted.</p>
+        </div>
+        <p class="paint-need" id="paintNeed"></p>
+      </div>
+      <div class="tab-panel" data-tabpanel="shop" hidden>
+        <div id="shop"></div>
+      </div>
+      <div class="panel-actions">
+        <button type="button" class="btn" data-go="measure">Edit measurements</button>
+        <button type="button" class="btn" id="resetDesign">Reset design</button>
+      </div>
+    </div>
+
+    <!-- Piece details -->
+    <div class="panel" data-panel="product" hidden>
+      <button type="button" class="back-btn" id="productBack">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12 4l-6 6 6 6" /></svg>
+        All pieces
+      </button>
+      <p class="p-cat" id="pCat"></p>
+      <h2 class="p-name" id="pName"></h2>
+      <p class="p-price"><span id="pPrice"></span> <span class="p-est">typical price</span></p>
+      <div class="p-actions">
+        <a class="btn btn--primary" id="pShop" href="#" target="_blank" rel="noopener noreferrer"></a>
+        <button type="button" class="btn" id="pStudio">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3a7 7 0 1 1-6.6 4.7" /><path d="M3 3.5v4h4" /></svg>
+          View in 360°
+        </button>
+      </div>
+      <dl class="specs">
+        <div><dt>Size</dt><dd id="pSize"></dd></div>
+        <div><dt>Made of</dt><dd id="pMat"></dd></div>
+        <div><dt>Where</dt><dd id="pWhere"></dd></div>
+      </dl>
+      <div class="field">
+        <span class="label" id="finishLabel">Finish</span>
+        <div class="finishes" id="pFinishes" role="radiogroup" aria-labelledby="finishLabel"></div>
+      </div>
+      <div class="field">
+        <span class="label">Same spot, other budgets</span>
+        <ul class="alts" id="pAlts"></ul>
+      </div>
+      <button type="button" class="btn btn--quiet" id="pRemove">Remove from the design</button>
+      <p class="fine-print">Shop links open a search for this kind of piece at the store. The full app links straight to the product through store feeds.</p>
+    </div>
+  </section>
+</div>
+
+<input type="file" id="fileCamera" class="visually-hidden" accept="image/*" capture="environment">
+<input type="file" id="fileUpload" class="visually-hidden" accept="image/*">
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
