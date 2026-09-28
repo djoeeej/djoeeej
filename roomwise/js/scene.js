@@ -884,7 +884,14 @@ export class Stage {
     this.skies ??= {};
     if (!this.skies[name]) {
       const [{ EXRLoader }, mod] = await Promise.all([import('three/addons/loaders/EXRLoader.js'), import(HDRI(name))]);
-      const tex = await new EXRLoader().loadAsync(mod.default);
+      // Decode the embedded EXR directly (no fetch of a data: URL, which strict pages block).
+      const bin = Uint8Array.from(atob(mod.default.split(',')[1]), (c) => c.charCodeAt(0));
+      const d = new EXRLoader().parse(bin.buffer);
+      const tex = new THREE.DataTexture(d.data, d.width, d.height, d.format, d.type);
+      tex.colorSpace = d.colorSpace ?? THREE.LinearSRGBColorSpace;
+      tex.minFilter = tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = false;
+      tex.needsUpdate = true;
       tex.mapping = THREE.EquirectangularReflectionMapping;
       this.skies[name] = tex;
     }
