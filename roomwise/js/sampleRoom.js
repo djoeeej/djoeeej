@@ -3,11 +3,16 @@
 // check on the measuring maths.
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { floorPlanks, windowView } from './textures.js';
+import { floorTexture, windowView } from './textures.js';
 import { focalPx, matchPhotoCamera } from './measure.js';
 import { rng } from './util.js';
 
 export const SAMPLE = { W: 4.2, D: 4.3, H: 2.6, camX: 2.0, camY: 1.3, stand: 0.45, width: 1600, height: 1200, focal35: 26, vp: { x: 800, y: 470 } };
+// The window in the photo, and the door the photo was taken from.
+export const SAMPLE_OPENINGS = [
+  { wall: 'back', a0: 1.35, a1: 2.85, y0: 0.85, y1: 2.3, kind: 'window' },
+  { wall: 'front', a0: 1.55, a1: 2.45, y0: 0, y1: 2.05, kind: 'door' },
+];
 
 export function renderSampleRoom() {
   const S = SAMPLE;
@@ -22,7 +27,7 @@ export function renderSampleRoom() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -41,8 +46,9 @@ export function renderSampleRoom() {
     m.position.copy(pos); m.rotation.set(rotX, rotY, 0, 'YXZ'); m.receiveShadow = true; scene.add(m); return m;
   };
 
-  const floorTex = floorPlanks('#b48a5c');
-  floorTex.repeat.set(S.W / 1.8, S.D / 1.8);
+  const floorTex = floorTexture('plank', '#b48a5c').map.clone();
+  floorTex.repeat.set(S.W / 2.4, S.D / 2.4);
+  floorTex.needsUpdate = true;
   plane(S.W, S.D, new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.5 }), new THREE.Vector3(S.W / 2, 0, S.D / 2), 0, -Math.PI / 2);
   plane(S.W, S.D, new THREE.MeshStandardMaterial({ color: '#f3f1ec', roughness: 1 }), new THREE.Vector3(S.W / 2, S.H, S.D / 2), 0, Math.PI / 2);
   plane(S.D, S.H, wall, new THREE.Vector3(0, S.H / 2, S.D / 2), Math.PI / 2);

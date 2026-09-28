@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Roomwise</title>
-<meta name="description" content="Photograph a room, get it measured, and see it designed with real furniture at three budgets.">
+<meta name="description" content="Photograph a room, get it measured, and see it designed with real, linked furniture at three budgets. For homes, apartments and Airbnbs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap">
@@ -12,8 +12,11 @@
 <script type="importmap">
 {
   "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/",
+    "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/",
+    "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.9.15/build/index.module.js",
+    "three-gpu-pathtracer": "https://cdn.jsdelivr.net/npm/three-gpu-pathtracer@0.0.25/build/index.module.js"
   }
 }
 </script>
@@ -63,6 +66,14 @@
     </div>
     <div class="view-tools" id="viewTools" hidden>
       <div class="viewpoints" id="viewpoints" hidden></div>
+      <div class="seg seg--mini" id="moodSeg" role="radiogroup" aria-label="Light">
+        <button type="button" role="radio" data-mood="day" aria-checked="true">Day</button>
+        <button type="button" role="radio" data-mood="evening" aria-checked="false">Evening</button>
+      </div>
+      <button type="button" class="tool" id="photoBtn">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h3l1.5-2h5L14 7h3v9H3z" /><circle cx="10" cy="11.5" r="3" /></svg>
+        <span>Real photo</span>
+      </button>
       <button type="button" class="tool" id="tourBtn" aria-pressed="false">
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3a7 7 0 1 1-6.6 4.7" /><path d="M3 3.5v4h4" /></svg>
         <span id="tourLabel">Turn 360°</span>
@@ -80,6 +91,14 @@
       </div>
       <button type="button" class="btn btn--small" id="studioClose">Back to the room</button>
     </div>
+    <div class="render" id="render" hidden>
+      <img id="renderImg" alt="Photo-real render of the designed room">
+      <div class="render-bar">
+        <div class="render-progress" id="renderProgress"><i></i></div>
+        <p class="render-text" id="renderText">Rendering light bounces…</p>
+        <button type="button" class="btn btn--small" id="renderClose">Close</button>
+      </div>
+    </div>
     <div class="toast" id="toast" role="status" hidden><span id="toastText"></span><button type="button" class="toast-action" id="toastAction" hidden></button></div>
     <div class="stage-error" id="stageError" hidden></div>
   </main>
@@ -92,6 +111,13 @@
       <fieldset class="field">
         <legend class="label">Which room is it?</legend>
         <div class="chips" id="roomTypes" role="radiogroup" aria-label="Room type"></div>
+      </fieldset>
+      <fieldset class="field">
+        <legend class="label">Who is it for?</legend>
+        <div class="seg" id="purposeSeg" role="radiogroup" aria-label="Purpose">
+          <button type="button" role="radio" data-purpose="home" aria-checked="true">My home</button>
+          <button type="button" role="radio" data-purpose="airbnb" aria-checked="false">Airbnb or rental</button>
+        </div>
       </fieldset>
       <div class="cta-row">
         <label class="btn btn--primary" for="fileCamera">
@@ -133,6 +159,15 @@
         <div class="len-input" id="refInput"></div>
         <p class="help" id="refHelp"></p>
       </div>
+      <div class="field">
+        <span class="label">Windows and doors</span>
+        <p class="help">Furniture stays clear of doors, tall pieces stay out of the light, and curtains hang on every window.</p>
+        <div class="openings" id="openings"></div>
+        <div class="chips">
+          <button type="button" class="chip" id="addWindow">+ Window</button>
+          <button type="button" class="chip" id="addDoor">+ Door</button>
+        </div>
+      </div>
       <details class="fine">
         <summary>Lens and where you stood</summary>
         <div class="field">
@@ -163,13 +198,21 @@
         <span class="label" id="roomTypeLabel2">Room</span>
         <div class="chips" id="roomTypes2" role="radiogroup" aria-labelledby="roomTypeLabel2"></div>
       </div>
+      <div class="field">
+        <span class="label" id="styleLabel">Design concept</span>
+        <div class="styles" id="styles" role="radiogroup" aria-labelledby="styleLabel"></div>
+      </div>
       <div class="tiers" id="tiers"></div>
-      <p class="fine-print">Totals are typical US store prices for every piece that fits your room. Wall paint is extra.</p>
+      <p class="fine-print" id="budgetPrint">Totals are the current US prices of real products that fit your room, including textiles, bulbs and cushion inserts. Wall paint is extra.</p>
     </div>
 
     <!-- 4. Design -->
     <div class="panel" data-panel="design" hidden>
       <div class="seg seg--tiers" id="tierSwitch" role="tablist" aria-label="Budget"></div>
+      <div class="concept">
+        <div class="chips chips--scroll" id="styleSwitch" role="radiogroup" aria-label="Design concept"></div>
+        <button type="button" class="chip chip--accent" id="anotherIdea">Another idea</button>
+      </div>
       <div class="total">
         <div>
           <p class="total-label">Estimated total</p>
@@ -178,12 +221,18 @@
         <p class="total-meta" id="totalMeta"></p>
       </div>
       <div class="tabs" role="tablist" aria-label="Design details">
+        <button type="button" role="tab" data-tab="notes" aria-selected="false">Design</button>
         <button type="button" role="tab" data-tab="pieces" aria-selected="true">Pieces</button>
-        <button type="button" role="tab" data-tab="paint" aria-selected="false">Wall paint</button>
-        <button type="button" role="tab" data-tab="shop" aria-selected="false">Shopping list</button>
+        <button type="button" role="tab" data-tab="paint" aria-selected="false">Paint</button>
+        <button type="button" role="tab" data-tab="shop" aria-selected="false">Shop</button>
+        <button type="button" role="tab" data-tab="host" aria-selected="false" id="hostTab">Airbnb</button>
+      </div>
+      <div class="tab-panel" data-tabpanel="notes" hidden>
+        <div id="notes"></div>
       </div>
       <div class="tab-panel" data-tabpanel="pieces">
         <ul class="pieces" id="pieces"></ul>
+        <div class="extras" id="extras"></div>
         <div class="removed" id="removed"></div>
       </div>
       <div class="tab-panel" data-tabpanel="paint" hidden>
@@ -208,10 +257,16 @@
       </div>
       <div class="tab-panel" data-tabpanel="shop" hidden>
         <div id="shop"></div>
+        <p class="fine-print" id="checkedNote"></p>
       </div>
+      <div class="tab-panel" data-tabpanel="host" hidden>
+        <div id="host"></div>
+      </div>
+      <div class="project" id="project"></div>
       <div class="panel-actions">
         <button type="button" class="btn" data-go="measure">Edit measurements</button>
         <button type="button" class="btn" id="resetDesign">Reset design</button>
+        <button type="button" class="btn btn--primary" id="saveRoom">Add room to my project</button>
       </div>
     </div>
 
@@ -223,7 +278,9 @@
       </button>
       <p class="p-cat" id="pCat"></p>
       <h2 class="p-name" id="pName"></h2>
-      <p class="p-price"><span id="pPrice"></span> <span class="p-est">typical price</span></p>
+      <p class="p-price"><span id="pPrice"></span> <span class="p-est" id="pStore"></span></p>
+      <p class="p-why" id="pWhy"></p>
+      <p class="p-check" id="pCheck"></p>
       <div class="p-actions">
         <a class="btn btn--primary" id="pShop" href="#" target="_blank" rel="noopener noreferrer"></a>
         <button type="button" class="btn" id="pStudio">
@@ -240,12 +297,17 @@
         <span class="label" id="finishLabel">Finish</span>
         <div class="finishes" id="pFinishes" role="radiogroup" aria-labelledby="finishLabel"></div>
       </div>
+      <div class="field" id="pAddonsField">
+        <span class="label">Not in the box</span>
+        <ul class="addons" id="pAddons"></ul>
+      </div>
+      <label class="own"><input type="checkbox" id="pOwned"> I already have this. Leave it out of the total.</label>
       <div class="field">
         <span class="label">Same spot, other budgets</span>
         <ul class="alts" id="pAlts"></ul>
       </div>
       <button type="button" class="btn btn--quiet" id="pRemove">Remove from the design</button>
-      <p class="fine-print">Shop links open a search for this kind of piece at the store. The full app links straight to the product through store feeds.</p>
+      <p class="fine-print" id="pFine">Shop links go straight to the product page. Prices change often, so check the store before you buy.</p>
     </div>
   </section>
 </div>

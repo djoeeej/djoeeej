@@ -14,6 +14,8 @@
 // it really costs. Things that are not included in the box (bulbs, cushion inserts, curtain
 // rods, a mattress) are listed as add-ons with their own links.
 
+import { VERIFIED } from './verified.js';
+
 export const RETAILERS = {
   ikea: { name: 'IKEA', search: (q) => `https://www.ikea.com/us/en/search/?q=${q}` },
   walmart: { name: 'Walmart', search: (q) => `https://www.walmart.com/search?q=${q}` },
@@ -72,6 +74,7 @@ function add(o) {
     id: o.id, cat: o.cat, tier: o.tier, name: o.name, store: o.store, price: o.price, dims: o.dims ?? [40, 40, 40],
     material: o.material ?? '', why: o.why ?? '', rating: o.rating ?? null, url: o.url ?? null, query: o.query ?? o.name,
     unit: o.unit ?? null, // e.g. 'set of 2', 'pair', 'panel'
+    pack: o.pack ?? 1, // how many of the store's selling units make one of ours (two covers = one set)
     perWindow: o.perWindow ?? 1, // curtain panels needed per window
     existing: o.store === 'existing',
     finishes: (o.finishes ?? [['Standard', '#cccccc']]).map(([name, color, url, price]) => ({ name, color, url: url ?? null, price: price ?? null })),
@@ -94,7 +97,7 @@ const U = {
 
 // Frequently used add-ons.
 const BULB = { id: 'ikea-solhetta-bulb', name: 'SOLHETTA LED bulb E26 450 lm', store: 'ikea', price: 2.49, url: U.ikea('solhetta-led-bulb-e26-450-lumen-globe-opal-10591479'), why: 'Bulbs are sold separately. Warm 2700K keeps the room cosy.' };
-const INSERTS = { id: 'ikea-fjadrar-insert', name: 'FJÄDRAR inner cushion 20x20", 2', store: 'ikea', price: 24, url: U.ikea('fjaedrar-inner-cushion-off-white-60262188'), why: 'Feather inserts make cheap covers look full and plump.' };
+const INSERTS = { id: 'ikea-fjadrar-insert', name: 'FJÄDRAR inner cushion 20x20", 2', store: 'ikea', price: 24, pack: 2, url: U.ikea('fjaedrar-inner-cushion-off-white-60262188'), why: 'Feather inserts make cheap covers look full and plump.' };
 const ROD = { id: 'ikea-racka-rod', name: 'RÄCKA curtain rod set, 47-83"', store: 'ikea', price: 15, url: U.ikea('raecka-curtain-rod-combination-white-s59929243'), why: 'Mount it high and wide: windows look bigger.', perWindow: true };
 const ROD_BLACK = { ...ROD, id: 'ikea-racka-rod-black', name: 'RÄCKA curtain rod set, black, 47-83"', url: U.ikea('raecka-curtain-rod-combination-black-s99929241') };
 
@@ -107,15 +110,13 @@ const b = (o) => add({ tier: 'basic', ...o });
 b({ id: 'ikea-glostad-loveseat', cat: 'sofa', name: 'GLOSTAD loveseat', store: 'ikea', price: 169, dims: [176, 81, 75],
   material: 'Knisa polyester fabric, polyurethane foam, solid wood frame',
   why: 'IKEA\'s cheapest sofa and one of its best-sellers: 8 screws to assemble, light enough to move alone.', rating: [4.5, 630],
-  url: U.ikea('glostad-loveseat-knisa-dark-gray-70489011'),
-  finishes: [['Knisa dark gray', '#54575a', U.ikea('glostad-loveseat-knisa-dark-gray-70489011')], ['Knisa medium blue', '#4f6788', U.ikea('glostad-loveseat-knisa-medium-blue-20488820')]],
+  url: U.ikea('glostad-loveseat-knisa-dark-gray-70489011'), finishes: [['Knisa dark gray', '#54575a']],
   model: { main: 'fabric', seats: 2, arm: 'track', legs: 'taper' }, tags: ['compact'] });
-b({ id: 'ikea-linanas-sofa', cat: 'sofa', name: 'LINANÄS sofa', store: 'ikea', price: 349, dims: [204, 86, 78],
-  material: 'Vissle dope-dyed polyester, foam seat, 10-year guarantee',
-  why: 'A full three-seater for the price of a loveseat, with a wipe-clean cover and a 10-year guarantee.',
-  url: U.ikea('linanaes-sofa-vissle-beige-80512233'),
-  finishes: [['Vissle beige', '#c9bda6', U.ikea('linanaes-sofa-vissle-beige-80512233')], ['Vissle dark gray', '#57595b', U.ikea('linanaes-sofa-vissle-dark-gray-80512247')]],
-  model: { main: 'fabric', seats: 3, arm: 'slope', legs: 'taper', v: 'basic' } });
+b({ id: 'ikea-glostad-sofa', cat: 'sofa', name: 'GLOSTAD sofa', store: 'ikea', price: 199, dims: [188, 82, 75],
+  material: 'Knisa polyester fabric, polyurethane foam, solid wood frame',
+  why: 'A full three-seat sofa for $199: the most affordable way to seat a family or a group of guests.', rating: [4, 80],
+  url: U.ikea('glostad-sofa-knisa-dark-gray-40595942'), finishes: [['Knisa dark gray', '#54575a']],
+  model: { main: 'fabric', seats: 3, arm: 'track', legs: 'taper' } });
 b({ id: 'walmart-tatum-sleeper', cat: 'sofa', name: 'Mainstays Tatum twin sleeper loveseat', store: 'walmart', price: 199, dims: [143, 74, 89],
   material: 'Polyester, pocket-coil seat, pull-out twin mattress',
   why: 'Sofa by day, twin bed by night: a Walmart best-seller that lets a small room sleep one more guest.', rating: [4.3, 331],
@@ -145,8 +146,8 @@ b({ id: 'ikea-lack-coffee', cat: 'coffeeTable', name: 'LACK coffee table', store
 b({ id: 'ikea-gladom', cat: 'sideTable', name: 'GLADOM tray table', store: 'ikea', price: 19.99, dims: [45, 45, 53],
   material: 'Powder-coated steel, removable tray top',
   why: 'Lift the top off to serve snacks. Rated 4.7 and costs less than a takeaway.', rating: [4.7, null],
-  url: U.ikea('gladom-tray-table-dark-green-10330670'),
-  finishes: [['Dark green', '#34463a', U.ikea('gladom-tray-table-dark-green-10330670')], ['Pale pink', '#e2c3b7', U.ikea('gladom-tray-table-pale-pink-10519407')], ['Red', '#9a3027', U.ikea('gladom-tray-table-red-00533649')]],
+  url: U.ikea('gladom-tray-table-black-50411990'),
+  finishes: [['Black', '#262626', U.ikea('gladom-tray-table-black-50411990')], ['White', '#eeeeea', U.ikea('gladom-tray-table-white-70337819')], ['Dark gray-green', '#3e4a42', U.ikea('gladom-tray-table-dark-gray-green-70578451')], ['Light blue', '#a9c0cf', U.ikea('gladom-tray-table-light-blue-10534002')]],
   kind: 'trayTable', model: { main: 'paint' } });
 b({ id: 'ikea-micke', cat: 'desk', name: 'MICKE desk', store: 'ikea', price: 109.99, dims: [105, 50, 75],
   material: 'Particleboard, honeycomb paper filling, cable outlet at the back',
@@ -171,18 +172,24 @@ b({ id: 'ikea-sandsberg', cat: 'diningTable', name: 'SANDSBERG table', store: 'i
   why: 'Seats four in a small kitchen or studio for the price of one takeaway dinner for four.',
   url: U.ikea('sandsberg-table-black-s29420393'), finishes: [['Black', '#262626']],
   model: { main: 'laminate', seats: 4 } });
-b({ id: 'ikea-ekedalen', cat: 'diningTable', name: 'EKEDALEN extendable table', store: 'ikea', price: 249, dims: [180, 80, 75],
-  material: 'Solid birch legs, ash veneer, self-storing leaf',
-  why: 'One person can extend it from 4 to 6 seats. No seam in the top when closed.',
-  url: U.ikea('ekedalen-extendable-table-white-70340807'),
-  finishes: [['White', '#ecebe6', U.ikea('ekedalen-extendable-table-white-70340807')], ['Brown', '#5b4031', U.ikea('ekedalen-extendable-table-brown-90340769')]],
+b({ id: 'ikea-naesinge', cat: 'diningTable', name: 'NÄSINGE extendable table', store: 'ikea', price: 229.99, dims: [160, 90, 75],
+  material: 'Beech veneer and solid beech, extension leaf',
+  why: 'Seats four every day and six when friends come over.',
+  url: U.ikea('naesinge-extendable-table-white-00587492'),
+  finishes: [['White', '#ecebe6', U.ikea('naesinge-extendable-table-white-00587492')], ['Dark brown beech', '#4a3526', U.ikea('naesinge-extendable-table-dark-brown-stained-beech-veneer-70587498')]],
   model: { main: 'laminate', seats: 6 } });
-b({ id: 'ikea-teodores', cat: 'diningChair', name: 'TEODORES chair', store: 'ikea', price: 55, dims: [46, 54, 81],
-  material: 'Moulded polypropylene, powder-coated steel legs',
-  why: 'Stackable, wipe-clean and strong: ideal for families and rentals.',
-  url: U.ikea('teodores-chair-white-30486156'), finishes: [['White', '#eeeeea']],
+b({ id: 'ikea-sandsberg-chair', cat: 'diningChair', name: 'SANDSBERG chair', store: 'ikea', price: 15, dims: [44, 51, 80],
+  material: 'Powder-coated steel frame, moulded seat',
+  why: '$15 a chair: sturdy, stackable and wipe-clean, so a full dining set costs less than one designer chair.',
+  url: U.ikea('sandsberg-chair-black-30605423'),
+  finishes: [['Black', '#262626', U.ikea('sandsberg-chair-black-30605423')], ['White', '#eeeeea', U.ikea('sandsberg-chair-white-10605424')], ['Blue', '#3f5a7a', U.ikea('sandsberg-chair-blue-80605425')]],
   kind: 'shellChair', model: { main: 'paint' } });
-
+b({ id: 'ikea-skogsta-chair', cat: 'diningChair', name: 'SKOGSTA chair', store: 'ikea', price: 70, dims: [43, 50, 83],
+  material: 'Solid acacia',
+  why: 'Solid wood with a warm oiled finish, for a more grown-up table.',
+  url: U.ikea('skogsta-chair-acacia-70544866'),
+  finishes: [['Acacia', '#8a5a36', U.ikea('skogsta-chair-acacia-70544866')], ['Black', '#262626', U.ikea('skogsta-chair-black-50544867')]],
+  model: { main: 'wood' } });
 // ---- storage ----
 b({ id: 'ikea-lack-tv', cat: 'mediaUnit', name: 'LACK TV unit', store: 'ikea', price: 24.99, dims: [90, 36, 45],
   material: 'Honeycomb board, cable opening at the back',
@@ -195,20 +202,31 @@ b({ id: 'ikea-billy', cat: 'bookcase', name: 'BILLY bookcase', store: 'ikea', pr
   url: U.ikea('billy-bookcase-white-20522046'),
   finishes: [['White', '#ecebe6', U.ikea('billy-bookcase-white-20522046')], ['Oak effect', '#c7a47a', U.ikea('billy-bookcase-oak-effect-10508932')], ['Black oak effect', '#2e2925', U.ikea('billy-bookcase-black-oak-effect-40477340')]],
   model: { main: 'laminate' } });
-b({ id: 'ikea-kullen-2', cat: 'nightstand', name: 'KULLEN 2-drawer chest', store: 'ikea', price: 39.99, dims: [35, 40, 49],
-  material: 'Particleboard, foil finish',
-  why: 'Two drawers for chargers and books at a price that makes buying a pair easy.',
-  url: U.ikea('kullen-2-drawer-chest-black-brown-60322130'), finishes: [['Black-brown', '#3b3129']],
+b({ id: 'ikea-knarrevik', cat: 'nightstand', name: 'KNARREVIK nightstand', store: 'ikea', price: 29.99, dims: [37, 28, 45],
+  material: 'Powder-coated steel, shelf and top',
+  why: 'Small, light and cheap enough to buy two: room for a lamp, a phone and a book.',
+  url: U.ikea('knarrevik-nightstand-black-20569977'), finishes: [['Black', '#262626']],
+  kind: 'nightstand', model: { main: 'blackMetal' } });
+b({ id: 'ikea-storklinta-night', cat: 'nightstand', name: 'STORKLINTA nightstand with drawer', store: 'ikea', price: 59.99, dims: [40, 40, 55],
+  material: 'Particleboard, drawer with anchor-unlock safety',
+  why: 'A drawer hides chargers and clutter, so the bedside stays calm.',
+  url: U.ikea('storklinta-nightstand-white-with-1-drawer-30561155'), finishes: [['White', '#ecebe6']],
   model: { main: 'laminate' } });
-b({ id: 'ikea-kullen-6', cat: 'dresser', name: 'KULLEN 6-drawer dresser', store: 'ikea', price: 129, dims: [140, 40, 72],
-  material: 'Particleboard, wall anchor included',
-  why: 'Six drawers for the price of a nightstand elsewhere. Rated 4.6.', rating: [4.6, null],
-  url: U.ikea('kullen-6-drawer-dresser-white-70484787'), finishes: [['White', '#ecebe6']],
+b({ id: 'ikea-rast-6', cat: 'dresser', name: 'RAST 6-drawer dresser', store: 'ikea', price: 129.99, dims: [80, 40, 91],
+  material: 'Solid pine, untreated: paint or stain it yourself',
+  why: 'Solid pine for the price of particleboard. A favourite for painting and customising.',
+  url: U.ikea('rast-6-drawer-dresser-pine-00582164'), finishes: [['Pine', '#d9c09a']],
+  model: { main: 'wood' } });
+b({ id: 'ikea-storklinta-6', cat: 'dresser', name: 'STORKLINTA 6-drawer dresser', store: 'ikea', price: 249.99, dims: [140, 48, 74],
+  material: 'Particleboard, anchor-unlock safety drawers',
+  why: 'A wide, low dresser with deep drawers and a safety lock that only opens once it is anchored to the wall.',
+  url: U.ikea('storklinta-6-drawer-dresser-white-anchor-unlock-function-60561248'),
+  finishes: [['White', '#ecebe6', U.ikea('storklinta-6-drawer-dresser-white-anchor-unlock-function-60561248')], ['Oak effect', '#c7a47a', U.ikea('storklinta-6-drawer-dresser-oak-effect-anchor-unlock-function-00561246')], ['Dark brown oak effect', '#4a3526', U.ikea('storklinta-6-drawer-dresser-dark-brown-oak-effect-anchor-unlock-function-50561244')]],
   model: { main: 'laminate' } });
 b({ id: 'ikea-rakkestad', cat: 'wardrobe', name: 'RAKKESTAD wardrobe with 2 doors', store: 'ikea', price: 149, dims: [79, 55, 176],
   material: 'Particleboard, clothes rail and shelf',
   why: 'Holds about 20 shirts and 40 T-shirts. Fits under low ceilings.',
-  url: U.ikea('rakkestad-wardrobe-with-2-doors-black-brown-70519635'), finishes: [['Black-brown', '#3b3129']],
+  url: U.ikea('rakkestad-wardrobe-with-2-doors-black-brown-40586805'), finishes: [['Black-brown', '#3b3129']],
   model: { main: 'laminate' } });
 
 // ---- beds ----
@@ -220,6 +238,11 @@ b({ id: 'ikea-malm-bed', cat: 'bed', name: 'MALM bed frame, Queen', store: 'ikea
   addons: [{ id: 'ikea-asbygda-queen', name: 'ÅSBYGDA foam mattress, Queen', store: 'ikea', price: 249, url: U.ikea('asbygda-foam-mattress-firm-white-10481503'), why: 'The bed has no mattress. This firm foam one has a washable cover.' }] });
 
 // ---- lighting ----
+b({ id: 'ikea-ringsta-skaftet', cat: 'floorLamp', name: 'RINGSTA / SKAFTET floor lamp', store: 'ikea', price: 64.99, dims: [42, 42, 170],
+  material: 'Nickel-plated steel stand, white fabric shade',
+  why: 'A tall fabric-shade lamp that casts a soft glow over the whole seating area.',
+  url: U.ikea('ringsta-skaftet-floor-lamp-white-nickel-plated-s59387448'), finishes: [['White / nickel', '#b9bcbf']],
+  model: { main: 'metal', lamp: 'stem' }, addons: [BULB] });
 b({ id: 'ikea-arstid-floor', cat: 'floorLamp', name: 'ÅRSTID floor lamp', store: 'ikea', price: 89.99, dims: [36, 36, 155],
   material: 'Nickel-plated steel, pleated fabric shade',
   why: 'One of IKEA\'s most loved lamps: the fabric shade softens the light for evenings.',
@@ -238,6 +261,17 @@ b({ id: 'ikea-tertial', cat: 'deskLamp', name: 'TERTIAL work lamp', store: 'ikea
   url: U.ikea('tertial-work-lamp-dark-gray-20355434'),
   finishes: [['Dark gray', '#3d3f42', U.ikea('tertial-work-lamp-dark-gray-20355434')], ['Light blue', '#9fb7c9', U.ikea('tertial-work-lamp-light-blue-70504295')]],
   kind: 'tableLamp', model: { main: 'blackMetal', lamp: 'task' }, addons: [BULB] });
+b({ id: 'ikea-gullsudare', cat: 'ceilingLight', name: 'GULLSUDARE pendant shade, handmade paper', store: 'ikea', price: 9.99, dims: [50, 50, 50],
+  material: 'Handmade paper on a steel frame',
+  why: 'A big paper lantern softens the light of a bare bulb for $10: the classic designer budget trick.',
+  url: U.ikea('gullsudare-pendant-lamp-shade-white-handmade-80583616'), finishes: [['White paper', '#f4f0e8']],
+  model: { main: 'paper', light: 'lantern' },
+  addons: [{ id: 'ikea-strala-cord', name: 'STRÅLA cord set', store: 'ikea', price: 7.99, url: U.ikea('strala-cord-set-white-90371505'), why: 'The shade needs a cord set to hang from the ceiling.' }, BULB] });
+b({ id: 'ikea-sinnerlig', cat: 'ceilingLight', name: 'SINNERLIG pendant lamp, bamboo', store: 'ikea', price: 59.99, dims: [45, 45, 30],
+  material: 'Hand-woven bamboo',
+  why: 'Warm, hand-woven bamboo that throws soft patterned light.',
+  url: U.ikea('sinnerlig-pendant-lamp-bamboo-handmade-70315030'), finishes: [['Bamboo', '#c9a878']],
+  model: { main: 'jute', light: 'woven' }, addons: [BULB] });
 b({ id: 'ikea-misterhult', cat: 'ceilingLight', name: 'MISTERHULT pendant lamp 18"', store: 'ikea', price: 149.99, dims: [45, 45, 38],
   material: 'Hand-woven bamboo',
   why: 'Hand-woven, so every one is unique. It throws a beautiful pattern of light on the ceiling. Rated 4.7.', rating: [4.7, null],
@@ -245,27 +279,32 @@ b({ id: 'ikea-misterhult', cat: 'ceilingLight', name: 'MISTERHULT pendant lamp 1
   model: { main: 'jute', light: 'woven' }, addons: [BULB] });
 
 // ---- decor ----
-b({ id: 'ikea-lohals', cat: 'rug', name: 'LOHALS rug, flatwoven', store: 'ikea', price: 79.99, dims: [230, 160, 1],
+b({ id: 'ikea-tiphede', cat: 'rug', name: 'TIPHEDE rug, flatwoven', store: 'ikea', price: 39.99, dims: [220, 155, 1],
+  material: 'Hand-woven cotton, reversible',
+  why: 'A striped cotton rug for under $40 that you can flip and wash: the cheapest way to warm up a floor.',
+  url: U.ikea('tiphede-rug-flatwoven-natural-black-40559166'), finishes: [['Natural / black', '#d8cdb8']],
+  model: { main: 'rug', pattern: 'stripe' } });
+b({ id: 'ikea-lohals', cat: 'rug', name: 'LOHALS rug, flatwoven', store: 'ikea', price: 129.99, dims: [300, 200, 1],
   material: 'Hand-woven jute',
-  why: 'Natural jute adds texture and warmth for under $80, and it is easy to vacuum.',
-  url: U.ikea('lohals-rug-flatwoven-natural-80515104'), finishes: [['Natural', '#b99a70']],
+  why: 'Natural jute adds texture and warmth, and it is easy to vacuum.',
+  url: U.ikea('lohals-rug-flatwoven-natural-50277393'), finishes: [['Natural', '#b99a70']],
   model: { main: 'rug', pattern: 'jute' } });
 b({ id: 'ikea-toftbo', cat: 'bathMat', name: 'TOFTBO bath mat', store: 'ikea', price: 9.99, dims: [80, 50, 1],
   material: 'Microfibre, non-slip back',
   why: 'Ultra-soft and quick-drying.',
-  url: U.ikea('toftbo-bath-mat-white-40454032'),
-  finishes: [['White', '#f1efe9', U.ikea('toftbo-bath-mat-white-40454032')], ['Dark beige', '#b9a78b', U.ikea('toftbo-bath-mat-dark-beige-10467583')]],
+  url: U.ikea('toftbo-bath-mat-gray-white-melange-20610279'),
+  finishes: [['Gray-white melange', '#d9d9d4', U.ikea('toftbo-bath-mat-gray-white-melange-20610279')], ['Beige', '#cdbda2', U.ikea('toftbo-bath-mat-beige-60610263')], ['Anthracite', '#3d3f42', U.ikea('toftbo-bath-mat-anthracite-00610275')]],
   model: { main: 'terry' } });
 b({ id: 'ikea-fejka-monstera', cat: 'plant', name: 'FEJKA artificial monstera', store: 'ikea', price: 24.99, dims: [45, 45, 90],
   material: 'Artificial plant, min. 50% recycled plastic',
   why: 'Looks real and never needs watering: perfect for rentals and guest rooms.',
-  url: U.ikea('fejka-artificial-potted-plant-indoor-outdoor-monstera-70496610'), finishes: [['Green / white pot', '#eeeeea']],
+  url: U.ikea('fejka-artificial-potted-plant-indoor-outdoor-monstera-10615244'), finishes: [['Green / white pot', '#eeeeea']],
   model: { main: 'matteCeramic', leaf: 'monstera' }, tags: ['airbnb'] });
-b({ id: 'ikea-bjorksta', cat: 'wallArt', name: 'BJÖRKSTA picture and frame', store: 'ikea', price: 44.99, dims: [118, 3, 78],
-  material: 'Printed canvas, black aluminium frame',
-  why: 'A large piece of art for less than $50 makes the wall look finished.',
-  url: U.ikea('bjoerksta-picture-and-frame-flowers-close-up-black-s89561163'), finishes: [['Flowers close up', '#8c9b7a']],
-  model: { main: 'art', art: 'abstract' } });
+b({ id: 'ikea-pjatteryd', cat: 'wallArt', name: 'PJÄTTERYD picture', store: 'ikea', price: 29.99, dims: [90, 3, 60],
+  material: 'Printed canvas, ready to hang',
+  why: 'A big picture for $30 finishes a wall and gives the eye somewhere to land.',
+  url: U.ikea('pjaetteryd-picture-forest-fairy-tale-30614130'), finishes: [['Forest fairy tale', '#6e7a5a']],
+  model: { main: 'art', art: 'landscape' } });
 b({ id: 'ikea-lindbyn-50', cat: 'mirror', name: 'LINDBYN mirror 19⅝"', store: 'ikea', price: 29.99, dims: [50, 3, 50],
   material: 'Recycled aluminium frame, safety film',
   why: 'Approved for bathrooms. Rated 4.7 by 1,500 people.', rating: [4.7, 1505],
@@ -276,59 +315,61 @@ b({ id: 'ikea-lindbyn-80', cat: 'mirror', name: 'LINDBYN mirror 31½"', store: '
   why: 'A big round mirror bounces light around and makes the room feel larger.',
   url: U.ikea('lindbyn-mirror-black-60507204'), finishes: [['Black', '#262626']],
   model: { main: 'blackMetal', shape: 'round' } });
-b({ id: 'ikea-nissedal', cat: 'floorMirror', name: 'NISSEDAL mirror', store: 'ikea', price: 49.99, dims: [65, 30, 150],
-  material: 'Walnut-effect frame, safety film',
+b({ id: 'ikea-nissedal', cat: 'floorMirror', name: 'NISSEDAL mirror', store: 'ikea', price: 69.99, dims: [65, 30, 150],
+  material: 'Framed mirror with safety film',
   why: 'Guests always ask for a full-length mirror. Lean it or hang it.',
-  url: U.ikea('nissedal-mirror-walnut-effect-30501864'), finishes: [['Walnut effect', '#7a5230']],
-  model: { main: 'laminate' }, tags: ['airbnb'] });
-b({ id: 'ikea-hemnes-shelf', cat: 'tallCabinet', name: 'HEMNES bathroom shelf unit', store: 'ikea', price: 99.99, dims: [42, 32, 172],
+  url: U.ikea('nissedal-mirror-black-20503774'),
+  finishes: [['Black', '#262626', U.ikea('nissedal-mirror-black-20503774')], ['White', '#eeeeea', U.ikea('nissedal-mirror-white-90503775')]],
+  model: { main: 'blackMetal' }, tags: ['airbnb'] });
+b({ id: 'ikea-hemnes-shelf', cat: 'tallCabinet', name: 'HEMNES shelf unit', store: 'ikea', price: 159.99, dims: [42, 37, 172],
   material: 'Solid pine and fibreboard, painted',
   why: 'Open shelves keep towels and toiletries in reach for guests.',
-  url: U.ikea('hemnes-bathroom-shelf-unit-white-90400447'),
-  finishes: [['White', '#f1efe9', U.ikea('hemnes-bathroom-shelf-unit-white-90400447')], ['Black-brown', '#3b3129', U.ikea('hemnes-bathroom-shelf-unit-black-brown-70400448')]],
+  url: U.ikea('hemnes-shelf-unit-white-30217654'),
+  finishes: [['White', '#f1efe9', U.ikea('hemnes-shelf-unit-white-30217654')], ['Gray', '#8f928e', U.ikea('hemnes-shelf-unit-gray-20349004')]],
   kind: 'shelfUnit', model: { main: 'paint' } });
-b({ id: 'walmart-towel-ladder', cat: 'towelRack', name: 'Arched bamboo blanket ladder', store: 'walmart', price: 29.99, dims: [45, 30, 150],
-  material: 'Natural bamboo',
+b({ id: 'target-blanket-ladder', cat: 'towelRack', name: 'LuxenHome 59" solid wood blanket ladder', store: 'target', price: 45, dims: [45, 30, 150],
+  material: 'Solid wood, four rungs',
   why: 'Leans on the wall, no drilling: towels in the bathroom or throws in the living room.',
-  url: U.walmart('Versatile-Arched-Bamboo-Blanket-Ladder-Natural/17262772063'), finishes: [['Natural bamboo', '#c9a878']],
+  url: U.target('luxenhome-solid-wood-natural-4-rung-59-inch-tall-blanket-ladder-brown/-/A-93849592'), finishes: [['Natural wood', '#b58a5a']],
   model: { main: 'wood' } });
-b({ id: 'walmart-luggage-rack', cat: 'luggageRack', name: 'Folding bamboo luggage rack, 2-pack', store: 'walmart', price: 39.99, dims: [66, 40, 50],
-  material: 'Bamboo, nylon straps, holds 131 lb',
-  why: 'Hotel-style comfort that guests notice and mention in reviews. Two in the pack.',
-  url: U.walmart('2-Pack-Luggage-Rack-Folding-Luggage-Rack-Guest-Room-Bamboo-Suitcase-Stand-Holds-131-lb-Luggage-Stand-Storage-Shelf-Hotel-Bedroom/13812523827'),
-  finishes: [['Natural bamboo', '#c9a878']], unit: '2-pack', model: { main: 'wood' }, tags: ['airbnb'] });
-b({ id: 'ikea-godmorgon', cat: 'vanity', name: 'GODMORGON / TOLKEN vanity with sink', store: 'ikea', price: 499, dims: [82, 49, 88],
-  material: 'Moisture-resistant foil, marble-effect countertop, DALSKÄR faucet',
-  why: 'Wall-hung, so the floor is easy to clean. Drawers are sealed against water.',
-  url: 'https://www.ikea.com/us/en/p/godmorgon-tolken-toernviken-cabinet-countertop-19-5-8-sink-high-gloss-white-marble-effect-dalskaer-faucet-s79308704/',
-  finishes: [['High-gloss white / marble effect', '#f4f3f0']], model: { main: 'lacquer' }, tags: ['upgrade'] });
-
+b({ id: 'target-luggage-rack', cat: 'luggageRack', name: 'Scarlett luggage rack (Winsome)', store: 'target', price: 45, dims: [66, 40, 50],
+  material: 'Solid wood, woven straps',
+  why: 'Hotel-style comfort that guests notice and mention in reviews.',
+  url: U.target('scarlett-luggage-rack-cappuccino-winsome/-/A-54260830'), finishes: [['Cappuccino', '#5b3d25']],
+  model: { main: 'wood' }, tags: ['airbnb'] });
 // ---- textiles ----
-b({ id: 'ikea-gurli-pillows', cat: 'pillows', name: 'GURLI cushion covers 20x20", 2', store: 'ikea', price: 11.98, unit: 'set of 2',
+b({ id: 'ikea-gurli-pillows', cat: 'pillows', name: 'GURLI cushion covers 20x20", 2', store: 'ikea', price: 9.98, unit: 'set of 2', pack: 2,
   material: '100% cotton, machine washable',
   why: 'The cheapest way to change the look of a room. Wash them after every guest.',
-  url: U.ikea('gurli-cushion-cover-white-70518607'),
-  finishes: [['White', '#f1efe9'], ['Beige', '#d3c8b4'], ['Green', '#7b8766'], ['Dark gray', '#4a4c4f']],
+  url: U.ikea('gurli-cushion-cover-unbleached-20598729'),
+  finishes: [['Unbleached', '#e9e2d3', U.ikea('gurli-cushion-cover-unbleached-20598729')], ['Dark gray', '#4a4c4f', U.ikea('gurli-cushion-cover-dark-gray-30598781')], ['Yellow', '#d9a93c', U.ikea('gurli-cushion-cover-yellow-00598787')], ['Red', '#9a3027', U.ikea('gurli-cushion-cover-red-80598769')], ['Black', '#262626', U.ikea('gurli-cushion-cover-black-50598761')]],
   model: { main: 'fabric' }, addons: [INSERTS] });
-b({ id: 'ikea-gurli-throw', cat: 'throw', name: 'GURLI throw', store: 'ikea', price: 12.99,
-  material: 'Cotton-blend, machine washable',
-  why: 'A throw over the arm makes a sofa look lived-in instantly.',
-  url: U.ikea('gurli-throw-gray-black-20204906'), finishes: [['Gray-black', '#5c5d5c']], model: { main: 'fabric' } });
+b({ id: 'ikea-vitmossa', cat: 'throw', name: 'VITMOSSA throw', store: 'ikea', price: 2.99,
+  material: 'Soft polyester fleece, machine washable',
+  why: 'A throw over the arm makes a sofa look lived-in instantly, and this one costs $3.',
+  url: U.ikea('vitmossa-throw-gray-90304889'), finishes: [['Gray', '#8f908c']], model: { main: 'knit' } });
+b({ id: 'ikea-vallkrassing', cat: 'throw', name: 'VALLKRASSING throw', store: 'ikea', price: 19.99,
+  material: 'Soft chenille-look weave',
+  why: 'A softer, nicer-looking throw in calm colours.',
+  url: U.ikea('vallkrassing-throw-off-white-20570928'),
+  finishes: [['Off-white', '#ece6da', U.ikea('vallkrassing-throw-off-white-20570928')], ['Light gray-brown', '#b5a795', U.ikea('vallkrassing-throw-light-gray-brown-70570940')], ['Gray-green', '#8c9884', U.ikea('vallkrassing-throw-gray-green-00570934')], ['Light blue-gray', '#a7b3bd', U.ikea('vallkrassing-throw-light-blue-gray-30570942')]],
+  model: { main: 'knit' } });
 b({ id: 'ikea-angslilja', cat: 'bedding', name: 'ÄNGSLILJA duvet cover and pillowcases, Full/Queen', store: 'ikea', price: 39.99,
   material: '100% pre-washed cotton, 125 thread count',
   why: 'Washed cotton looks relaxed even when it isn\'t ironed, which saves time between guests.',
   url: U.ikea('aengslilja-duvet-cover-and-pillowcase-s-white-00318541'),
   finishes: [['White', '#f5f3ef', U.ikea('aengslilja-duvet-cover-and-pillowcase-s-white-00318541')], ['Natural', '#e2d8c6', U.ikea('aengslilja-duvet-cover-and-pillowcase-s-natural-30591987')], ['Gray-green', '#9ea696', U.ikea('aengslilja-duvet-cover-and-pillowcase-s-gray-green-70585183')], ['Blue-gray', '#8c9aa8', U.ikea('aengslilja-duvet-cover-and-pillowcase-s-blue-gray-40585226')]],
   model: { main: 'linen' } });
-b({ id: 'ikea-hannalill', cat: 'curtains', name: 'HANNALILL curtains, 1 pair', store: 'ikea', price: 29.99, unit: 'pair',
-  material: 'Light-filtering cotton-blend, 57x98"',
+b({ id: 'ikea-ginstmott', cat: 'curtains', name: 'GINSTMOTT curtains, 1 pair', store: 'ikea', price: 29.99, unit: 'pair',
+  material: 'Light-filtering weave, heading tape',
   why: 'Soft daylight and privacy. Hang them just under the ceiling for taller-looking windows.',
-  url: 'https://www.ikea.com/us/en/p/hannalill-curtains-1-pair-beige-30410883/', finishes: [['Beige', '#e6dccb']],
+  url: U.ikea('ginstmott-curtains-1-pair-beige-with-heading-tape-00603005'),
+  finishes: [['Beige', '#e6dccb', U.ikea('ginstmott-curtains-1-pair-beige-with-heading-tape-00603005')], ['White', '#f5f3ef', U.ikea('ginstmott-curtains-1-pair-white-with-heading-tape-20603009')], ['Dark gray', '#55575a', U.ikea('ginstmott-curtains-1-pair-dark-gray-with-heading-tape-60603007')]],
   model: { main: 'linen' }, addons: [ROD] });
-b({ id: 'ikea-hannalena', cat: 'curtains', name: 'HANNALENA room-darkening curtains, 1 pair', store: 'ikea', price: 39.99, unit: 'pair',
-  material: 'Room-darkening polyester, 57x98"',
-  why: 'Blocks most light so guests sleep in. The #1 Airbnb bedroom complaint is light.',
-  url: U.ikea('hannalena-room-darkening-curtains-1-pair-gray-90410875'), finishes: [['Gray', '#9a9b98']],
+b({ id: 'ikea-vilborg', cat: 'curtains', name: 'VILBORG room-darkening curtains, 1 pair', store: 'ikea', price: 39.99, unit: 'pair',
+  material: 'Room-darkening weave, heading tape',
+  why: 'Blocks most light so guests sleep in. Light in the morning is a top complaint in rental reviews.',
+  url: U.ikea('vilborg-room-darkening-curtains-1-pair-beige-with-heading-tape-00297553'), finishes: [['Beige', '#d9ccb4']],
   model: { main: 'linen' }, addons: [ROD], tags: ['airbnb', 'bedroom'] });
 b({ id: 'ikea-vagsjon', cat: 'towels', name: 'VÅGSJÖN towel set', store: 'ikea', price: 25.96,
   material: '100% cotton terry, 400 g/m²',
@@ -700,6 +741,20 @@ export const PAINT_COLORS = [
   { name: 'Midnight', color: '#2d3a4f' },
   { name: 'Charcoal', color: '#434645' },
 ];
+
+// ---- live prices -----------------------------------------------------------------
+// Where the link checker read a price from the product page, use it instead of the price
+// seen during research. Colour-specific pages can have their own price.
+const live = (url) => (url ? VERIFIED.links[url]?.p ?? null : null);
+for (const p of PRODUCTS) {
+  const base = live(p.url);
+  if (base) p.price = +(base * p.pack).toFixed(2);
+  p.finishes.forEach((f) => {
+    const v = live(f.url);
+    if (v && Math.abs(v * p.pack - p.price) > 0.5) f.price = +(v * p.pack).toFixed(2);
+  });
+  p.addons.forEach((a) => { const v = live(a.url); if (v) a.price = +(v * (a.pack ?? 1)).toFixed(2); });
+}
 
 // ---- queries ---------------------------------------------------------------------
 export const getProduct = (id) => BY_ID.get(id);
