@@ -1,0 +1,40 @@
+name: Check product links
+
+on:
+  push:
+    branches: ['claude/**']
+    paths:
+      - 'roomwise/js/catalog.js'
+      - 'roomwise/tools/**'
+      - '.github/workflows/check-links.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * 1'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        working-directory: roomwise/tools
+        run: |
+          npm init -y > /dev/null
+          npm install playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Probe one page per store
+        if: hashFiles('roomwise/tools/probe-urls.txt') != ''
+        working-directory: roomwise/tools
+        run: xvfb-run -a node check-links.mjs --headed --file probe-urls.txt --json probe-report.json || true
+      - name: Check every product link
+        working-directory: roomwise/tools
+        run: xvfb-run -a node check-links.mjs --headed --json link-report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: link-report
+          path: roomwise/tools/*-report.json
