@@ -1,0 +1,15 @@
+{
+  "name": "erasmus-internship-deck",
+  "private": true,
+  "description": "Builds the Erasmus+ internship defence deck",
+  "scripts": {
+    "build": "node build.js && python3 animate.py raw.pptx ../Erasmus_Internship_Haithem_Cheniti.pptx"
+  },
+  "dependencies": {
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-icons": "^5.7.0",
+    "sharp": "^0.35.5"
+  }
+}
