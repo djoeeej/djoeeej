@@ -41,9 +41,16 @@ emb = [f for f in fonts if f[1] in ("ttf", "cff", "otf", "pfa", "pfb", "cid")]
 report(len(fonts) > 0 and len(emb) == len(fonts),
        f"all fonts embedded ({len(emb)}/{len(fonts)}): " + ", ".join(sorted({f[3].split('+')[-1] for f in fonts})))
 
-# ---- raster images (300 dpi rule)
+# ---- raster images: CMYK and at least 300 ppi where placed (rule 3.5)
 imgs = page.get_images(full=True)
-report(len(imgs) == 0, f"no raster images, fully vector ({len(imgs)} images)")
+if not imgs:
+    report(True, "no raster images, fully vector (300 ppi rule met at any size)")
+for img in imgs:
+    xref, _, w, h, bpc, cs = img[:6]
+    for r in page.get_image_rects(xref):
+        ppi = min(w / (r.width / 72), h / (r.height / 72))
+        report(cs == "DeviceCMYK", f"image {w}x{h}px is CMYK ({cs})")
+        report(ppi >= 299.5, f"image effective resolution {ppi:.1f} ppi (min 300)")
 
 # ---- colour operators in the content stream
 raw = page.read_contents().decode("latin-1")

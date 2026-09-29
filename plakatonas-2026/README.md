@@ -1,7 +1,35 @@
 # Plakatonas 2026
 
 Posters for **Plakatonas: International Social Inclusion** (Klaipėda). Deadline 9 October 2026, send to plakatonas@kvk.lt.
-Only one poster per participant may be submitted (rule 2.1), so pick one of the two designs.
+Only one poster per participant may be submitted (rule 2.1), so pick one of the three designs.
+
+## Design 3: "Even amber came from somewhere else."
+
+| File | What it is |
+|---|---|
+| `Plakatonas_2026_Amber_A2_print.pdf` | **The entry.** A2 print PDF with the photo in CMYK at 300 ppi |
+| `Plakatonas_2026_Amber_preview.jpg` | Optional on-screen preview |
+| `render_amber.py` | The 3D scene (Blender/Cycles): amber, wet sand, backwash, sea and sunset sky |
+| `make_poster_amber.py` | Converts the render to CMYK (FOGRA39) and lays out the poster |
+| `FOGRA39_TAC300.icc` | Print profile built with ArgyllCMS from the FOGRA39 characterisation data, 300% ink limit |
+
+Baltic amber, "Lithuanian gold", formed about 40 million years ago from the resin of forests in
+Fennoscandia. The Eridanos river carried it to the sea, and autumn storms still wash it onto
+Melnragė and Giruliai beaches in Klaipėda. The most Lithuanian thing there is came from somewhere
+else, and nobody asks amber where it's from.
+
+**The picture is a 3D render (CGI), not a photograph.** It was modelled and rendered in Blender:
+- 200,000 individual sand grains;
+- raw amber with a weathered crust;
+- a physically simulated sunset over the sea, since Klaipėda's beaches face west.
+
+If anyone asks, describe it as a 3D render, not as a photo you took.
+
+To rebuild it:
+
+    pip install bpy
+    python3 render_amber.py --width 5020 --aspect 1.10235 --samples 40 --strip i 8 --out strips/strip_i.png   # i = 0..7
+    python3 make_poster_amber.py --photo strips --icc FOGRA39_TAC300.icc
 
 ## Design 2: "It takes two to turn a bridge."
 
@@ -63,6 +91,6 @@ Everything on the poster is drawn from scratch, so no third-party images are use
 
 ## Before sending
 
-- [ ] Have a native speaker check the Lithuanian lines. Design 2: *Tiltą pasuka du.*, *Pasukime kartu.*, *vietinis*, *tarptautinis*. Design 1: *Pusė vėliavos nieko nesako.*, *pusė iš Klaipėdos*, *pusė iš viso pasaulio*, *raudona gija: pirmasis labas*, *Būk kita pusė.*
+- [ ] Have a native speaker check the Lithuanian lines. Design 3: *Net gintaras atkeliavo iš kitur. Niekas neklausia gintaro, iš kur jis.* Design 2: *Tiltą pasuka du.*, *Pasukime kartu.*, *vietinis*, *tarptautinis*. Design 1: *Pusė vėliavos nieko nesako.*, *pusė iš Klaipėdos*, *pusė iš viso pasaulio*, *raudona gija: pirmasis labas*, *Būk kita pusė.*
 - [ ] Check the official rules' section on AI use, and declare AI assistance if the rules ask for it
 - [ ] Put your name(s) and institution in the email (the poster itself carries no names)
