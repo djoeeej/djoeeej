@@ -104,6 +104,8 @@ report(min_tf is not None and min_tf >= 7 - 1e-6, f"smallest text {min_tf:.2f} p
 # ---- safe area: nothing but paper/rope/bleed within 5 mm of the trim edge
 safe_ok = True
 for b in page.get_text("dict")["blocks"]:
+    if b.get("type") != 0:          # text blocks only; images may bleed
+        continue
     x0, y0, x1, y1 = b["bbox"]
     if (x0 - trim.x0) / MM < 5 or (trim.x1 - x1) / MM < 5 or (y0 - trim.y0) / MM < 5 or (trim.y1 - y1) / MM < 5:
         safe_ok = False
