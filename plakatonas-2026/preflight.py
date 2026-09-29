@@ -35,6 +35,18 @@ report(abs(mw - 425) < 0.05 and abs(mh - 599) < 0.05, f"media incl. 2.5 mm bleed
 report(abs(trim.x0 / MM - 2.5) < 0.05 and abs(trim.y0 / MM - 2.5) < 0.05, "trim box centred in bleed")
 report(abs(bleed.width / MM - 425) < 0.05, "bleed box set")
 
+# ---- "For Print" PDF/X-1a with a FOGRA39 output intent
+import pikepdf
+with pikepdf.open(PDF) as pp:
+    ver = str(pp.docinfo.get("/GTS_PDFXVersion", ""))
+    oi = pp.Root.get("/OutputIntents", [])
+    cond = [str(o.get("/OutputConditionIdentifier", "")) for o in oi]
+    has_icc = all("/DestOutputProfile" in o for o in oi) and len(oi) > 0
+    trapped = str(pp.docinfo.get("/Trapped", ""))
+report(ver.startswith("PDF/X-1a"), f"PDF/X version: {ver or 'none'}")
+report("FOGRA39" in cond and has_icc, f"output intent: {', '.join(cond) or 'none'} (ICC embedded: {has_icc})")
+report(trapped in ("/False", "/True"), f"Trapped key set ({trapped})")
+
 # ---- fonts embedded
 fonts = page.get_fonts(full=True)
 emb = [f for f in fonts if f[1] in ("ttf", "cff", "otf", "pfa", "pfb", "cid")]
@@ -98,10 +110,21 @@ for b in page.get_text("dict")["blocks"]:
         print("   text too close to edge:", b["bbox"])
 report(safe_ok, "all text at least 5 mm inside the trim")
 
-# ---- total ink (rendered in CMYK)
-pix = page.get_pixmap(dpi=40, colorspace=pymupdf.csCMYK)
-a = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)[..., :4]
-tac = a.astype(int).sum(axis=2).max() / 255 * 100
+# ---- total ink, read from the file's own colour values (no colour management)
+tac = 0.0
+nums = []
+for t in toks:
+    if re.fullmatch(r"[-+]?\d*\.?\d+", t):
+        nums.append(float(t))
+        continue
+    if t in ("k", "K") and len(nums) >= 4:
+        tac = max(tac, sum(nums[-4:]) * 100)
+    nums = []
+for img in imgs:
+    pix = pymupdf.Pixmap(doc, img[0])
+    if pix.n >= 4:
+        a = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)[..., :4]
+        tac = max(tac, a.astype(int).sum(axis=2).max() / 255 * 100)
 report(tac <= 300, f"max total ink {tac:.0f}% (keep under 300%)")
 
 print("\nPREFLIGHT", "PASSED" if ok else "FAILED")

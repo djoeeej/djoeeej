@@ -17,6 +17,8 @@ from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+from pdfx import make_pdfx
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_PDF = os.path.join(HERE, "Plakatonas_2026_Takes-two_A2_print.pdf")
 OUT_JPG = os.path.join(HERE, "Plakatonas_2026_Takes-two_preview.jpg")
@@ -66,13 +68,19 @@ def text(c, s, x, y, font, pt, color=INK, anchor="l", tracking=0.0):
         x -= w / 2
     elif anchor == "r":
         x -= w
+    c.saveState()
     c.setFillColor(color)
+    if color is INK:
+        # black text overprints, so a slight plate shift can't open a white gap
+        c.setFillOverprint(True)
+        c.setOverprintMask(True)
     t = c.beginText()
     t.setTextOrigin(x, y)
     t.setFont(font, size)
     t.setCharSpace(tracking * PT)
     t.textOut(s)
     c.drawText(t)
+    c.restoreState()
     TEXT_BOXES.append((s, x, y + pdfmetrics.getDescent(font, size),
                        x + w, y + pdfmetrics.getAscent(font, size)))
     return w
@@ -355,7 +363,7 @@ def build():
     # ---- header
     hy = TRIM_H - 26
     text(c, "KLAIPĖDA  /  SWING BRIDGE  /  1855", M, hy, "Mono", 12, tracking=1.2)
-    text(c, "PLAKATONAS 2026  /  INTERNATIONAL SOCIAL INCLUSION", TRIM_W - M, hy, "Mono", 12,
+    text(c, "PLAKATONAS: INTERNATIONAL SOCIAL INCLUSION", TRIM_W - M, hy, "Mono", 12,
          anchor="r", tracking=1.2)
 
     # ---- headline
@@ -404,6 +412,7 @@ def build():
 
     c.showPage()
     c.save()
+    make_pdfx(OUT_PDF)
 
 
 def check():

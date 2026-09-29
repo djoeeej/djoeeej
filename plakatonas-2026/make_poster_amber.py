@@ -18,6 +18,8 @@ from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+from pdfx import make_pdfx
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ap = argparse.ArgumentParser()
 ap.add_argument("--photo", required=True)
@@ -68,13 +70,19 @@ def text(c, s, x, y, font, pt, color=INK, anchor="l", tracking=0.0):
         x -= w / 2
     elif anchor == "r":
         x -= w
+    c.saveState()
     c.setFillColor(color)
+    if color is INK:
+        # black text overprints, so a slight plate shift can't open a white gap
+        c.setFillOverprint(True)
+        c.setOverprintMask(True)
     t = c.beginText()
     t.setTextOrigin(x, y)
     t.setFont(font, size)
     t.setCharSpace(tracking * PT)
     t.textOut(s)
     c.drawText(t)
+    c.restoreState()
     TEXT_BOXES.append((s, x, y + pdfmetrics.getDescent(font, size),
                        x + w, y + pdfmetrics.getAscent(font, size)))
     return w
@@ -147,31 +155,35 @@ def build():
     b1 = TRIM_H - 74
     for i, line in enumerate(["Even amber", "came from", "somewhere else."]):
         text(c, line, M - 1.5, b1 - i * lead, "Display", hp, RICH, tracking=-1)
+    text(c, "Net gintaras atkeliavo iš kitur.", M, b1 - 2 * lead - 22, "SerifIt", 30)
 
     # ---- the panel
     top = PHOTO_Y - 20
     text(c, "Nobody asks amber where it’s from.", M - 1, top, "Head", 44, RICH, tracking=-0.8)
-    text(c, "Net gintaras atkeliavo iš kitur. Niekas neklausia gintaro, iš kur jis.",
-         M, top - 13, "SerifIt", 17)
+    text(c, "Local or international, you belong here too.", M - 1, top - 18, "Head", 44, AMBER,
+         tracking=-0.8)
+    text(c, "Niekas neklausia gintaro, iš kur jis. Vietinis ar tarptautinis: čia visi savi.",
+         M, top - 30, "SerifIt", 16)
 
     body = ["Baltic amber, “Lithuanian gold”, formed some 40 million years ago",
             "from the resin of forests that grew far to the north. An ancient",
             "river, the Eridanos, carried it to the sea. Every autumn, storms",
             "still wash it onto the beaches of Melnragė and Giruliai."]
     for i, line in enumerate(body):
-        text(c, line, M, top - 32 - i * 6.6, "Mono", 12.5, tracking=0.2)
+        text(c, line, M, top - 46 - i * 6.6, "Mono", 12.5, tracking=0.2)
 
-    cy = top - 32 - 4 * 6.6 - 13
+    cy = top - 46 - 3 * 6.6 - 15
     c.setStrokeColor(INK)
     c.setLineWidth(0.3)
     c.line(M, cy + 7.5, TRIM_W - M, cy + 7.5)
-    text(c, "LOCAL OR INTERNATIONAL STUDENT: MAKE SOMEONE NEW FEEL AT HOME IN KLAIPĖDA.",
+    text(c, "SAY LABAS TO SOMEONE NEW THIS WEEK. MAKE KLAIPĖDA FEEL LIKE HOME.",
          M, cy, "MonoBold", 12.5, tracking=0.6)
 
-    text(c, "PLAKATONAS 2026  /  INTERNATIONAL SOCIAL INCLUSION", TRIM_W - M, 16, "Mono", 9, anchor="r", tracking=0.8)
+    text(c, "PLAKATONAS: INTERNATIONAL SOCIAL INCLUSION", TRIM_W - M, 14, "Mono", 9, anchor="r", tracking=0.8)
 
     c.showPage()
     c.save()
+    make_pdfx(OUT_PDF)
 
 
 def check():
