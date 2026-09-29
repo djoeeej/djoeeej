@@ -1,6 +1,29 @@
-# Plakatonas 2026 — "Half a flag says nothing."
+# Plakatonas 2026
 
-Poster for **Plakatonas: International Social Inclusion** (Klaipėda). Deadline 9 October 2026, send to plakatonas@kvk.lt.
+Posters for **Plakatonas: International Social Inclusion** (Klaipėda). Deadline 9 October 2026, send to plakatonas@kvk.lt.
+Only one poster per participant may be submitted (rule 2.1), so pick one of the two designs.
+
+## Design 2: "It takes two to turn a bridge."
+
+| File | What it is |
+|---|---|
+| `Plakatonas_2026_Takes-two_A2_print.pdf` | **The entry.** A2 print PDF |
+| `Plakatonas_2026_Takes-two_preview.jpg` | Optional on-screen preview |
+| `make_poster_bridge.py` | Builds both files: `python3 make_poster_bridge.py` |
+
+Klaipėda's swing bridge (*Pasukamasis / grandinių tiltas*) was built in 1855. It is still turned by hand,
+by two people, and it is the only bridge like it in Lithuania. The poster shows two identical figures
+turning it together, one labelled *local* and one *international*. They are drawn the same on purpose,
+so you can't tell who is who. The call to action is **"Let's turn it together." / "Pasukime kartu."**
+
+Other details:
+- Old Town half-timbered houses in the background.
+- The chains that gave the bridge its old name, "Chain Bridge".
+- The riveted iron deck.
+
+`python3 preflight.py Plakatonas_2026_Takes-two_A2_print.pdf` passes every check listed below.
+
+## Design 1: "Half a flag says nothing."
 
 | File | What it is |
 |---|---|
@@ -40,6 +63,6 @@ Everything on the poster is drawn from scratch, so no third-party images are use
 
 ## Before sending
 
-- [ ] Have a native speaker check the Lithuanian lines: *Pusė vėliavos nieko nesako.*, *pusė iš Klaipėdos*, *pusė iš viso pasaulio*, *raudona gija: pirmasis labas*, *Būk kita pusė.*
+- [ ] Have a native speaker check the Lithuanian lines. Design 2: *Tiltą pasuka du.*, *Pasukime kartu.*, *vietinis*, *tarptautinis*. Design 1: *Pusė vėliavos nieko nesako.*, *pusė iš Klaipėdos*, *pusė iš viso pasaulio*, *raudona gija: pirmasis labas*, *Būk kita pusė.*
 - [ ] Check the official rules' section on AI use, and declare AI assistance if the rules ask for it
 - [ ] Put your name(s) and institution in the email (the poster itself carries no names)
