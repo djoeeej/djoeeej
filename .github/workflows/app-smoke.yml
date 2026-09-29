@@ -1,0 +1,38 @@
+name: App smoke test
+
+on:
+  push:
+    branches: ['claude/**']
+    paths:
+      - 'roomwise/**'
+      - '.github/workflows/app-smoke.yml'
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright (Chromium and WebKit)
+        working-directory: roomwise/tools
+        run: |
+          npm init -y > /dev/null
+          npm install playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Serve the app
+        working-directory: roomwise
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 > /dev/null 2>&1 &
+          sleep 2
+      - name: Walk through the app in Chrome, Android Chrome and iPhone Safari (WebKit)
+        working-directory: roomwise/tools
+        run: xvfb-run -a node smoke.mjs http://127.0.0.1:8000/index.html
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-screenshots
+          path: roomwise/tools/shots/
