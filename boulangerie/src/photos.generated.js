@@ -5,6 +5,7 @@ const PHOTO_LOCAL = {
     "large": "images/croissant-1200.webp",
     "credit": {
       "author": "Herry Wibisono (herryway)",
+      "site": "Wikimedia Commons",
       "license": "CC0",
       "url": "https://commons.wikimedia.org/wiki/File:Croissants_au_beurre_(18953292873).jpg"
     },
@@ -15,6 +16,7 @@ const PHOTO_LOCAL = {
     "large": "images/pain-au-chocolat-1200.webp",
     "credit": {
       "author": "Luc Viatour",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Pain_au_chocolat_Luc_Viatour.jpg"
     },
@@ -25,6 +27,7 @@ const PHOTO_LOCAL = {
     "large": "images/chausson-aux-pommes-1200.webp",
     "credit": {
       "author": "Frédéric BISSON",
+      "site": "Wikimedia Commons",
       "license": "CC BY 2.0",
       "url": "https://commons.wikimedia.org/wiki/File:Chaussons_aux_pommes.jpg"
     },
@@ -35,6 +38,7 @@ const PHOTO_LOCAL = {
     "large": "images/brioche-1200.webp",
     "credit": {
       "author": "Dedda71",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Sicilian_brioche.jpg"
     },
@@ -45,6 +49,7 @@ const PHOTO_LOCAL = {
     "large": "images/eclair-1200.webp",
     "credit": {
       "author": "Thomon",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 4.0",
       "url": "https://commons.wikimedia.org/wiki/File:Deux_%C3%A9clairs_au_chocolat.jpg"
     },
@@ -55,6 +60,7 @@ const PHOTO_LOCAL = {
     "large": "images/tarte-aux-fraises-1200.webp",
     "credit": {
       "author": "Karen Fasimpaur",
+      "site": "Wikimedia Commons",
       "license": "CC BY 2.0",
       "url": "https://commons.wikimedia.org/wiki/File:Strawberry_pie_by_karenandbrademerson.jpg"
     },
@@ -65,6 +71,7 @@ const PHOTO_LOCAL = {
     "large": "images/mille-feuille-1200.webp",
     "credit": {
       "author": "Georges Seguin (Okki)",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Mille-feuille_20100916.jpg"
     },
@@ -75,6 +82,7 @@ const PHOTO_LOCAL = {
     "large": "images/paris-brest-1200.webp",
     "credit": {
       "author": "Deror_avi",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 4.0",
       "url": "https://commons.wikimedia.org/wiki/File:Paris-Brest_IMG_0875.JPG"
     },
@@ -85,6 +93,7 @@ const PHOTO_LOCAL = {
     "large": "images/tarte-au-citron-1200.webp",
     "credit": {
       "author": "Arnaud 25",
+      "site": "Wikimedia Commons",
       "license": "CC0",
       "url": "https://commons.wikimedia.org/wiki/File:Tarte_au_citron_meringu%C3%A9e_02.jpg"
     },
@@ -95,6 +104,7 @@ const PHOTO_LOCAL = {
     "large": "images/macarons-1200.webp",
     "credit": {
       "author": "Nicolas Halftermeyer",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Macarons,_French_made_mini_cakes.JPG"
     },
@@ -105,6 +115,7 @@ const PHOTO_LOCAL = {
     "large": "images/baguette-1200.webp",
     "credit": {
       "author": "Benoît Prieur",
+      "site": "Wikimedia Commons",
       "license": "CC0",
       "url": "https://commons.wikimedia.org/wiki/File:Boulangerie_de_Saint-Maurice-de-Beynost_(Ain,_France)_-_des_baguettes_de_pain.JPG"
     },
@@ -115,6 +126,7 @@ const PHOTO_LOCAL = {
     "large": "images/pain-de-campagne-1200.webp",
     "credit": {
       "author": "Zantastik",
+      "site": "Wikimedia Commons",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Boule_de_campagne_01.jpg"
     },
