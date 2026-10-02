@@ -622,11 +622,11 @@ const PHOTOS = {
   'chausson-aux-pommes': { commons: ['Chaussons aux pommes.jpg', 'Chausson aux pommes.jpg'] },
   brioche: { commons: ['Sicilian brioche.jpg', 'Brioche.jpg', 'Brioche Nanterre (mars 2021).jpg'] },
   eclair: { commons: ['Deux éclairs au chocolat.jpg', 'Éclairs au chocolat (13190996733).jpg'] },
-  'tarte-aux-fraises': { commons: ['Strawberry pie by karenandbrademerson.jpg', 'Tarte aux fraises.jpg'] },
+  'tarte-aux-fraises': { url: 'https://images.rawpixel.com/editor_1024/cHJpdmF0ZS9zdGF0aWMvaW1hZ2Uvd2Vic2l0ZS8yMDIyLTA0L2xyL2Zyc3RyYXdiZXJyeV90YXJ0X2Nha2Vfc3VpdGVzLWltYWdlLWt5YmNtaWhsLmpwZw.jpg', author: 'rawpixel', site: 'Rawpixel', license: 'CC0', page: 'https://www.rawpixel.com/image/6031774/photo-image-public-domain-fruit-food' },
   'mille-feuille': { commons: ['Mille-feuille 20100916.jpg', 'Mille-feuille 02.jpg'] },
   'paris-brest': { commons: ['Paris-Brest IMG 0875.JPG', 'Paris-brest 1.jpg'] },
   'tarte-au-citron': { commons: ['Tarte au citron meringuée 02.jpg', 'Tarte au citron meringuée sur le comptoir du restaurant La Cocagne (Lyon).jpg', 'Tarte au citron meringuée crème chantilly.jpg'] },
   macarons: { commons: ['Macarons, French made mini cakes.JPG', 'French macaroons.jpg'] },
-  baguette: { commons: ['Boulangerie de Saint-Maurice-de-Beynost (Ain, France) - des baguettes de pain.JPG', 'Baguette de pain, WikiCheese Lausanne.jpg', 'Baguette.jpg'] },
+  baguette: { url: 'https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvZnJob2FsdXUwMDAwMS1pbWFnZS1rd3Z3d3hicS5qcGc.jpg', author: 'rawpixel', site: 'Rawpixel', license: 'CC0', page: 'https://www.rawpixel.com/image/5917689/image-public-domain-food-free' },
   'pain-de-campagne': { commons: ['Boule de campagne 01.jpg', 'Miche de pain.JPG'] },
 };
