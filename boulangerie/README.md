@@ -6,20 +6,16 @@ Site vitrine de la Boulangerie D.O (rue Gambetta, 60100 Creil) : une vitrine 3D 
 
 Tout est dans le bloc `CONFIG` en haut de `src/data.js` : numéro de rue, téléphone, horaires (un par jour, du lundi au dimanche), lien Instagram. Un champ laissé vide s’affiche « À compléter ».
 
-## Ajouter les photos
+## Photos
 
-Pour chaque produit, placez deux fichiers dans `images/` :
+Par défaut, chaque produit affiche une vraie photo sous licence libre issue de **Wikimedia Commons**. Le navigateur du visiteur demande la photo à Commons avec son auteur et sa licence, qui sont crédités sous la photo et dans le pied de page (« Crédits photo »). La liste des fichiers est dans `PHOTOS` (`src/data.js`) ; pour chaque produit, plusieurs noms de fichiers sont indiqués et le premier qui existe est utilisé.
 
-- `<id>-800.webp` (cartes et vitrine 3D)
-- `<id>-1400.webp` (page produit)
+Pour mettre **vos propres photos** (recommandé : ce sont vos produits) :
 
-au format portrait 4:5, puis ajoutez une entrée dans `PHOTOS` (`src/data.js`) :
+1. placez le fichier dans `images/`, par exemple `images/croissant.webp` (format portrait 4:5 idéal) ;
+2. dans `PHOTOS`, remplacez la ligne du produit par `croissant: { local: 'images/croissant.webp' },`.
 
-```js
-croissant: { focus: [0.5, 0.5], alt: { fr: 'Croissants dorés', en: 'Golden croissants' }, credit: null },
-```
-
-Les identifiants sont ceux de `PRODUCTS` (`croissant`, `chausson-aux-pommes`, `eclair`…). `credit` est à remplir pour une photo sous licence (auteur, source, licence, lien) ; laissez `null` pour vos propres photos.
+Vos propres photos n’ont pas besoin de crédit. Les identifiants sont ceux de `PRODUCTS` (`croissant`, `chausson-aux-pommes`, `eclair`…).
 
 ## Construire et publier
 
@@ -27,4 +23,4 @@ Les identifiants sont ceux de `PRODUCTS` (`croissant`, `chausson-aux-pommes`, `e
 python3 build.py
 ```
 
-regroupe `src/` dans un seul `index.html`. Publiez ensuite `index.html` et le dossier `images/` sur n’importe quel hébergement statique (Netlify, GitHub Pages, OVH…). Three.js et les polices sont chargés depuis jsDelivr et Google Fonts.
+regroupe `src/` dans un seul `index.html`. Publiez ensuite `index.html` (et le dossier `images/` si vous avez ajouté vos photos) sur n’importe quel hébergement statique (Netlify, GitHub Pages, OVH…). Three.js, les polices et les photos Commons sont chargés depuis jsDelivr, Google Fonts et Wikimedia.

@@ -6,7 +6,9 @@ const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const byId = (id) => document.getElementById(id);
 const PRODUCT = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const photoSrc = (id, size) => (PHOTOS[id] ? `images/${id}-${size}.webp` : null);
+// Photo URLs and credits, filled in by loadPhotos(): id → { small, large, credit }
+const PHOTO = {};
+const photoSrc = (id, size) => PHOTO[id]?.[size >= 1000 ? 'large' : 'small'] ?? null;
 
 // ───────── Language
 let lang = (() => {
@@ -20,7 +22,7 @@ let lang = (() => {
 })();
 const t = (k) => UI[lang][k];
 const locale = () => (lang === 'fr' ? 'fr-FR' : 'en-GB');
-const photoAlt = (id) => PHOTOS[id]?.alt?.[lang] ?? PRODUCT[id].name;
+const photoAlt = (id) => PRODUCT[id].name;
 
 // Keep numbers and their units together on one line.
 function nb(s) {
@@ -84,10 +86,8 @@ function applyLang() {
   if (D.open) { renderPaper(D.id, true); setStagePhoto(D.id); updateStageLabels(); }
 }
 
-function photoMarkup(id, size, cls) {
-  const src = photoSrc(id, size);
-  if (!src) return `<span class="${cls} is-empty"><span class="empty-name">${esc(PRODUCT[id].name)}</span><span class="glare"></span></span>`;
-  return `<span class="${cls}"><img src="${src}" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="glare"></span></span>`;
+function photoMarkup(id, cls) {
+  return `<span class="${cls} is-empty"><span class="empty-name">${esc(PRODUCT[id].name)}</span><span class="glare"></span></span>`;
 }
 
 function renderShelves() {
@@ -107,7 +107,7 @@ function renderShelves() {
       b.type = 'button';
       b.className = 'item';
       b.dataset.id = p.id;
-      b.innerHTML = `${photoMarkup(p.id, 800, 'item-photo')}
+      b.innerHTML = `${photoMarkup(p.id, 'item-photo')}
         <span class="tag"><span class="tag-name">${esc(p.name)}</span><span class="tag-short"></span></span>`;
       row.appendChild(b);
     }
@@ -116,11 +116,6 @@ function renderShelves() {
   root.querySelectorAll('.item').forEach((item) => {
     const id = item.dataset.id;
     const photo = item.querySelector('.item-photo');
-    item.querySelector('img')?.addEventListener('error', () => {
-      photo.classList.add('is-empty');
-      photo.querySelector('img').remove();
-      photo.insertAdjacentHTML('afterbegin', `<span class="empty-name">${esc(PRODUCT[id].name)}</span>`);
-    });
     item.addEventListener('click', () => openDetail(id, { fromEl: photo, returnFocus: item }));
     if (!REDUCED) bindTilt(item, photo, 9);
   });
@@ -190,15 +185,15 @@ function renderVisit() {
   byId('footerLinks').innerHTML = CONFIG.instagram ? `<a href="${esc(CONFIG.instagram)}" target="_blank" rel="noopener">Instagram</a>` : '';
 }
 
-const creditText = (c) => `${c.author}${c.source ? `, ${c.source}` : ''}${c.license ? ` (${c.license})` : ''}`;
+const creditText = (c) => `${c.author}, Wikimedia Commons${c.license ? ` (${c.license})` : ''}`;
 
 function renderCredits() {
-  const list = PRODUCTS.filter((p) => PHOTOS[p.id]?.credit);
+  const list = PRODUCTS.filter((p) => PHOTO[p.id]?.credit);
   const box = byId('credits');
   if (!list.length) { box.hidden = true; return; }
   box.hidden = false;
   box.innerHTML = `<summary>${esc(t('credits'))}</summary><p>${esc(t('creditsNote'))}</p><ul>${list.map((p) => {
-    const c = PHOTOS[p.id].credit;
+    const c = PHOTO[p.id].credit;
     return `<li>${esc(p.name)} : <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(creditText(c))}</a></li>`;
   }).join('')}</ul>`;
 }
@@ -221,6 +216,75 @@ function injectStructuredData() {
   document.head.appendChild(s);
 }
 
+// ───────── Photos from Wikimedia Commons (or local files)
+const stripHtml = (html) => {
+  const text = new DOMParser().parseFromString(html || '', 'text/html').body.textContent.replace(/\s+/g, ' ').trim();
+  return text.length > 80 ? `${text.slice(0, 77)}…` : text;
+};
+
+async function loadPhotos() {
+  const wanted = [];
+  for (const [id, entry] of Object.entries(PHOTOS)) {
+    if (entry.local) PHOTO[id] = { small: entry.local, large: entry.local, credit: entry.credit ?? null };
+    else if (entry.commons) wanted.push(...entry.commons.map((f) => `File:${f}`));
+  }
+  if (!wanted.length) return;
+  const query = (width) => fetch('https://commons.wikimedia.org/w/api.php?' + new URLSearchParams({
+    action: 'query', format: 'json', formatversion: '2', origin: '*',
+    prop: 'imageinfo', iiprop: 'url|extmetadata', iiextmetadatafilter: 'Artist|LicenseShortName',
+    iiurlwidth: String(width), titles: [...new Set(wanted)].join('|'),
+  })).then((r) => r.json());
+  let small, large;
+  try {
+    [small, large] = await Promise.all([query(960), query(1280)]);
+  } catch (e) {
+    return; // offline or blocked: the named placeholders stay
+  }
+  const index = (res) => {
+    const pages = new Map((res.query?.pages || []).map((pg) => [pg.title, pg]));
+    for (const n of res.query?.normalized || []) if (pages.has(n.to)) pages.set(n.from, pages.get(n.to));
+    return pages;
+  };
+  const S = index(small), L = index(large);
+  for (const [id, entry] of Object.entries(PHOTOS)) {
+    if (!entry.commons) continue;
+    for (const f of entry.commons) {
+      const ps = S.get(`File:${f}`), pl = L.get(`File:${f}`);
+      const is = ps?.imageinfo?.[0], il = pl?.imageinfo?.[0];
+      if (!is || ps.missing) continue;
+      const meta = is.extmetadata || {};
+      PHOTO[id] = {
+        small: is.thumburl || is.url,
+        large: il?.thumburl || il?.url || is.thumburl || is.url,
+        credit: { author: stripHtml(meta.Artist?.value) || 'Wikimedia Commons', license: meta.LicenseShortName?.value || '', url: is.descriptionurl },
+      };
+      break;
+    }
+  }
+}
+
+// Put the loaded photos into the menu, the 3D ring and the open product page.
+function applyPhotos() {
+  document.querySelectorAll('.item').forEach((item) => {
+    const id = item.dataset.id, src = photoSrc(id, 800);
+    const box = item.querySelector('.item-photo');
+    if (!src || box.querySelector('img')) return;
+    const img = new Image();
+    img.alt = photoAlt(id);
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    img.width = 800; img.height = 1000;
+    img.addEventListener('load', () => box.classList.remove('is-empty'));
+    img.addEventListener('error', () => img.remove());
+    img.src = src;
+    box.prepend(img);
+  });
+  if (carousel) PRODUCTS.forEach((p, i) => { const src = photoSrc(p.id, 800); if (src) carousel.setPhoto(i, src); });
+  updateHeroCaption();
+  renderCredits();
+  if (D.open) setStagePhoto(D.id);
+}
+
 // ───────── Home page 3D photo ring
 let carousel = null, heroFront = 0;
 function updateHeroCaption() {
@@ -237,7 +301,7 @@ function heroOpenRect() {
 }
 function initHero() {
   const host = byId('heroView');
-  carousel = makeCarousel(host, PRODUCTS.map((p) => ({ name: p.name, src: photoSrc(p.id, 800), focus: PHOTOS[p.id]?.focus })), {
+  carousel = makeCarousel(host, PRODUCTS.map((p) => ({ name: p.name, src: photoSrc(p.id, 800) })), {
     reduced: REDUCED,
     onFront: (i) => { heroFront = i; updateHeroCaption(); },
     onOpen: (i) => openDetail(PRODUCTS[i].id, { fromRect: heroOpenRect(), returnFocus: byId('heroOpen') }),
@@ -273,7 +337,7 @@ function setStagePhoto(id) {
     img.removeAttribute('src');
     img.hidden = true;
   }
-  const c = PHOTOS[id]?.credit;
+  const c = PHOTO[id]?.credit;
   byId('photoCredit').innerHTML = c ? `${esc(t('photoBy'))} : <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(creditText(c))}</a>` : '';
 }
 byId('photoImg').addEventListener('error', () => { photoCard.classList.add('is-empty'); byId('photoImg').hidden = true; });
@@ -479,6 +543,7 @@ renderShelves();
 applyLang();
 injectStructuredData();
 initHero();
+loadPhotos().then(applyPhotos);
 
 const nav = byId('nav');
 const onScroll = () => nav.classList.toggle('is-solid', scrollY > 40);

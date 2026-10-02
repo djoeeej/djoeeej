@@ -167,6 +167,9 @@ p { margin: 0; }
 }
 .is-tilting .glare { opacity: 1; }
 .is-empty { display: grid; place-items: center; background: radial-gradient(ellipse at 50% 65%, #b8692a, #5a2a10 60%, #24170f); }
+.item-photo img { position: absolute; inset: 0; opacity: 1; transition: opacity 0.5s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.item-photo.is-empty img { opacity: 0; }
+.item-photo:not(.is-empty) .empty-name { display: none; }
 .empty-name { font-family: var(--display); font-size: 1.6rem; line-height: 1.1; text-align: center; color: var(--farine); padding: 1.25rem; }
 
 .tag {

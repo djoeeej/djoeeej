@@ -115,19 +115,21 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
     holder.add(card, mirror);
     ring.add(holder);
     card.userData.index = i;
-    if (item.src) {
-      loader.load(item.src, (tex) => {
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-        coverCrop(tex, ASPECT, item.focus);
-        mat.map.dispose();
-        mat.map = tex; refl.map = tex;
-        mat.needsUpdate = true; refl.needsUpdate = true;
-        dirty = true;
-      });
-    }
     return { card, mat, refl };
   });
+
+  function setPhoto(i, src, focus) {
+    const { mat, refl } = cards[i];
+    loader.load(src, (tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      coverCrop(tex, ASPECT, focus);
+      mat.map.dispose();
+      mat.map = tex; refl.map = tex;
+      mat.needsUpdate = true; refl.needsUpdate = true;
+    });
+  }
+  items.forEach((item, i) => { if (item.src) setPhoto(i, item.src, item.focus); });
 
   // Warm pool of light on the counter under the front photo
   const glow = new THREE.Mesh(
@@ -166,7 +168,7 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
 
   // State
   let angle = 0, target = 0, velocity = 0, dragging = false, moved = 0, lastX = 0, lastT = 0;
-  let front = -1, visible = true, dirty = true, hovering = false, autoTimer = 0, last = performance.now();
+  let front = -1, visible = true, hovering = false, autoTimer = 0, last = performance.now();
   const ndc = new THREE.Vector2(), ray = new THREE.Raycaster();
   const frontIndex = () => (((Math.round(-target / STEP) % N) + N) % N);
 
@@ -180,7 +182,6 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
     camera.position.set(0, 0.95, R + dist);
     camera.lookAt(0, 0.82, R - 0.4);
     camera.updateProjectionMatrix();
-    dirty = true;
   }
   new ResizeObserver(resize).observe(host);
   resize();
@@ -190,7 +191,6 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
     let d = ((i - cur) % N + N) % N;
     if (d > N / 2) d -= N;
     target -= d * STEP;
-    dirty = true;
   }
 
   function pick(e) {
@@ -217,7 +217,6 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
     angle += da; target = angle;
     velocity = da / Math.max(1, now - lastT) * 16;
     lastX = e.clientX; lastT = now;
-    dirty = true;
   });
   const end = (e) => {
     if (!dragging) return;
@@ -229,13 +228,12 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
       return;
     }
     target = Math.round((angle + velocity * 10) / STEP) * STEP;
-    dirty = true;
   };
   canvas.addEventListener('pointerup', end);
   canvas.addEventListener('pointercancel', end);
   host.addEventListener('pointerenter', () => { hovering = true; });
   host.addEventListener('pointerleave', () => { hovering = false; });
-  new IntersectionObserver(([en]) => { visible = en.isIntersecting; dirty = true; }).observe(host);
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(host);
 
   function tick(now) {
     requestAnimationFrame(tick);
@@ -268,12 +266,12 @@ function makeCarousel(host, items, { onFront, onOpen, reduced }) {
     const f = frontIndex();
     if (f !== front) { front = f; onFront(f); }
     renderer.render(scene, camera);
-    dirty = false;
   }
   requestAnimationFrame(tick);
 
   return {
     goTo,
+    setPhoto,
     next: () => { target -= STEP; autoTimer = 0; },
     prev: () => { target += STEP; autoTimer = 0; },
     setNames(names) {
