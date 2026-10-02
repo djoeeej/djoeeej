@@ -44,7 +44,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "Photos already up to date."
           else
-            git commit -m "Update bakery photos from Wikimedia Commons"
+            git commit -m "Update bakery photos"
             git pull --rebase origin "${GITHUB_REF_NAME}"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi

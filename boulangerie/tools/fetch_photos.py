@@ -34,28 +34,6 @@ def get(url):
         return r.read()
 
 
-def get_largest(url):
-    """Rawpixel's free links are 1024 px wide; try its larger sizes first."""
-    tries = [url]
-    if "images.rawpixel.com/editor_1024/" in url:
-        tries = [url.replace("editor_1024", s) for s in ("editor_2048", "image_1300", "editor_1600")] + [url]
-    best = None
-    for u in tries:
-        try:
-            data = get(u)
-            im = Image.open(io.BytesIO(data))
-            if best is None or im.width > best[0]:
-                best = (im.width, data)
-            if im.width >= 1600:
-                break
-        except Exception:  # noqa: BLE001
-            continue
-    if best is None:
-        raise RuntimeError(f"could not download {url}")
-    print(f"    {url[:60]}… → {best[0]} px wide")
-    return best[1]
-
-
 def parse_photos():
     """Return {id: [Commons file names]} and {id: {url, author, license, page}} for direct photos."""
     src = DATA.read_text(encoding="utf-8")
@@ -160,7 +138,7 @@ def main():
     result, failed = {}, []
     for pid, d in direct.items():
         try:
-            im = Image.open(io.BytesIO(get_largest(d["url"])))
+            im = Image.open(io.BytesIO(get(d["url"])))
             credit = {"author": d.get("author", ""), "site": d.get("site", ""), "license": d.get("license", ""), "url": d.get("page") or d["url"]}
             result[pid] = save(pid, im, credit, d["url"])
             print(f"ok {pid}: {d['url']} ({credit['author']}, {credit['license']})")

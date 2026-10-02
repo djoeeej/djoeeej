@@ -627,6 +627,6 @@ const PHOTOS = {
   'paris-brest': { commons: ['Paris-Brest IMG 0875.JPG', 'Paris-brest 1.jpg'] },
   'tarte-au-citron': { commons: ['Tarte au citron meringuée 02.jpg', 'Tarte au citron meringuée sur le comptoir du restaurant La Cocagne (Lyon).jpg', 'Tarte au citron meringuée crème chantilly.jpg'] },
   macarons: { commons: ['Macarons, French made mini cakes.JPG', 'French macaroons.jpg'] },
-  baguette: { url: 'https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvZnJob2FsdXUwMDAwMS1pbWFnZS1rd3Z3d3hicS5qcGc.jpg', author: 'rawpixel', site: 'Rawpixel', license: 'CC0', page: 'https://www.rawpixel.com/image/5917689/image-public-domain-food-free' },
+  baguette: { url: 'https://cdn.stocksnap.io/img-thumbs/960w/9J9OUZYDZ3.jpg', author: 'Krzysztof%20Puszczy%u0144ski', site: 'StockSnap', license: 'CC0', page: 'https://stocksnap.io/photo/bread-baguette-9J9OUZYDZ3' },
   'pain-de-campagne': { commons: ['Boule de campagne 01.jpg', 'Miche de pain.JPG'] },
 };
