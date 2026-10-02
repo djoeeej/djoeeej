@@ -15,12 +15,12 @@ const PHOTO_LOCAL = {
     "small": "images/baguette-640.webp",
     "large": "images/baguette-1200.webp",
     "credit": {
-      "author": "Krzysztof%20Puszczy%u0144ski",
-      "site": "StockSnap",
+      "author": "Jackson Monichan",
+      "site": "WordPress Photo Directory",
       "license": "CC0",
-      "url": "https://stocksnap.io/photo/bread-baguette-9J9OUZYDZ3"
+      "url": "https://wordpress.org/photos/photo/7406a28fc9/"
     },
-    "source": "https://cdn.stocksnap.io/img-thumbs/960w/9J9OUZYDZ3.jpg"
+    "source": "https://pd.w.org/2026/06/7406a28fc94bcb986.38718954-2048x1365.jpg"
   },
   "croissant": {
     "small": "images/croissant-640.webp",
