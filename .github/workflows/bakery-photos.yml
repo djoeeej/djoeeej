@@ -8,6 +8,8 @@ on:
     paths:
       - 'boulangerie/src/data.js'
       - 'boulangerie/tools/fetch_photos.py'
+      - 'boulangerie/tools/search_photos.py'
+      - 'boulangerie/tools/photo-search.json'
       - '.github/workflows/bakery-photos.yml'
   workflow_dispatch:
 
@@ -27,6 +29,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pillow
+      - name: Search Commons for candidate photos
+        run: cd boulangerie/tools && python3 search_photos.py
       - name: Download and crop photos
         run: python3 boulangerie/tools/fetch_photos.py
       - name: Rebuild the site
@@ -36,9 +40,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add boulangerie/images boulangerie/src/photos.generated.js boulangerie/index.html
+          if [ -d boulangerie/tools/preview ]; then git add boulangerie/tools/preview; fi
           if git diff --cached --quiet; then
             echo "Photos already up to date."
           else
             git commit -m "Update bakery photos from Wikimedia Commons"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi

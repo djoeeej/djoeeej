@@ -65,10 +65,18 @@ def strip_html(value):
     return text[:77] + "…" if len(text) > 80 else text
 
 
+def clean_author(text, uploader=None):
+    """Turn Commons' fallback wording into a plain name; use the uploader if no author is given."""
+    m = re.match(r"No machine-readable author provided\.\s*(.+?) assumed", text or "")
+    if m:
+        return m.group(1)
+    return text or (uploader or "")
+
+
 def commons_info(titles):
     params = {
         "action": "query", "format": "json", "formatversion": "2",
-        "prop": "imageinfo", "iiprop": "url|extmetadata",
+        "prop": "imageinfo", "iiprop": "url|extmetadata|user",
         "iiextmetadatafilter": "Artist|LicenseShortName", "iiurlwidth": "1600",
         "titles": "|".join(titles),
     }
@@ -130,7 +138,7 @@ def main():
                 entry[size] = f"images/{path.name}"
             meta = info.get("extmetadata", {})
             entry["credit"] = {
-                "author": strip_html(meta.get("Artist", {}).get("value")) or "Wikimedia Commons",
+                "author": clean_author(strip_html(meta.get("Artist", {}).get("value")), info.get("user")) or "Wikimedia Commons",
                 "license": meta.get("LicenseShortName", {}).get("value", ""),
                 "url": info["descriptionurl"],
             }

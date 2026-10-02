@@ -2207,6 +2207,9 @@ const stripHtml = (html) => {
   return text.length > 80 ? `${text.slice(0, 77)}…` : text;
 };
 
+// Commons' fallback wording becomes a plain name; with no author, credit the uploader.
+const cleanAuthor = (text, uploader) => (text || '').match(/^No machine-readable author provided\.\s*(.+?) assumed/)?.[1] || text || uploader || 'Wikimedia Commons';
+
 async function loadPhotos() {
   const wanted = [];
   for (const [id, entry] of Object.entries(PHOTOS)) {
@@ -2218,7 +2221,7 @@ async function loadPhotos() {
   if (!wanted.length) return;
   const query = (width) => fetch('https://commons.wikimedia.org/w/api.php?' + new URLSearchParams({
     action: 'query', format: 'json', formatversion: '2', origin: '*',
-    prop: 'imageinfo', iiprop: 'url|extmetadata', iiextmetadatafilter: 'Artist|LicenseShortName',
+    prop: 'imageinfo', iiprop: 'url|extmetadata|user', iiextmetadatafilter: 'Artist|LicenseShortName',
     iiurlwidth: String(width), titles: [...new Set(wanted)].join('|'),
   })).then((r) => r.json());
   let small, large;
@@ -2243,7 +2246,7 @@ async function loadPhotos() {
       PHOTO[id] = {
         small: is.thumburl || is.url,
         large: il?.thumburl || il?.url || is.thumburl || is.url,
-        credit: { author: stripHtml(meta.Artist?.value) || 'Wikimedia Commons', license: meta.LicenseShortName?.value || '', url: is.descriptionurl },
+        credit: { author: cleanAuthor(stripHtml(meta.Artist?.value), is.user), license: meta.LicenseShortName?.value || '', url: is.descriptionurl },
       };
       break;
     }
