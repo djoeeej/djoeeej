@@ -15,12 +15,12 @@ const PHOTO_LOCAL = {
     "small": "images/baguette-640.webp",
     "large": "images/baguette-1200.webp",
     "credit": {
-      "author": "rawpixel",
-      "site": "Rawpixel",
+      "author": "Krzysztof%20Puszczy%u0144ski",
+      "site": "StockSnap",
       "license": "CC0",
-      "url": "https://www.rawpixel.com/image/5917689/image-public-domain-food-free"
+      "url": "https://stocksnap.io/photo/bread-baguette-9J9OUZYDZ3"
     },
-    "source": "https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvZnJob2FsdXUwMDAwMS1pbWFnZS1rd3Z3d3hicS5qcGc.jpg"
+    "source": "https://cdn.stocksnap.io/img-thumbs/960w/9J9OUZYDZ3.jpg"
   },
   "croissant": {
     "small": "images/croissant-640.webp",
