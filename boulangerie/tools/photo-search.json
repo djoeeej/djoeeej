@@ -1,0 +1,14 @@
+{
+  "croissant": {"q": "croissant butter", "source": "openverse"},
+  "pain-au-chocolat": {"q": "pain au chocolat", "source": "openverse"},
+  "chausson-aux-pommes": {"q": "apple turnover", "source": "openverse"},
+  "brioche": {"q": "brioche", "source": "openverse"},
+  "eclair": {"q": "chocolate eclair", "source": "openverse"},
+  "tarte-aux-fraises": {"q": "strawberry tart", "source": "openverse"},
+  "mille-feuille": {"q": "mille-feuille", "source": "openverse"},
+  "paris-brest": {"q": "paris-brest", "source": "openverse"},
+  "tarte-au-citron": {"q": "lemon meringue tart", "source": "openverse"},
+  "macarons": {"q": "macarons", "source": "openverse"},
+  "baguette": {"q": "baguette bread", "source": "openverse"},
+  "pain-de-campagne": {"q": "sourdough boule", "source": "openverse"}
+}

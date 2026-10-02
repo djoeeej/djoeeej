@@ -2,7 +2,10 @@
 """Search Wikimedia Commons for candidate photos and make one numbered contact
 sheet per product in tools/preview/, with the file names, authors and
 licences in tools/preview/candidates.json. Used to choose photos; the queries
-come from tools/photo-search.json, e.g. {"brioche": "brioche à tête"}.
+come from tools/photo-search.json, e.g. {"brioche": "brioche à tête"} to
+search Wikimedia Commons, or {"brioche": {"q": "brioche", "source": "openverse"}}
+to search Openverse (openly licensed photos from Flickr and others; only
+licences that allow commercial use).
 Runs in GitHub Actions; needs network access and Pillow.
 """
 import io
@@ -47,6 +50,26 @@ def search(query, limit=16):
     return out
 
 
+OPENVERSE = "https://api.openverse.org/v1/images/"
+
+
+def search_openverse(query, limit=16):
+    params = {"q": query, "license_type": "commercial", "page_size": str(limit), "mature": "false", "aspect_ratio": "", "size": "large"}
+    params = {k: v for k, v in params.items() if v}
+    data = json.loads(get(OPENVERSE + "?" + urllib.parse.urlencode(params)))
+    out = []
+    for r in data.get("results", []):
+        lic = r.get("license", "")
+        name = "CC0" if lic == "cc0" else "Public domain" if lic == "pdm" else f"CC {lic.upper()} {r.get('license_version', '')}".strip()
+        out.append({
+            "file": r.get("title") or r["id"], "url": r["url"], "license": name,
+            "author": r.get("creator") or r.get("source", ""), "page": r.get("foreign_landing_url") or r.get("detail_url"),
+            "source": r.get("source", ""), "size": f"{r.get('width')}×{r.get('height')}",
+            "thumb": r.get("thumbnail") or r["url"],
+        })
+    return out
+
+
 def sheet(pid, cands):
     w, h, pad, cols = 300, 300, 34, 4
     rows = max(1, (len(cands) + cols - 1) // cols)
@@ -60,7 +83,7 @@ def sheet(pid, cands):
         except Exception as e:  # noqa: BLE001
             d.text((x + 10, y + 10), f"error: {e}"[:40], fill=(255, 120, 120))
         d.text((x + 6, y + h + 4), f"#{i} {c['file'][:40]}", fill=(242, 237, 227))
-        d.text((x + 6, y + h + 18), f"{c['license']} · {c['size']}", fill=(185, 192, 211))
+        d.text((x + 6, y + h + 18), f"{c.get('source', 'commons')} · {c['license']} · {c['size']}", fill=(185, 192, 211))
     path = OUT / f"{pid}.jpg"
     img.save(path, quality=82)
     return path
@@ -75,7 +98,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     result = {}
     for pid, q in queries.items():
-        cands = search(q)
+        cands = search_openverse(q["q"]) if isinstance(q, dict) and q.get("source") == "openverse" else search(q["q"] if isinstance(q, dict) else q)
         result[pid] = [{k: v for k, v in c.items() if k != "thumb"} for c in cands]
         print(f"{pid}: {len(cands)} candidates -> {sheet(pid, cands).name}")
     (OUT / "candidates.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

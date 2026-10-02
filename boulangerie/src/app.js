@@ -185,7 +185,7 @@ function renderVisit() {
   byId('footerLinks').innerHTML = CONFIG.instagram ? `<a href="${esc(CONFIG.instagram)}" target="_blank" rel="noopener">Instagram</a>` : '';
 }
 
-const creditText = (c) => `${c.author}, Wikimedia Commons${c.license ? ` (${c.license})` : ''}`;
+const creditText = (c) => `${c.author}${c.site ? `, ${c.site}` : ''}${c.license ? ` (${c.license})` : ''}`;
 
 function renderCredits() {
   const list = PRODUCTS.filter((p) => PHOTO[p.id]?.credit);
@@ -216,7 +216,7 @@ function injectStructuredData() {
   document.head.appendChild(s);
 }
 
-// ───────── Photos from Wikimedia Commons (or local files)
+// ───────── Photos: the owner's own, downloaded copies, a direct link, or Wikimedia Commons live
 const stripHtml = (html) => {
   const text = new DOMParser().parseFromString(html || '', 'text/html').body.textContent.replace(/\s+/g, ' ').trim();
   return text.length > 80 ? `${text.slice(0, 77)}…` : text;
@@ -230,7 +230,8 @@ async function loadPhotos() {
   for (const [id, entry] of Object.entries(PHOTOS)) {
     // Your own photo, then the copy downloaded by the GitHub workflow, then Commons live.
     if (entry.local) PHOTO[id] = { small: entry.local, large: entry.local, credit: entry.credit ?? null };
-    else if (PHOTO_LOCAL[id]) PHOTO[id] = PHOTO_LOCAL[id];
+    else if (PHOTO_LOCAL[id]) PHOTO[id] = { ...PHOTO_LOCAL[id], credit: { site: 'Wikimedia Commons', ...PHOTO_LOCAL[id].credit } };
+    else if (entry.url) PHOTO[id] = { small: entry.url, large: entry.url, credit: { author: entry.author, site: entry.site, license: entry.license, url: entry.page || entry.url } };
     else if (entry.commons) wanted.push(...entry.commons.map((f) => `File:${f}`));
   }
   if (!wanted.length) return;
@@ -261,7 +262,7 @@ async function loadPhotos() {
       PHOTO[id] = {
         small: is.thumburl || is.url,
         large: il?.thumburl || il?.url || is.thumburl || is.url,
-        credit: { author: cleanAuthor(stripHtml(meta.Artist?.value), is.user), license: meta.LicenseShortName?.value || '', url: is.descriptionurl },
+        credit: { author: cleanAuthor(stripHtml(meta.Artist?.value), is.user), site: 'Wikimedia Commons', license: meta.LicenseShortName?.value || '', url: is.descriptionurl },
       };
       break;
     }

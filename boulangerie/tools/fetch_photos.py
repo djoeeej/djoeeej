@@ -35,18 +35,23 @@ def get(url):
 
 
 def parse_photos():
+    """Return {id: [Commons file names]} and {id: {url, author, license, page}} for direct photos."""
     src = DATA.read_text(encoding="utf-8")
     block = src[src.index("const PHOTOS = {"):]
     block = block[: block.index("\n};") + 3]
-    photos = {}
+    photos, direct = {}, {}
     for m in re.finditer(r"^\s*'?([\w-]+)'?:\s*\{(.*)\},?\s*$", block, re.M):
         pid, body = m.group(1), m.group(2)
         if "local:" in body:
             continue
+        if re.search(r"\burl:", body):
+            fields = dict(re.findall(r"(\w+):\s*'((?:[^'\\]|\\.)*)'", body))
+            direct[pid] = {k: v.replace("\\'", "'") for k, v in fields.items()}
+            continue
         files = re.findall(r"'((?:[^'\\]|\\.)+)'", body.split("commons:", 1)[-1])
         if files:
             photos[pid] = [f.replace("\\'", "'") for f in files]
-    return photos
+    return photos, direct
 
 
 class _Text(HTMLParser):
@@ -111,12 +116,33 @@ def smart_crop(im, ratio=0.8):
     return im.crop((0, min(y0, h - ch), w, min(y0, h - ch) + ch))
 
 
+def save(pid, im, credit, source):
+    crop = smart_crop(ImageOps.exif_transpose(im).convert("RGB"))
+    entry = {}
+    for size, (w, h) in SIZES.items():
+        path = IMAGES / f"{pid}-{w}.webp"
+        crop.resize((w, h), Image.LANCZOS).save(path, "WEBP", quality=80, method=6)
+        entry[size] = f"images/{path.name}"
+    entry["credit"] = credit
+    entry["source"] = source
+    return entry
+
+
 def main():
-    photos = parse_photos()
+    photos, direct = parse_photos()
     titles = sorted({f"File:{f}" for files in photos.values() for f in files})
-    pages = commons_info(titles)
+    pages = commons_info(titles) if titles else {}
     IMAGES.mkdir(exist_ok=True)
     result, failed = {}, []
+    for pid, d in direct.items():
+        try:
+            im = Image.open(io.BytesIO(get(d["url"])))
+            credit = {"author": d.get("author", ""), "site": d.get("site", ""), "license": d.get("license", ""), "url": d.get("page") or d["url"]}
+            result[pid] = save(pid, im, credit, d["url"])
+            print(f"ok {pid}: {d['url']} ({credit['author']}, {credit['license']})")
+        except Exception as e:  # noqa: BLE001
+            print(f"  {pid}: download failed for {d['url']}: {e}")
+            failed.append(pid)
     for pid, files in photos.items():
         for f in files:
             page = pages.get(f"File:{f}")
@@ -126,24 +152,17 @@ def main():
                 continue
             try:
                 im = Image.open(io.BytesIO(get(info.get("thumburl") or info["url"])))
-                im = ImageOps.exif_transpose(im).convert("RGB")
             except Exception as e:  # noqa: BLE001
                 print(f"  {pid}: download failed for {f}: {e}")
                 continue
-            crop = smart_crop(im)
-            entry = {}
-            for size, (w, h) in SIZES.items():
-                path = IMAGES / f"{pid}-{w}.webp"
-                crop.resize((w, h), Image.LANCZOS).save(path, "WEBP", quality=80, method=6)
-                entry[size] = f"images/{path.name}"
             meta = info.get("extmetadata", {})
-            entry["credit"] = {
+            credit = {
                 "author": clean_author(strip_html(meta.get("Artist", {}).get("value")), info.get("user")) or "Wikimedia Commons",
+                "site": "Wikimedia Commons",
                 "license": meta.get("LicenseShortName", {}).get("value", ""),
                 "url": info["descriptionurl"],
             }
-            entry["source"] = f"File:{f}"
-            result[pid] = entry
+            entry = result[pid] = save(pid, im, credit, f"File:{f}")
             print(f"ok {pid}: {f} ({entry['credit']['author']}, {entry['credit']['license']})")
             break
         else:
