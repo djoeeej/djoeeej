@@ -1,0 +1,2338 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Boulangerie D.O, Creil — pains, viennoiseries et pâtisseries</title>
+<meta name="description" content="Boulangerie D.O, rue Gambetta à Creil : croissants, viennoiseries, pâtisseries et pains cuits sur place. Découvrez chaque pâtisserie, son histoire et sa recette complète.">
+<meta name="theme-color" content="#131b31">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Boulangerie D.O, Creil">
+<meta property="og:description" content="Croissants, pâtisseries et pains, cuits ici chaque matin. Découvrez chaque pâtisserie, son histoire et sa recette.">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23131b31'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23f2ede3'%3ED.O%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap">
+<style>
+:root {
+  --nuit: #131b31;
+  --nuit-2: #1a2442;
+  --nuit-3: #24335c;
+  --vitre: #3a4f80;
+  --farine: #f2ede3;
+  --farine-2: #b9c0d3;
+  --dorure: #e9a440;
+  --dorure-2: #f5c57e;
+  --papier: #f5f0e6;
+  --encre: #1b2440;
+  --encre-2: #525b75;
+  --croute: #8a4520;
+  --filet: rgba(27, 36, 64, 0.14);
+  --filet-nuit: rgba(242, 237, 227, 0.14);
+
+  --display: 'Gloock', 'Iowan Old Style', 'Times New Roman', serif;
+  --text: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ipa: 'Charis SIL', 'Gentium Plus', 'Noto Sans', 'Segoe UI', system-ui, sans-serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3125rem;
+  --step-2: 1.5rem;
+  --step-3: 2.25rem;
+  --step-4: 3rem;
+  --step-5: clamp(2.75rem, 6vw, 4.5rem);
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --maxw: 1240px;
+  --nav-h: 64px;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #1c2847 0%, var(--nuit) 34rem, #10172b 100%) var(--nuit);
+  color: var(--farine);
+  font-family: var(--text);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, svg, canvas { display: block; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+
+:focus-visible { outline: 3px solid var(--dorure); outline-offset: 3px; border-radius: 4px; }
+
+.skip {
+  position: absolute; left: 16px; top: -100px; z-index: 100;
+  background: var(--dorure); color: var(--nuit); padding: 0.6rem 1rem; border-radius: 999px; font-weight: 600; text-decoration: none;
+}
+.skip:focus { top: 12px; }
+
+.wrap { width: min(100% - 2 * var(--gutter), var(--maxw)); margin-inline: auto; }
+
+/* ───────── Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 48px; padding: 0.75rem 1.4rem; border-radius: 999px;
+  font-weight: 600; font-size: 1rem; text-decoration: none; cursor: pointer;
+  border: 1px solid transparent; transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn-primary { background: var(--dorure); color: var(--nuit); }
+.btn-primary:hover { background: var(--dorure-2); }
+.btn-ghost { border-color: rgba(242, 237, 227, 0.35); background: transparent; }
+.btn-ghost:hover { border-color: var(--farine); }
+.btn-small { min-height: 40px; padding: 0.5rem 1rem; font-size: 0.9375rem; }
+
+/* ───────── Navigation */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30; height: var(--nav-h);
+  display: flex; align-items: center; gap: 1.5rem; padding-inline: var(--gutter);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+.nav.is-solid { background: rgba(19, 27, 49, 0.86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--filet-nuit); }
+.nav-mark { font-family: var(--display); font-size: 1.75rem; line-height: 1; text-decoration: none; margin-right: auto; }
+.nav-links { display: flex; gap: 1.5rem; }
+.nav-links a { text-decoration: none; color: var(--farine-2); font-size: 0.9375rem; padding: 0.5rem 0; }
+.nav-links a:hover { color: var(--farine); }
+.lang {
+  min-width: 48px; min-height: 36px; padding: 0.25rem 0.75rem; border-radius: 999px; cursor: pointer;
+  background: transparent; border: 1px solid rgba(242, 237, 227, 0.35); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em;
+}
+.lang:hover { border-color: var(--farine); }
+
+/* ───────── Hero */
+.hero {
+  position: relative;
+  min-height: min(100svh, 940px);
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: clamp(16px, 3vw, 48px);
+  padding: calc(var(--nav-h) + 24px) var(--gutter) 48px;
+  max-width: calc(var(--maxw) + 2 * var(--gutter)); margin-inline: auto;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0 -20vw; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 42% 46% at 66% 52%, rgba(233, 164, 64, 0.2), rgba(233, 164, 64, 0) 70%);
+}
+.lockup { display: flex; flex-direction: column; font-family: var(--display); }
+.lockup-small { font-size: clamp(1.5rem, 2.6vw, 2.25rem); color: var(--farine-2); line-height: 1.1; }
+.lockup-big { font-size: clamp(6.5rem, 17vw, 14rem); line-height: 0.82; letter-spacing: -0.02em; margin-left: -0.06em; margin-top: 0.08em; }
+.hero-tagline { margin-top: 1.75rem; font-size: var(--step-1); line-height: 1.4; max-width: 24ch; }
+.hero-where { margin-top: 0.75rem; color: var(--farine-2); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.hero-stage { position: relative; min-width: 0; }
+.hero-view { position: relative; width: 100%; aspect-ratio: 6 / 5; max-height: 70vh; margin-inline: auto; }
+.carousel-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%), linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%), linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-composite: intersect;
+}
+.carousel-canvas.is-dragging { cursor: grabbing; }
+.hero-fallback { display: block; width: min(70%, 420px); aspect-ratio: 4 / 5; object-fit: cover; margin: 4% auto 0; border-radius: 18px; box-shadow: 0 40px 60px -30px rgba(0, 0, 0, 0.8); }
+.hero-caption { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.75rem 1rem; margin-top: 0.5rem; }
+.hero-label { min-width: 16ch; text-align: center; }
+.hero-now { display: block; color: var(--farine-2); font-size: var(--step--1); }
+.hero-name { display: block; font-family: var(--display); font-size: var(--step-2); line-height: 1.15; }
+.hero-hint { margin-top: 0.75rem; text-align: center; color: var(--farine-2); font-size: var(--step--1); }
+
+/* ───────── Shared section heads */
+.section { padding-block: clamp(4.5rem, 10vw, 8rem); }
+.section-head h2 { font-family: var(--display); font-size: var(--step-5); line-height: 1; }
+.section-head p { margin-top: 1rem; color: var(--farine-2); font-size: var(--step-1); line-height: 1.45; max-width: 46ch; }
+
+/* ───────── La vitrine */
+.shelf { margin-top: clamp(3rem, 6vw, 5rem); }
+.shelf-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1.25rem; margin-bottom: 0.25rem; }
+.shelf-head h3 { font-family: var(--display); font-size: var(--step-3); line-height: 1.1; }
+.shelf-head p { color: var(--farine-2); max-width: 52ch; }
+.shelf-row {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 42%), 1fr));
+  gap: 2.25rem clamp(14px, 2vw, 28px); margin-top: 1.25rem;
+}
+.item {
+  appearance: none; background: none; border: 0; padding: 0; margin: 0; text-align: left; cursor: pointer;
+  display: flex; flex-direction: column; min-width: 0; border-radius: 14px; perspective: 900px;
+}
+
+/* Photos that tilt towards the pointer, with a moving highlight */
+.item-photo, .photo-card {
+  position: relative; display: block; overflow: hidden; aspect-ratio: 4 / 5; background: var(--nuit-2);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s;
+  will-change: transform;
+}
+.item-photo { border-radius: 14px; box-shadow: 0 26px 40px -26px rgba(0, 0, 0, 0.85); }
+.item-photo img, .photo-card img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transform: translate(calc(var(--mx, 0) * -8px), calc(var(--my, 0) * -8px)) scale(1.07);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.is-tilting { transition-duration: 0.12s; }
+.is-tilting img { transition-duration: 0.12s; }
+.item-photo.is-tilting { box-shadow: 0 36px 50px -26px rgba(0, 0, 0, 0.9); }
+.glare {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.4s;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%), rgba(255, 244, 225, 0.32), rgba(255, 244, 225, 0) 55%);
+}
+.is-tilting .glare { opacity: 1; }
+.is-empty { display: grid; place-items: center; background: radial-gradient(ellipse at 50% 65%, #b8692a, #5a2a10 60%, #24170f); }
+.empty-name { font-family: var(--display); font-size: 1.6rem; line-height: 1.1; text-align: center; color: var(--farine); padding: 1.25rem; }
+
+.tag {
+  position: relative; z-index: 1;
+  display: block; margin: -1.75rem 0.75rem 0; padding: 0.7rem 0.9rem 0.8rem;
+  background: var(--papier); color: var(--encre); border-radius: 4px;
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.7);
+}
+.tag-name { display: block; font-family: var(--display); font-size: 1.25rem; line-height: 1.15; }
+.tag-short { display: block; margin-top: 0.25rem; font-size: var(--step--1); line-height: 1.4; color: var(--encre-2); }
+.item:hover .tag-name, .item:focus-visible .tag-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+
+/* ───────── Visit */
+.visit-title { font-family: var(--display); font-size: var(--step-5); line-height: 1; }
+.visite-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+.address { margin-top: 2rem; font-family: var(--display); font-size: var(--step-3); line-height: 1.15; font-style: normal; }
+.visite-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.hours { width: 100%; border-collapse: collapse; }
+.hours caption { text-align: left; font-family: var(--display); font-size: var(--step-2); padding-bottom: 0.75rem; }
+.hours th, .hours td { padding: 0.8rem 0; border-top: 1px solid var(--filet-nuit); text-align: left; font-weight: 400; }
+.hours td { text-align: right; }
+.hours tr.today th, .hours tr.today td { color: var(--dorure); font-weight: 600; }
+.phone-line { display: flex; justify-content: space-between; padding: 0.8rem 0; border-top: 1px solid var(--filet-nuit); border-bottom: 1px solid var(--filet-nuit); margin-top: 1.5rem; }
+.todo { color: var(--farine-2); font-style: italic; border-bottom: 1px dashed currentColor; }
+
+/* ───────── Footer */
+.footer { border-top: 1px solid var(--filet-nuit); padding-block: 2.5rem 3rem; color: var(--farine-2); font-size: var(--step--1); }
+.footer .wrap { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; align-items: baseline; justify-content: space-between; }
+.footer-mark { font-family: var(--display); font-size: 1.5rem; color: var(--farine); }
+.credits { flex-basis: 100%; }
+.credits summary { cursor: pointer; display: inline-block; padding: 0.25rem 0; }
+.credits p { margin-top: 0.5rem; }
+.credits ul { margin: 0.5rem 0 0; padding-left: 1.1rem; columns: 2 20rem; }
+.credits li { margin-bottom: 0.25rem; break-inside: avoid; }
+.noscript { padding: 2rem; }
+
+/* ───────── Product page (dialog) */
+.detail {
+  position: fixed; inset: 0; z-index: 50;
+  display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(400px, 1fr);
+  background: var(--nuit);
+}
+.detail[hidden] { display: none; }
+.detail-stage {
+  position: relative; overflow: hidden; min-height: 0;
+  display: flex; align-items: center; justify-content: center; perspective: 1300px;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 62%, rgba(233, 164, 64, 0.24), rgba(233, 164, 64, 0) 70%),
+    linear-gradient(180deg, #1f2c50 0%, #121a30 100%);
+}
+.photo-scene { width: min(68%, 54vh, 540px); margin-top: -4vh; }
+.photo-card {
+  margin: 0; border-radius: 22px; touch-action: none;
+  box-shadow: 0 60px 90px -45px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  -webkit-box-reflect: below 14px linear-gradient(transparent 74%, rgba(255, 255, 255, 0.16));
+}
+.photo-card .empty-name { display: none; }
+.photo-card.is-empty .empty-name { display: grid; place-items: center; position: absolute; inset: 0; font-size: 2.4rem; padding: 2rem; }
+.photo-credit { position: absolute; left: 24px; bottom: 30px; right: 140px; font-size: 0.8125rem; color: var(--farine-2); }
+.photo-credit a { color: inherit; }
+.stage-nav { position: absolute; right: 24px; bottom: 24px; display: flex; gap: 0.5rem; }
+.icon-btn {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: rgba(19, 27, 49, 0.6); border: 1px solid rgba(242, 237, 227, 0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.icon-btn:hover { border-color: var(--farine); }
+.icon-btn svg { width: 20px; height: 20px; }
+.detail-close {
+  position: absolute; top: 14px; right: 14px; z-index: 5;
+  background: var(--papier); color: var(--encre); border-color: var(--filet);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.5);
+}
+.detail-close:hover { border-color: var(--encre); }
+
+.detail-paper {
+  overflow-y: auto; overscroll-behavior: contain; min-height: 0;
+  background: var(--papier); color: var(--encre);
+  padding: clamp(28px, 4vw, 56px) clamp(20px, 4vw, 56px) 64px;
+}
+.detail-paper:focus { outline: none; }
+.detail-paper :focus-visible { outline-color: var(--croute); }
+.paper-inner { max-width: 640px; }
+.paper-cat { color: var(--croute); font-weight: 600; font-size: var(--step--1); }
+.paper-head h2 { font-family: var(--display); font-size: clamp(2.5rem, 4.2vw, 3.5rem); line-height: 1.02; margin-top: 0.5rem; padding-right: 48px; }
+.paper-ipa { margin-top: 0.6rem; font-family: var(--ipa); color: var(--encre-2); }
+.paper-sub { margin-top: 0.25rem; color: var(--encre-2); font-style: italic; }
+.paper-block { margin-top: 2rem; }
+.paper-block h3, .ing-head h3, .method h3 { font-weight: 600; font-size: 1rem; color: var(--croute); }
+.paper-block p { margin-top: 0.5rem; line-height: 1.68; max-width: 62ch; }
+.paper-lede { font-size: var(--step-1); line-height: 1.5 !important; }
+
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 2.25rem 0 0; border-top: 1px solid var(--filet); border-bottom: 1px solid var(--filet); }
+.facts div { padding: 0.9rem 0.75rem 1rem 0; }
+.facts div + div { padding-left: 0.9rem; border-left: 1px solid var(--filet); }
+.facts dt { font-size: 0.8125rem; color: var(--encre-2); }
+.facts dd { margin: 0.2rem 0 0; font-size: 1.125rem; font-weight: 600; line-height: 1.25; }
+.allergens { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin-top: 1rem; font-size: var(--step--1); }
+.allergens > span:first-child { color: var(--encre-2); margin-right: 0.25rem; }
+.chip { border: 1px solid var(--filet); border-radius: 999px; padding: 0.15rem 0.6rem; background: rgba(255, 255, 255, 0.5); }
+
+.ingredients { margin-top: 2.75rem; }
+.ing-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; }
+.scaler { display: inline-flex; align-items: center; gap: 0.5rem; }
+.scaler button {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--filet); background: #fff; color: var(--encre);
+  font-size: 1.25rem; line-height: 1; cursor: pointer; display: grid; place-items: center;
+}
+.scaler button:hover:not(:disabled) { border-color: var(--encre); }
+.scaler button:disabled { opacity: 0.35; cursor: default; }
+.scaler output { min-width: 11ch; text-align: center; font-weight: 600; }
+.scale-note { margin-top: 0.75rem; font-size: var(--step--1); color: var(--encre-2); background: rgba(233, 164, 64, 0.14); padding: 0.6rem 0.8rem; border-radius: 6px; }
+.component { margin-top: 1.5rem; }
+.component h4 { font-family: var(--display); font-size: 1.3rem; }
+.component ul { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+.component li { border-bottom: 1px solid var(--filet); }
+.component label { display: grid; grid-template-columns: 1.4rem 5.25rem minmax(0, 1fr); gap: 0 0.5rem; align-items: baseline; padding: 0.55rem 0; cursor: pointer; }
+.component input { margin: 0; accent-color: var(--croute); width: 1rem; height: 1rem; transform: translateY(2px); }
+.qty { font-weight: 600; white-space: nowrap; }
+.ing-note { display: block; font-size: var(--step--1); color: var(--encre-2); }
+.component input:checked ~ .qty, .component input:checked ~ .ing-name { text-decoration: line-through; color: var(--encre-2); }
+.component-note { margin-top: 0.6rem; font-size: var(--step--1); color: var(--encre-2); }
+
+.method { margin-top: 2.75rem; }
+.method ol { list-style: none; counter-reset: step; padding: 0; margin: 0.75rem 0 0; }
+.method li { counter-increment: step; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 0.25rem; padding: 0.9rem 0; border-top: 1px solid var(--filet); line-height: 1.65; }
+.method li::before { content: counter(step); font-family: var(--display); font-size: 1.5rem; line-height: 1.1; color: var(--croute); }
+.tip { margin-top: 2.25rem; padding: 1.25rem 1.4rem; background: var(--encre); color: var(--papier); border-radius: 10px; }
+.tip h3 { font-family: var(--display); font-size: 1.35rem; color: var(--dorure-2); }
+.tip p { margin-top: 0.4rem; line-height: 1.6; }
+.recipe-note { margin-top: 1.5rem; font-size: var(--step--1); color: var(--encre-2); max-width: 60ch; }
+.paper-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn-ink { border-color: var(--encre); color: var(--encre); background: transparent; }
+.btn-ink:hover { background: var(--encre); color: var(--papier); }
+
+/* ───────── Responsive */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; text-align: left; padding-top: calc(var(--nav-h) + 8px); min-height: 0; }
+  .hero-stage { order: -1; }
+  .hero-view { aspect-ratio: 1 / 1; max-height: 58vh; width: min(100%, 64vh); }
+  .visite-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .detail { display: block; overflow-y: auto; overscroll-behavior: contain; }
+  .detail-stage { position: sticky; top: 0; height: 50svh; }
+  .detail-paper { position: relative; z-index: 1; overflow: visible; margin-top: -20px; border-radius: 20px 20px 0 0; min-height: 50svh; box-shadow: 0 -12px 30px -18px rgba(0, 0, 0, 0.6); }
+  .photo-scene { width: min(62%, 34svh); margin-top: 0; }
+  .photo-credit { left: 16px; bottom: 34px; right: 128px; font-size: 0.75rem; }
+  .stage-nav { right: 16px; bottom: 30px; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts div:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid var(--filet); }
+  .facts div:nth-child(4) { border-top: 1px solid var(--filet); }
+}
+@media (max-width: 560px) {
+  .nav-links { display: none; }
+  .tag { margin-inline: 0.4rem; padding: 0.55rem 0.65rem 0.65rem; }
+  .tag-name { font-size: 1.05rem; }
+  .tag-short { font-size: 0.8125rem; }
+  .component label { grid-template-columns: 1.4rem 4.5rem minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+/* ───────── Print: only the open recipe */
+@media print {
+  body { background: #fff; color: #000; }
+  body > *:not(.detail) { display: none !important; }
+  .detail { position: static; display: block; background: #fff; }
+  .detail-stage, .detail-close, .paper-actions, .scaler button, .component input { display: none !important; }
+  .detail-paper { overflow: visible; padding: 0; background: #fff; color: #000; }
+  .tip { background: #fff; color: #000; border: 1px solid #000; }
+  .tip h3 { color: #000; }
+  .method li, .component li { break-inside: avoid; }
+}
+
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<a class="skip" href="#vitrine" data-t="navMenu">La vitrine</a>
+<header class="nav" id="nav">
+  <a class="nav-mark" href="#top" aria-label="Boulangerie D.O">D.O</a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#vitrine" data-t="navMenu">La vitrine</a>
+    <a href="#visite" data-t="navVisit">Nous trouver</a>
+  </nav>
+  <button class="lang" id="lang" type="button" lang="en" aria-label="Read this site in English">EN</button>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero-copy">
+      <h1 class="lockup"><span class="lockup-small">Boulangerie</span><span class="lockup-big">D.O</span></h1>
+      <p class="hero-tagline" data-t="tagline">Croissants, pâtisseries et pains, cuits ici chaque matin.</p>
+      <p class="hero-where" id="heroWhere">Rue Gambetta, 60100 Creil</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#vitrine" data-t="heroBrowse">Voir la vitrine</a>
+        <a class="btn btn-ghost" href="#visite" data-t="heroVisit">Nous trouver</a>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <div class="hero-view" id="heroView"></div>
+      <div class="hero-caption">
+        <button class="icon-btn" type="button" id="heroPrev" data-t-label="carouselPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <p class="hero-label" aria-live="polite"><span class="hero-now" data-t="heroNow">En vitrine</span> <span class="hero-name" id="heroName"></span></p>
+        <button class="icon-btn" type="button" id="heroNext" data-t-label="carouselNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="btn btn-ghost btn-small" type="button" id="heroOpen" data-t="heroOpen">Voir la recette</button>
+      </div>
+      <p class="hero-hint" data-t="heroHint"></p>
+    </div>
+  </section>
+
+  <section class="section" id="vitrine" aria-labelledby="vitrineTitle">
+    <div class="wrap">
+      <header class="section-head">
+        <h2 id="vitrineTitle" data-t="menuTitle">Ce que nous cuisons</h2>
+        <p data-t="menuIntro"></p>
+      </header>
+      <div id="shelves"></div>
+    </div>
+  </section>
+
+  <section class="section" id="visite" aria-labelledby="visiteTitle">
+    <div class="wrap visite-grid">
+      <div>
+        <h2 class="visit-title" id="visiteTitle" data-t="visitTitle">Nous trouver</h2>
+        <address class="address" id="address"></address>
+        <div class="visite-actions" id="visitActions"></div>
+      </div>
+      <div>
+        <table class="hours" id="hours"></table>
+        <div class="phone-line" id="phoneLine"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <span class="footer-mark">D.O</span>
+    <span id="footerText"></span>
+    <span id="footerLinks"></span>
+    <details class="credits" id="credits" hidden></details>
+  </div>
+</footer>
+
+<div class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="detail-stage" id="detailStage">
+    <div class="photo-scene">
+      <figure class="photo-card" id="photoCard">
+        <img id="photoImg" alt="" width="1400" height="1750" decoding="async">
+        <span class="empty-name"></span>
+        <span class="glare"></span>
+      </figure>
+    </div>
+    <p class="photo-credit" id="photoCredit"></p>
+    <div class="stage-nav">
+      <button class="icon-btn" type="button" id="btnPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="icon-btn" type="button" id="btnNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <article class="detail-paper" id="paper" tabindex="-1"></article>
+  <button class="icon-btn detail-close" type="button" id="btnClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
+<noscript><p class="noscript">Ce site a besoin de JavaScript pour afficher la vitrine en 3D et les recettes.</p></noscript>
+
+<script type="module">
+import * as THREE from 'three';
+// ─────────────────────────────────────────────────────────────
+// SHOP DETAILS — edit these. Anything left empty is hidden or
+// shown as a clearly marked placeholder on the page.
+// ─────────────────────────────────────────────────────────────
+const CONFIG = {
+  name: 'Boulangerie D.O',
+  wordmark: 'D.O',
+  street: 'Rue Gambetta',   // add the street number, e.g. '59 rue Gambetta'
+  city: '60100 Creil',
+  phone: '',                // e.g. '03 44 00 00 00' — shown as a placeholder while empty
+  mapUrl: 'https://www.google.com/maps/search/?api=1&query=Boulangerie+D.O+rue+Gambetta+60100+Creil',
+  instagram: '',            // e.g. 'https://instagram.com/boulangerie.do'
+  // One entry per day, Monday first. Use '' for unknown (shows a placeholder),
+  // 'closed' for closed days, or the hours as text, e.g. '6 h 30 – 20 h'.
+  hours: ['', '', '', '', '', '', ''],
+};
+
+const CATEGORIES = [
+  { id: 'viennoiseries', name: 'Viennoiseries', gloss: 'Laminated and enriched doughs, for breakfast and the afternoon goûter' },
+  { id: 'patisseries', name: 'Pâtisseries', gloss: 'Tarts, choux and layered cakes' },
+  { id: 'pains', name: 'Pains', gloss: 'Bread, shaped and baked on site' },
+];
+
+// Quantities are for home kitchens, by weight. Scaling in the page
+// multiplies every number below; items with q: null never scale.
+const PRODUCTS = [
+  // ───────────────────────────── VIENNOISERIES
+  {
+    id: 'croissant',
+    category: 'viennoiseries',
+    name: 'Croissant au beurre',
+    ipa: '/kʁwa.sɑ̃ o bœʁ/',
+    en: 'All-butter croissant',
+    short: 'Crisp outside, honeycomb inside',
+    definition:
+      'A crescent of yeast-leavened dough laminated with butter. Thin sheets of butter are folded into the dough again and again, so in the oven the water in the butter turns to steam and pushes the layers apart, leaving a shattering crust and an open, honeycombed crumb.',
+    origin:
+      'Its ancestor is the Austrian kipferl, which reached Paris with the Viennese bakeries of the 1830s — hence “viennoiserie”. The laminated croissant we know took shape in French bakeries in the early 20th century. The story that it was invented to celebrate a 1683 victory over the Ottomans is a legend.',
+    taste: 'Flaky and crackling outside, soft and stretchy inside, with a clean, milky butter flavour and very little sweetness.',
+    yield: { n: 12, unit: 'croissants', unit1: 'croissant' },
+    times: { prep: '1 h 15', rest: '14 h, overnight', bake: '16–18 min' },
+    level: 'Advanced',
+    allergens: ['Gluten', 'Milk', 'Eggs'],
+    components: [
+      { title: 'Dough (détrempe)', items: [
+        { q: 500, u: 'g', n: 'strong white flour (French T45 or T55)' },
+        { q: 55, u: 'g', n: 'caster sugar' },
+        { q: 10, u: 'g', n: 'fine salt' },
+        { q: 20, u: 'g', n: 'fresh yeast', note: 'or 7 g instant dried yeast' },
+        { q: 140, u: 'g', n: 'cold water' },
+        { q: 140, u: 'g', n: 'cold whole milk' },
+        { q: 40, u: 'g', n: 'unsalted butter, softened' },
+      ]},
+      { title: 'Laminating butter', items: [
+        { q: 280, u: 'g', n: 'cold unsalted butter, 82 % fat (beurre de tourage)' },
+      ]},
+      { title: 'Egg wash', items: [
+        { q: 1, u: '', n: 'egg' },
+        { q: 15, u: 'g', n: 'milk' },
+        { q: null, u: '', n: 'pinch of salt' },
+      ]},
+    ],
+    steps: [
+      'Mix the flour, sugar and salt, then add the yeast on one side of the bowl so it doesn’t touch the salt. Add the cold water, milk and soft butter and knead on low speed for 4–5 min, just until smooth. The dough should stay cool (about 24 °C) and not become elastic.',
+      'Flatten it into a 2 cm-thick rectangle, wrap tightly and refrigerate for at least 2 h, ideally overnight.',
+      'Beat the laminating butter between two sheets of baking paper into a 17 × 17 cm square, 1 cm thick. Chill it until it is cold but bends without cracking — the same firmness as the dough.',
+      'Roll the dough into a 35 × 18 cm rectangle. Set the butter in the centre, fold both ends over it so they meet in the middle, and pinch the seam closed.',
+      'Roll into a 60 × 20 cm strip and give it a double (book) fold: fold both ends to the centre, then fold in half. Wrap and chill for 30 min.',
+      'Roll again to 60 × 20 cm and give it a single (letter) fold, in thirds. Wrap and chill for 30 min.',
+      'Roll the dough into a 60 × 25 cm rectangle, 4–5 mm thick. Cut 12 long triangles with a 9 cm base.',
+      'Cut a 1 cm notch in the middle of each base, stretch the triangle gently, and roll it up from the base without pressing. Place on lined trays with the tip underneath.',
+      'Proof at 25–27 °C for about 2 h, until doubled and wobbly when you shake the tray. Never go above 28 °C or the butter will melt out.',
+      'Brush gently with egg wash. Bake at 180 °C (fan) for 16–18 min, until deep golden. Cool on a rack for 15 min.',
+    ],
+    tip: 'Keep everything cold. If the butter breaks into shards while rolling, it is too cold — wait 5 min. If it starts to seep out, chill the dough for 15 min.',
+  },
+  {
+    id: 'pain-au-chocolat',
+    category: 'viennoiseries',
+    name: 'Pain au chocolat',
+    ipa: '/pɛ̃ o ʃɔ.kɔ.la/',
+    en: 'Chocolate croissant',
+    short: 'Two bars of dark chocolate, rolled in croissant dough',
+    definition:
+      'A rectangle of croissant dough rolled around two sticks of dark baking chocolate. The same laminated dough as the croissant, shaped as a little parcel, so every bite has flaky pastry and a seam of chocolate that softens in the oven.',
+    origin:
+      'It belongs to the family of Viennese pastries that settled in France in the 19th century and became a French breakfast staple in the 20th. In south-west France and in Quebec it is called a chocolatine — a naming debate the French take very seriously.',
+    taste: 'Buttery, crisp layers with two lines of bittersweet chocolate that stay soft for hours.',
+    yield: { n: 12, unit: 'pains au chocolat', unit1: 'pain au chocolat' },
+    times: { prep: '1 h 15', rest: '14 h, overnight', bake: '16–18 min' },
+    level: 'Advanced',
+    allergens: ['Gluten', 'Milk', 'Eggs', 'Soy (in chocolate)'],
+    components: [
+      { title: 'Dough (détrempe)', items: [
+        { q: 500, u: 'g', n: 'strong white flour (French T45 or T55)' },
+        { q: 55, u: 'g', n: 'caster sugar' },
+        { q: 10, u: 'g', n: 'fine salt' },
+        { q: 20, u: 'g', n: 'fresh yeast', note: 'or 7 g instant dried yeast' },
+        { q: 140, u: 'g', n: 'cold water' },
+        { q: 140, u: 'g', n: 'cold whole milk' },
+        { q: 40, u: 'g', n: 'unsalted butter, softened' },
+      ]},
+      { title: 'Laminating butter', items: [
+        { q: 280, u: 'g', n: 'cold unsalted butter, 82 % fat (beurre de tourage)' },
+      ]},
+      { title: 'Filling', items: [
+        { q: 24, u: '', n: 'chocolate batons (bâtons boulangers, about 5 g each, 44–48 % cocoa)' },
+      ]},
+      { title: 'Egg wash', items: [
+        { q: 1, u: '', n: 'egg' },
+        { q: 15, u: 'g', n: 'milk' },
+        { q: null, u: '', n: 'pinch of salt' },
+      ]},
+    ],
+    steps: [
+      'Make, chill and laminate the dough exactly as for croissants: mix the détrempe, chill overnight, lock in the 17 × 17 cm butter square, then give one double fold and one single fold with 30 min in the fridge after each.',
+      'Roll the dough into a rectangle 4–5 mm thick and cut 12 rectangles of 8 × 15 cm.',
+      'Lay a chocolate baton across one short end, fold the dough over it, add a second baton, and roll to the end. Place seam-side down on lined trays and press lightly.',
+      'Proof at 25–27 °C for about 2 h, until doubled and wobbly.',
+      'Brush with egg wash and bake at 180 °C (fan) for 16–18 min, until deep golden. Cool on a rack for 15 min.',
+    ],
+    tip: 'Put the seam underneath and right in the middle — if it sits at the side, the roll opens up as it proofs.',
+  },
+  {
+    id: 'chausson-aux-pommes',
+    category: 'viennoiseries',
+    name: 'Chausson aux pommes',
+    ipa: '/ʃo.sɔ̃ o pɔm/',
+    en: 'Apple turnover',
+    short: 'Puff pastry folded over vanilla apple compote',
+    definition:
+      'A turnover of puff pastry folded over a filling of apple compote, sealed with a fluted edge, scored with a leaf pattern and brushed with syrup. “Chausson” means slipper, for its folded shape. It is one of the classic viennoiseries in every French boulangerie, eaten at breakfast or for the afternoon goûter.',
+    origin:
+      'The town of Saint-Calais, in the Sarthe, traces it to 1630: when an epidemic struck the town, the lady of the château is said to have handed out flour and apples to the poor. Saint-Calais still celebrates with a chausson aux pommes festival every September.',
+    taste: 'Crackling, buttery flakes around a soft, tangy-sweet apple filling with vanilla, under a sticky, lacquered top.',
+    yield: { n: 8, unit: 'chaussons', unit1: 'chausson' },
+    times: { prep: '1 h 15', rest: '3 h', bake: '30–35 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten', 'Milk', 'Eggs'],
+    components: [
+      { title: 'Puff pastry (pâte feuilletée)', items: [
+        { q: 300, u: 'g', n: 'plain flour (French T55)' },
+        { q: 6, u: 'g', n: 'fine salt' },
+        { q: 150, u: 'g', n: 'cold water' },
+        { q: 30, u: 'g', n: 'unsalted butter, melted' },
+        { q: 220, u: 'g', n: 'cold unsalted butter, 82 % fat, for laminating' },
+      ], note: 'Short on time? Use 600 g of all-butter puff pastry instead.' },
+      { title: 'Apple compote', items: [
+        { q: 800, u: 'g', n: 'apples, about 5 (Golden, Reine des Reinettes or Boskoop)' },
+        { q: 50, u: 'g', n: 'caster sugar' },
+        { q: 15, u: 'g', n: 'unsalted butter' },
+        { q: 0.5, u: '', n: 'vanilla pod, split', note: 'or 1 tsp vanilla extract' },
+        { q: 15, u: 'g', n: 'lemon juice (1 tbsp)' },
+        { q: 30, u: 'g', n: 'water (2 tbsp)' },
+        { q: null, u: '', n: 'pinch of ground cinnamon (optional)' },
+      ]},
+      { title: 'Egg wash', items: [
+        { q: 1, u: '', n: 'egg yolk' },
+        { q: 15, u: 'g', n: 'milk' },
+        { q: null, u: '', n: 'pinch of salt' },
+      ]},
+      { title: 'Shine syrup', items: [
+        { q: 30, u: 'g', n: 'caster sugar' },
+        { q: 30, u: 'g', n: 'water' },
+      ]},
+    ],
+    steps: [
+      'Make the détrempe: mix the flour, salt, water and melted butter just until it comes together. Shape into a ball, cut a deep cross in the top, wrap and chill for 1 h.',
+      'Beat the laminating butter between baking paper into a 13 cm square. It should be cold but pliable.',
+      'Roll the dough out from the cross into four flaps, set the butter in the centre and fold the flaps over it to seal it in completely.',
+      'Roll into a 45 × 15 cm strip, fold in three like a letter, turn a quarter and repeat. That is two single turns. Wrap and chill for 30 min. Repeat twice more for six turns in total — about 729 layers of butter.',
+      'Meanwhile, make the compote: peel, core and dice the apples into 1 cm cubes. Cook them covered over medium heat with the sugar, butter, vanilla, lemon juice and water for 15–20 min, stirring now and then, until soft but with some pieces left. Uncover for the last 5 min to cook off the liquid. Remove the pod and cool completely in the fridge — warm filling melts the pastry layers.',
+      'Roll the pastry 3 mm thick and cut 8 discs with a 14 cm fluted cutter. Roll each disc across its middle to stretch it into an oval about 16 cm long.',
+      'Brush the edge of one half with water, put 60 g (a heaped tablespoon) of cold compote on that half, fold the other half over and press the edges firmly to seal. Turn smooth side up onto a lined tray.',
+      'Brush with egg wash, chill for 30 min, then brush again.',
+      'With the tip of a knife, score a leaf pattern on top without cutting through, and pierce 2–3 small holes to let steam out.',
+      'Bake at 200 °C for 10 min, then lower to 180 °C and bake for 20–25 min more, until puffed and deep golden.',
+      'Boil the sugar and water for 1 min and brush it over the chaussons as soon as they come out of the oven. Let them cool for 15 min — the filling is very hot.',
+    ],
+    tip: 'The second coat of egg wash after chilling is what gives the deep, even colour; the syrup at the end gives the shine.',
+  },
+  {
+    id: 'brioche',
+    category: 'viennoiseries',
+    name: 'Brioche à tête',
+    ipa: '/bʁi.jɔʃ a tɛt/',
+    en: 'Brioche with a top knot',
+    short: 'Butter and egg brioche in a fluted mould',
+    definition:
+      'A rich yeast dough made with eggs instead of water and a large amount of butter, baked in a small fluted mould with a little ball of dough — the “tête”, or head — on top. It is the Parisian form of brioche.',
+    origin:
+      'Brioche has been baked in France since the Middle Ages, and Normandy’s butter is often credited for its richness. The famous line “let them eat brioche” comes from Rousseau’s Confessions, written before Marie-Antoinette could have said it.',
+    taste: 'Feathery and tender, pulling apart in soft strands, with a deep golden, shiny crust and a sweet, eggy, buttery flavour.',
+    yield: { n: 10, unit: 'brioches', unit1: 'brioche' },
+    times: { prep: '45 min', rest: '15 h, overnight', bake: '12–15 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten', 'Milk', 'Eggs'],
+    components: [
+      { title: 'Brioche dough', items: [
+        { q: 250, u: 'g', n: 'strong white flour (French T45)' },
+        { q: 30, u: 'g', n: 'caster sugar' },
+        { q: 5, u: 'g', n: 'fine salt' },
+        { q: 10, u: 'g', n: 'fresh yeast', note: 'or 4 g instant dried yeast' },
+        { q: 150, u: 'g', n: 'cold eggs (about 3)' },
+        { q: 15, u: 'g', n: 'cold whole milk' },
+        { q: 125, u: 'g', n: 'unsalted butter, cubed, cool but soft' },
+      ]},
+      { title: 'Egg wash', items: [
+        { q: 1, u: '', n: 'egg' },
+        { q: null, u: '', n: 'pinch of salt' },
+      ]},
+      { title: 'For the moulds', items: [
+        { q: 15, u: 'g', n: 'soft butter' },
+      ]},
+    ],
+    steps: [
+      'Put the flour, sugar, salt and yeast in a stand mixer, keeping the yeast and salt apart. Add the eggs and milk and knead on low for 5 min, then on medium for 8–10 min, until the dough comes away from the sides of the bowl.',
+      'Add the butter a few cubes at a time, letting each addition disappear before the next. Knead until the dough is smooth, glossy and stretches into a thin, translucent sheet. It should stay below 25 °C.',
+      'Cover and leave at room temperature for 1 h. Knock it back, cover and refrigerate overnight (about 12 h).',
+      'Butter ten 8 cm fluted brioche moulds. Divide the cold dough into 10 pieces of about 55 g and roll each into a tight ball.',
+      'With the side of your hand, roll each ball a quarter of the way along to form a small head joined by a thin neck. Drop it into the mould body first, then push the head into the centre with a floured finger.',
+      'Proof at about 26 °C for 2 h, until doubled.',
+      'Brush carefully with egg wash, wait 10 min and brush again. Bake at 180 °C for 12–15 min, until deep golden brown.',
+      'Unmould straight away and cool on a rack.',
+    ],
+    tip: 'Cold dough is much easier to shape: work straight from the fridge, and if it softens, put it back for 10 min.',
+  },
+
+  // ───────────────────────────── PÂTISSERIES
+  {
+    id: 'eclair',
+    category: 'patisseries',
+    name: 'Éclair au chocolat',
+    ipa: '/e.klɛʁ o ʃɔ.kɔ.la/',
+    en: 'Chocolate éclair',
+    short: 'Choux pastry, chocolate cream, glossy glaze',
+    definition:
+      'A long finger of choux pastry baked hollow, filled with chocolate pastry cream and dipped in shiny chocolate fondant. Choux is cooked twice — once on the stove, once in the oven — and puffs up with steam, which leaves the space inside for the filling.',
+    origin:
+      'Choux pastry was refined by the great 19th-century pastry chefs, Antonin Carême among them, and the éclair appears in French cookbooks by the middle of that century. “Éclair” means lightning: some say because it is eaten in a flash, others for the gleam of its glaze.',
+    taste: 'A light, eggy shell, cool and silky chocolate cream, and a sweet, glossy top that snaps softly.',
+    yield: { n: 12, unit: 'éclairs', unit1: 'éclair' },
+    times: { prep: '1 h', rest: '2 h', bake: '35–40 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten', 'Milk', 'Eggs', 'Soy (in chocolate)'],
+    components: [
+      { title: 'Choux pastry (pâte à choux)', items: [
+        { q: 125, u: 'g', n: 'water' },
+        { q: 125, u: 'g', n: 'whole milk' },
+        { q: 110, u: 'g', n: 'unsalted butter' },
+        { q: 5, u: 'g', n: 'fine salt' },
+        { q: 5, u: 'g', n: 'caster sugar' },
+        { q: 140, u: 'g', n: 'plain flour (French T55)' },
+        { q: 250, u: 'g', n: 'eggs (about 5), beaten' },
+      ]},
+      { title: 'Chocolate pastry cream', items: [
+        { q: 500, u: 'g', n: 'whole milk' },
+        { q: 100, u: 'g', n: 'egg yolks (about 5)' },
+        { q: 100, u: 'g', n: 'caster sugar' },
+        { q: 40, u: 'g', n: 'cornflour' },
+        { q: 120, u: 'g', n: 'dark chocolate, 64–70 %, chopped' },
+        { q: 25, u: 'g', n: 'unsalted butter' },
+      ]},
+      { title: 'Chocolate glaze', items: [
+        { q: 300, u: 'g', n: 'white pâtissier fondant' },
+        { q: 40, u: 'g', n: 'dark chocolate, 70 %, melted' },
+        { q: 15, u: 'g', n: 'sugar syrup or water, to loosen' },
+      ]},
+    ],
+    steps: [
+      'Bring the water, milk, butter, salt and sugar to a full boil. Take off the heat, tip in all the flour and beat until smooth.',
+      'Return to medium heat and stir for 1–2 min to dry the dough, until it forms a ball and leaves a thin film on the pan.',
+      'Transfer to a bowl and beat for 1 min to cool slightly. Add the egg a little at a time, beating well, until the dough is glossy and falls from the spatula in a thick V-shaped ribbon. You may not need all of it.',
+      'Pipe 13–14 cm lengths with an 18 mm French star tip onto a lined tray, leaving space between them.',
+      'Bake at 165 °C (fan) for 35–40 min, until deep golden and firm. Don’t open the oven for the first 25 min or they will collapse. Cool on a rack.',
+      'For the cream, heat the milk. Whisk the yolks, sugar and cornflour, pour on half the hot milk while whisking, then return everything to the pan. Boil for 2 min, whisking constantly.',
+      'Off the heat, stir in the chocolate and butter until smooth. Cover with cling film touching the surface and chill for 2 h.',
+      'Whisk the cold cream until smooth. Pierce three small holes underneath each éclair and pipe in about 50 g of cream.',
+      'Warm the fondant with the melted chocolate to 35–37 °C, loosening it with a little syrup until it coats like thick cream. Dip the top of each éclair, run a finger around the edge to tidy it, and leave to set for 15 min.',
+    ],
+    tip: 'Keep the glaze below 37 °C. Any hotter and it sets dull instead of glossy.',
+  },
+  {
+    id: 'tarte-aux-fraises',
+    category: 'patisseries',
+    name: 'Tarte aux fraises',
+    ipa: '/taʁt o fʁɛz/',
+    en: 'Strawberry tart',
+    short: 'Sweet pastry, vanilla cream, fresh strawberries',
+    definition:
+      'A crisp sweet-pastry shell filled with vanilla pastry cream and covered with fresh strawberries brushed with a light glaze. It is the tart that fills French bakery windows from spring to early summer.',
+    origin:
+      'Fruit tarts on pastry cream became a fixture of French pâtisserie in the 19th century. The best come in strawberry season, from April to July, made with fragrant French varieties such as Gariguette and Mara des Bois.',
+    taste: 'Buttery, crumbly pastry, cool vanilla cream and juicy, slightly tart berries under a shiny glaze.',
+    yield: { n: 8, unit: 'slices', unit1: 'slice', size: 'one 24 cm tart' },
+    times: { prep: '50 min', rest: '3 h 30', bake: '20–25 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten', 'Milk', 'Eggs', 'Nuts (almonds)'],
+    components: [
+      { title: 'Sweet pastry (pâte sucrée)', items: [
+        { q: 200, u: 'g', n: 'plain flour (French T55)' },
+        { q: 100, u: 'g', n: 'cold unsalted butter, diced' },
+        { q: 80, u: 'g', n: 'icing sugar' },
+        { q: 25, u: 'g', n: 'ground almonds' },
+        { q: 50, u: 'g', n: 'egg (1)' },
+        { q: 1, u: 'g', n: 'salt (a pinch)' },
+      ]},
+      { title: 'Vanilla pastry cream', items: [
+        { q: 400, u: 'g', n: 'whole milk' },
+        { q: 1, u: '', n: 'vanilla pod, split and scraped' },
+        { q: 80, u: 'g', n: 'egg yolks (about 4)' },
+        { q: 80, u: 'g', n: 'caster sugar' },
+        { q: 35, u: 'g', n: 'cornflour' },
+        { q: 30, u: 'g', n: 'unsalted butter' },
+      ]},
+      { title: 'Topping', items: [
+        { q: 500, u: 'g', n: 'strawberries (Gariguette or Mara des Bois)' },
+        { q: 50, u: 'g', n: 'redcurrant jelly or neutral glaze' },
+      ]},
+    ],
+    steps: [
+      'Rub the butter into the flour, icing sugar, ground almonds and salt until the mixture looks like sand. Add the egg and bring it together without kneading. Flatten, wrap and chill for 1 h.',
+      'Roll the pastry 3 mm thick and line a 24 cm tart ring or tin. Prick the base with a fork and chill for 30 min.',
+      'Line with baking paper and baking beans and bake at 170 °C (fan) for 15 min. Remove the paper and beans and bake for 5–10 min more, until evenly golden. Cool completely.',
+      'Make the pastry cream: heat the milk with the vanilla pod and seeds. Whisk the yolks, sugar and cornflour, pour on half the hot milk while whisking, return everything to the pan and boil for 2 min, whisking. Stir in the butter, remove the pod, cover with film touching the surface and chill for 2 h.',
+      'Whisk the cold cream until smooth and spread it in the shell in an even 1.5 cm layer.',
+      'Hull the strawberries and halve them lengthways. Arrange them in tight circles from the outside in.',
+      'Warm the jelly with a teaspoon of water and brush it over the strawberries. Chill for 30 min and serve the same day.',
+    ],
+    tip: 'Brush the cooled shell with a thin layer of melted white chocolate before adding the cream: it keeps the pastry crisp for hours.',
+  },
+  {
+    id: 'mille-feuille',
+    category: 'patisseries',
+    name: 'Mille-feuille',
+    ipa: '/mil.fœj/',
+    en: 'Custard slice',
+    short: 'Three layers of puff pastry, vanilla cream, feathered glaze',
+    definition:
+      'Three sheets of crisp, well-baked puff pastry sandwiched with vanilla pastry cream, finished with white fondant feathered with chocolate. The name means “a thousand leaves”: six single turns give the pastry about 729 layers of butter.',
+    origin:
+      'Puff pastry desserts appear in French cookbooks from the 17th century. The mille-feuille as it is sold today took shape in 19th-century Paris, where the pâtissier Adolphe Seugnot is often credited with making it famous. In North America it is called a Napoleon.',
+    taste: 'Crunchy, caramelised pastry against soft vanilla cream, with a sweet, smooth top.',
+    yield: { n: 8, unit: 'slices', unit1: 'slice', size: 'one 30 × 12 cm cake' },
+    times: { prep: '1 h 30', rest: '4 h', bake: '25–30 min' },
+    level: 'Advanced',
+    allergens: ['Gluten', 'Milk', 'Eggs', 'Soy (in chocolate)'],
+    components: [
+      { title: 'Puff pastry (pâte feuilletée)', items: [
+        { q: 250, u: 'g', n: 'plain flour (French T55)' },
+        { q: 5, u: 'g', n: 'fine salt' },
+        { q: 125, u: 'g', n: 'cold water' },
+        { q: 25, u: 'g', n: 'unsalted butter, melted' },
+        { q: 190, u: 'g', n: 'cold unsalted butter, 82 % fat, for laminating' },
+      ], note: 'Short on time? Use 500 g of all-butter puff pastry instead.' },
+      { title: 'Vanilla pastry cream', items: [
+        { q: 750, u: 'g', n: 'whole milk' },
+        { q: 1, u: '', n: 'vanilla pod, split and scraped' },
+        { q: 140, u: 'g', n: 'egg yolks (about 7)' },
+        { q: 150, u: 'g', n: 'caster sugar' },
+        { q: 60, u: 'g', n: 'cornflour' },
+        { q: 50, u: 'g', n: 'unsalted butter' },
+      ]},
+      { title: 'Glaze', items: [
+        { q: 250, u: 'g', n: 'white pâtissier fondant' },
+        { q: 30, u: 'g', n: 'dark chocolate, melted' },
+      ]},
+    ],
+    steps: [
+      'Make the puff pastry with six single turns, as for the chausson aux pommes, and chill it for 1 h.',
+      'Roll it into a 36 × 30 cm rectangle, 2 mm thick. Prick it all over with a fork and chill for 30 min.',
+      'Bake at 180 °C (fan) between two baking trays — one on top to keep it flat — for 25–30 min, until deep amber all the way through. Pale pastry turns soggy. Cool, trim the edges and cut into 3 strips of 12 × 30 cm.',
+      'Make the pastry cream as for the tarte aux fraises, cover with film touching the surface and chill for 2 h. Whisk it smooth and put it in a piping bag with a 12 mm plain tip.',
+      'Glaze the flattest strip first: warm the fondant to 35–37 °C and spread it evenly. Straight away, pipe thin lines of chocolate along the length 1.5 cm apart, then drag the tip of a knife across them, alternating direction each time, to make the feathered pattern. Leave to set.',
+      'Assemble: a plain strip, a layer of piped cream, the second strip, more cream, then the glazed strip on top. Chill for 1 h.',
+      'Slice into 8 with a sharp serrated knife, using a gentle sawing motion.',
+    ],
+    tip: 'Turn the pastry strips upside down before assembling: the flat underside makes a neater cake.',
+  },
+  {
+    id: 'paris-brest',
+    category: 'patisseries',
+    name: 'Paris-Brest',
+    ipa: '/pa.ʁi bʁɛst/',
+    en: 'Praline cream choux ring',
+    short: 'Choux ring, hazelnut praline cream, flaked almonds',
+    definition:
+      'A ring of choux pastry topped with flaked almonds, split and filled with crème mousseline au praliné — a pastry cream whipped with butter and caramelised hazelnut paste — then dusted with icing sugar.',
+    origin:
+      'Created in 1910 by Louis Durand, a pâtissier in Maisons-Laffitte, to honour the Paris–Brest–Paris bicycle race. Its round shape is meant to look like a bicycle wheel.',
+    taste: 'Crisp, nutty choux and a rich, light hazelnut-caramel cream that melts on the tongue.',
+    yield: { n: 8, unit: 'individual rings', unit1: 'ring' },
+    times: { prep: '1 h 15', rest: '2 h', bake: '35–40 min' },
+    level: 'Advanced',
+    allergens: ['Gluten', 'Milk', 'Eggs', 'Nuts (hazelnuts, almonds)'],
+    components: [
+      { title: 'Choux pastry', items: [
+        { q: 65, u: 'g', n: 'water' },
+        { q: 60, u: 'g', n: 'whole milk' },
+        { q: 55, u: 'g', n: 'unsalted butter' },
+        { q: 2, u: 'g', n: 'fine salt' },
+        { q: 3, u: 'g', n: 'caster sugar' },
+        { q: 70, u: 'g', n: 'plain flour (French T55)' },
+        { q: 125, u: 'g', n: 'eggs (about 2½), beaten' },
+        { q: 40, u: 'g', n: 'flaked almonds' },
+      ]},
+      { title: 'Praline mousseline cream', items: [
+        { q: 250, u: 'g', n: 'whole milk' },
+        { q: 60, u: 'g', n: 'egg yolks (about 3)' },
+        { q: 60, u: 'g', n: 'caster sugar' },
+        { q: 25, u: 'g', n: 'cornflour' },
+        { q: 40, u: 'g', n: 'unsalted butter, for the hot cream' },
+        { q: 110, u: 'g', n: 'unsalted butter, very soft, for whipping' },
+        { q: 120, u: 'g', n: 'hazelnut praline paste (50 % nuts)' },
+      ]},
+      { title: 'To finish', items: [
+        { q: 20, u: 'g', n: 'icing sugar' },
+      ]},
+    ],
+    steps: [
+      'Make the choux pastry as for the éclairs: boil the water, milk, butter, salt and sugar, beat in the flour, dry the dough for 1–2 min, then beat in the egg gradually until glossy.',
+      'Draw eight 8 cm circles on baking paper and turn it over. Using a 14 mm star tip, pipe a ring on each circle, then a second ring inside it, touching. Sprinkle generously with flaked almonds and tip off the excess.',
+      'Bake at 165 °C (fan) for 35–40 min, until deep golden. Keep the oven closed for the first 25 min. Cool on a rack.',
+      'Make a pastry cream with the milk, yolks, sugar and cornflour, boiling it for 2 min. Off the heat, whisk in the first 40 g of butter. Cover with film touching the surface and cool to room temperature, about 20 °C.',
+      'Beat the cream until smooth, then beat in the very soft butter and the praline paste for 5 min, until pale and light.',
+      'Slice the rings in half horizontally. Pipe the cream onto the bases in tall rosettes with a star tip, put the tops back on and dust with icing sugar.',
+    ],
+    tip: 'The cream and the butter must be the same temperature, around 20 °C, or the mousseline will split. If it does, warm the bowl briefly and beat again.',
+  },
+  {
+    id: 'tarte-au-citron',
+    category: 'patisseries',
+    name: 'Tarte au citron meringuée',
+    ipa: '/taʁt o si.tʁɔ̃ mə.ʁɛ̃.ɡe/',
+    en: 'Lemon meringue tart',
+    short: 'Sharp lemon cream under torched meringue',
+    definition:
+      'A sweet-pastry shell filled with tangy, buttery lemon cream and topped with Italian meringue, piped and toasted with a torch. Italian meringue is cooked by hot sugar syrup, so it is stable and holds its shape for a day.',
+    origin:
+      'Meringue appears in French cookbooks at the end of the 17th century. The French lemon tart, with its silky butter-enriched lemon cream, is a classic of the 20th-century pâtisserie window; the meringue version is its most famous variation.',
+    taste: 'Bright, sharp lemon softened by butter, against marshmallowy, caramel-edged meringue and crisp pastry.',
+    yield: { n: 8, unit: 'slices', unit1: 'slice', size: 'one 24 cm tart' },
+    times: { prep: '1 h', rest: '3 h 30', bake: '20–25 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten', 'Milk', 'Eggs', 'Nuts (almonds)'],
+    components: [
+      { title: 'Sweet pastry (pâte sucrée)', items: [
+        { q: 200, u: 'g', n: 'plain flour (French T55)' },
+        { q: 100, u: 'g', n: 'cold unsalted butter, diced' },
+        { q: 80, u: 'g', n: 'icing sugar' },
+        { q: 25, u: 'g', n: 'ground almonds' },
+        { q: 50, u: 'g', n: 'egg (1)' },
+        { q: 1, u: 'g', n: 'salt (a pinch)' },
+      ]},
+      { title: 'Lemon cream', items: [
+        { q: 150, u: 'g', n: 'fresh lemon juice (3–4 lemons)' },
+        { q: 2, u: '', n: 'unwaxed lemons, finely grated zest' },
+        { q: 150, u: 'g', n: 'caster sugar' },
+        { q: 150, u: 'g', n: 'eggs (3)' },
+        { q: 20, u: 'g', n: 'cornflour' },
+        { q: 120, u: 'g', n: 'unsalted butter, diced, cool' },
+      ]},
+      { title: 'Italian meringue', items: [
+        { q: 100, u: 'g', n: 'egg whites (about 3)' },
+        { q: 200, u: 'g', n: 'caster sugar' },
+        { q: 60, u: 'g', n: 'water' },
+      ]},
+    ],
+    steps: [
+      'Make the sweet pastry, line a 24 cm tart ring and blind-bake it until fully golden, as for the tarte aux fraises. Cool completely.',
+      'Rub the lemon zest into the sugar with your fingertips to release its oils. Whisk in the eggs and cornflour, then the lemon juice.',
+      'Cook over medium heat, whisking constantly, until the cream thickens and boils. Boil for 1 min, then strain into a jug.',
+      'Let it cool to 40–45 °C, then blend in the butter with a stick blender until silky. Pour into the shell, smooth the top and chill for 2 h.',
+      'For the meringue, heat the sugar and water. When the syrup reaches 110 °C, start whisking the egg whites. At 118 °C, pour the syrup in a thin stream down the side of the bowl while whisking on high.',
+      'Keep whisking for about 10 min, until the meringue is thick, glossy and only just warm.',
+      'Pipe the meringue over the lemon cream in small peaks with a 12 mm tip and toast the tips with a kitchen torch. Keep chilled and eat within 24 h.',
+    ],
+    tip: 'Blending the butter in while the cream is warm, not hot, is what gives the smooth, almost mousse-like texture.',
+  },
+  {
+    id: 'macarons',
+    category: 'patisseries',
+    name: 'Macarons à la framboise',
+    ipa: '/ma.ka.ʁɔ̃ a la fʁɑ̃.bwaz/',
+    en: 'Raspberry macarons',
+    short: 'Almond shells, raspberry white-chocolate ganache',
+    definition:
+      'Two smooth almond-meringue shells with a ruffled “foot”, sandwiched with raspberry and white chocolate ganache. Made by the Italian-meringue method, where hot syrup is whipped into the egg whites for a sturdy, glossy batter.',
+    origin:
+      'Single almond macarons have been baked in French towns such as Nancy and Saint-Émilion for centuries. The filled double macaron — the macaron parisien — appeared in Paris in the early 20th century; the house of Ladurée credits Pierre Desfontaines.',
+    taste: 'A thin crisp shell, a soft chewy centre, and a creamy, tangy raspberry filling.',
+    yield: { n: 30, unit: 'macarons', unit1: 'macaron' },
+    times: { prep: '1 h 15', rest: '24 h', bake: '13–15 min' },
+    level: 'Advanced',
+    allergens: ['Nuts (almonds)', 'Eggs', 'Milk', 'Soy (in chocolate)'],
+    components: [
+      { title: 'Shells', items: [
+        { q: 150, u: 'g', n: 'finely ground blanched almonds' },
+        { q: 150, u: 'g', n: 'icing sugar' },
+        { q: 55, u: 'g', n: 'egg whites, for the almond paste' },
+        { q: 150, u: 'g', n: 'caster sugar' },
+        { q: 40, u: 'g', n: 'water' },
+        { q: 55, u: 'g', n: 'egg whites, for the meringue' },
+        { q: null, u: '', n: 'raspberry-red powdered food colouring' },
+      ]},
+      { title: 'Raspberry ganache', items: [
+        { q: 200, u: 'g', n: 'white chocolate, chopped' },
+        { q: 100, u: 'g', n: 'raspberry purée, sieved (from about 150 g raspberries)' },
+        { q: 50, u: 'g', n: 'whipping cream (35 % fat)' },
+        { q: 15, u: 'g', n: 'unsalted butter, soft' },
+      ]},
+    ],
+    steps: [
+      'Make the ganache first: bring the raspberry purée and cream to a simmer, pour over the white chocolate and stir from the centre until smooth. Stir in the butter once it cools to about 35 °C. Cover and chill until thick enough to pipe, at least 3 h.',
+      'Sift the ground almonds and icing sugar together. Mix with the first 55 g of egg whites and the colouring into a thick paste.',
+      'Heat the caster sugar and water. When the syrup reaches 110 °C, start whisking the second 55 g of whites. At 118 °C, pour the syrup in a thin stream onto the whites, whisking on high, and whisk until the meringue is glossy and cooled to about 50 °C.',
+      'Fold the meringue into the almond paste in three additions. Keep folding and pressing the batter against the side of the bowl until it flows off the spatula in a thick ribbon and the trail disappears in about 30 seconds.',
+      'Pipe 3.5 cm rounds with a 10 mm plain tip on lined trays. Tap the trays firmly on the counter to release air bubbles.',
+      'Leave the shells for 20–30 min, until a skin forms and they are no longer sticky to the touch.',
+      'Bake at 150 °C (fan) for 13–15 min. Cool completely before lifting them off the paper.',
+      'Pair the shells by size, pipe a generous dot of ganache on half of them and sandwich. Refrigerate for 24 h so the shells soften slightly, and serve at room temperature.',
+    ],
+    tip: 'Age your egg whites: separate them a day or two ahead and keep them covered in the fridge. They make a steadier meringue.',
+  },
+
+  // ───────────────────────────── PAINS
+  {
+    id: 'baguette',
+    category: 'pains',
+    name: 'Baguette de tradition',
+    ipa: '/ba.ɡɛt də tʁa.di.sjɔ̃/',
+    en: 'Traditional French baguette',
+    short: 'Flour, water, salt, yeast — nothing else',
+    definition:
+      'A long, thin loaf with a crackling crust, open creamy crumb and sharp, raised score marks. Under the French bread decree of 1993, a “baguette de tradition française” may contain only flour, water, salt and yeast or sourdough — no additives, and never frozen.',
+    origin:
+      'Long loaves were sold in Paris from the 19th century, and the baguette became France’s everyday bread in the 20th. In 2022, the artisanal know-how and culture of the baguette were added to UNESCO’s list of Intangible Cultural Heritage.',
+    taste: 'A thin, shattering crust with roasted, nutty notes and a soft, chewy, slightly sweet crumb with irregular holes.',
+    yield: { n: 3, unit: 'baguettes', unit1: 'baguette' },
+    times: { prep: '45 min', rest: '16 h, overnight', bake: '22–25 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten'],
+    components: [
+      { title: 'Dough', items: [
+        { q: 500, u: 'g', n: 'bread flour (French T65 “tradition”)' },
+        { q: 325, u: 'g', n: 'water, about 20 °C' },
+        { q: 25, u: 'g', n: 'water, added later (bassinage)' },
+        { q: 10, u: 'g', n: 'fine sea salt' },
+        { q: 3, u: 'g', n: 'fresh yeast', note: 'or 1 g instant dried yeast' },
+      ]},
+      { title: 'For shaping and baking', items: [
+        { q: null, u: '', n: 'rice flour or semolina, for dusting' },
+        { q: 200, u: 'ml', n: 'boiling water, for steam' },
+      ]},
+    ],
+    steps: [
+      'Mix the flour and the first 325 g of water just until no dry flour remains. Cover and rest for 30–60 min (autolyse).',
+      'Add the salt, crumbled yeast and the remaining 25 g of water. Knead for 5–8 min, until smooth and stretchy.',
+      'Cover and leave at about 24 °C for 1 h 30, giving the dough a set of stretch-and-folds after 30 and 60 min.',
+      'Cover tightly and refrigerate for 12–15 h.',
+      'Tip the cold dough onto the counter and divide into 3 pieces of about 285 g. Pre-shape each loosely into a log and rest for 30 min.',
+      'Shape into 35–40 cm baguettes with tapered ends. Lay them seam up on a floured linen cloth, pleating the cloth between them.',
+      'Proof for 45–60 min at room temperature, until a floured fingertip leaves a dent that springs back slowly. Meanwhile heat the oven to 250 °C for 45 min with a baking stone or upturned tray and an empty tray on the bottom shelf.',
+      'Roll the baguettes onto a peel or board, seam down. Score each with 5 long, overlapping cuts held almost parallel to the loaf, blade at a shallow angle.',
+      'Slide them onto the hot stone, pour the boiling water into the bottom tray and close the door. Bake for 10 min, then open the door briefly to let the steam out and bake at 240 °C for 12–15 min more, until deep golden brown.',
+      'Cool on a rack for at least 20 min. Listen: a good crust crackles as it cools.',
+    ],
+    tip: 'The overnight rest in the fridge does the work — it develops the flavour and the creamy crumb with only a pinch of yeast.',
+  },
+  {
+    id: 'pain-de-campagne',
+    category: 'pains',
+    name: 'Pain de campagne',
+    ipa: '/pɛ̃ d(ə) kɑ̃.paɲ/',
+    en: 'Country sourdough loaf',
+    short: 'Sourdough, a little rye, thick crust',
+    definition:
+      'A large round country loaf leavened with natural sourdough, with a little rye flour for depth. It has a thick, crackling crust, a chewy, open crumb and a gentle tang, and it keeps well for several days.',
+    origin:
+      'For centuries this was the everyday bread of rural France, baked in big rounds in village ovens to last the week. Parisian bakers revived it in the 20th century as a rustic counterpart to the white baguette.',
+    taste: 'Deeply caramelised crust, moist and chewy crumb, with a mild sourness and an earthy note from the rye.',
+    yield: { n: 1, unit: 'large loaves', unit1: 'large loaf', size: 'one loaf of about 1 kg' },
+    times: { prep: '45 min', rest: '17 h, overnight', bake: '40–45 min' },
+    level: 'Intermediate',
+    allergens: ['Gluten'],
+    components: [
+      { title: 'Dough', items: [
+        { q: 450, u: 'g', n: 'bread flour (French T65)' },
+        { q: 50, u: 'g', n: 'wholemeal rye flour (French T130 or T170)' },
+        { q: 350, u: 'g', n: 'water, about 26 °C' },
+        { q: 100, u: 'g', n: 'active sourdough starter (100 % hydration)' },
+        { q: 10, u: 'g', n: 'fine sea salt' },
+      ]},
+      { title: 'For shaping', items: [
+        { q: null, u: '', n: 'rice flour, for the proofing basket' },
+      ]},
+    ],
+    steps: [
+      'Feed your starter 4–6 h ahead so it is bubbly and at its peak.',
+      'Mix both flours with the water until no dry flour remains. Cover and rest for 1 h.',
+      'Add the starter and salt and squeeze and fold them through the dough for 5 min, until it feels smooth.',
+      'Leave to rise at about 24 °C for 4 h. In the first 2 h, give it a set of stretch-and-folds every 30 min.',
+      'Turn the dough out and pre-shape it into a loose round. Rest for 20 min.',
+      'Shape a tight round loaf and place it seam up in a proofing basket dusted with rice flour. Cover and refrigerate for 12 h.',
+      'Heat the oven to 250 °C with a cast-iron casserole and its lid inside for 45 min.',
+      'Turn the cold loaf onto baking paper, score it — a square or a cross — and lower it into the hot casserole. Bake with the lid on for 20 min.',
+      'Remove the lid, lower to 230 °C and bake for 20–25 min more, until the crust is a deep chestnut brown.',
+      'Cool on a rack for at least 1 h before slicing; the crumb is still setting.',
+    ],
+    tip: 'Bake it darker than you think. Most of the flavour is in a well-caramelised crust.',
+  },
+];
+
+// Photos live in images/ as <id>-800.webp (cards, home page) and <id>-1400.webp
+// (product page). focus is the point to keep when cropping (0–1, from top left).
+// A product without an entry shows a plain card with its name instead.
+const PHOTOS = {};
+
+// Interface text and French product content. English product content
+// lives in data.js; anything missing here falls back to English.
+const UI = {
+  fr: {
+    htmlLang: 'fr',
+    langSwitch: 'EN',
+    langSwitchLabel: 'Read this site in English',
+    navMenu: 'La vitrine',
+    navVisit: 'Nous trouver',
+    tagline: 'Croissants, pâtisseries et pains, cuits ici chaque matin.',
+    heroBrowse: 'Voir la vitrine',
+    heroVisit: 'Nous trouver',
+    heroOpen: 'Voir la recette',
+    heroNow: 'En vitrine',
+    heroHint: 'Faites glisser la vitrine pour la faire tourner.',
+    carouselPrev: 'Pâtisserie précédente',
+    carouselNext: 'Pâtisserie suivante',
+    photoBy: 'Photo',
+    credits: 'Crédits photo',
+    creditsNote: 'Photos d’illustration, utilisées sous licence libre.',
+    menuTitle: 'Ce que nous cuisons',
+    menuIntro: 'Touchez une pâtisserie pour découvrir ce que c’est, d’où elle vient et sa recette complète.',
+    close: 'Fermer',
+    prev: 'Précédent',
+    next: 'Suivant',
+    whatIs: 'Qu’est-ce que c’est ?',
+    origin: 'D’où ça vient',
+    taste: 'En bouche',
+    makes: 'Pour',
+    prep: 'Préparation',
+    rest: 'Repos',
+    bake: 'Cuisson',
+    level: 'Niveau',
+    allergens: 'Allergènes',
+    ingredients: 'Ingrédients',
+    less: 'Moins',
+    more: 'Plus',
+    method: 'Méthode',
+    tip: 'Le conseil du boulanger',
+    print: 'Imprimer la recette',
+    recipeNote: 'Recettes écrites pour une cuisine familiale. Les quantités sont en grammes ; pesez tout, même les liquides.',
+    visitTitle: 'Nous trouver',
+    address: 'Adresse',
+    hours: 'Horaires',
+    phone: 'Téléphone',
+    directions: 'Itinéraire',
+    call: 'Appeler',
+    closed: 'Fermé',
+    toConfirm: 'À compléter',
+    days: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+    footer: 'Pains, viennoiseries et pâtisseries faits maison.',
+  },
+  en: {
+    htmlLang: 'en',
+    langSwitch: 'FR',
+    langSwitchLabel: 'Lire ce site en français',
+    navMenu: 'The counter',
+    navVisit: 'Visit',
+    tagline: 'Croissants, pastries and bread, baked here every morning.',
+    heroBrowse: 'Browse the counter',
+    heroVisit: 'Find us',
+    heroOpen: 'See the recipe',
+    heroNow: 'In the window',
+    heroHint: 'Drag the display to turn it.',
+    carouselPrev: 'Previous pastry',
+    carouselNext: 'Next pastry',
+    photoBy: 'Photo',
+    credits: 'Photo credits',
+    creditsNote: 'Illustrative photos, used under free licences.',
+    menuTitle: 'What we bake',
+    menuIntro: 'Tap any pastry to find out what it is, where it comes from, and how to make it.',
+    close: 'Close',
+    prev: 'Previous',
+    next: 'Next',
+    whatIs: 'What it is',
+    origin: 'Where it comes from',
+    taste: 'How it tastes',
+    makes: 'Makes',
+    prep: 'Active time',
+    rest: 'Resting',
+    bake: 'Baking',
+    level: 'Level',
+    allergens: 'Allergens',
+    ingredients: 'Ingredients',
+    less: 'Fewer',
+    more: 'More',
+    method: 'Method',
+    tip: 'Baker’s tip',
+    print: 'Print the recipe',
+    recipeNote: 'Recipes are written for home kitchens. Quantities are in grams; weigh everything, liquids included.',
+    visitTitle: 'Visit',
+    address: 'Address',
+    hours: 'Opening hours',
+    phone: 'Phone',
+    directions: 'Get directions',
+    call: 'Call',
+    closed: 'Closed',
+    toConfirm: 'To be added',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    footer: 'Bread, viennoiseries and pastries, made on site.',
+  },
+};
+
+const CATEGORIES_FR = {
+  viennoiseries: 'Pâtes feuilletées et briochées, pour le petit-déjeuner et le goûter',
+  patisseries: 'Tartes, choux et entremets',
+  pains: 'Pains façonnés et cuits sur place',
+};
+
+const LEVELS_FR = { Easy: 'Facile', Intermediate: 'Intermédiaire', Advanced: 'Confirmé' };
+const ALLERGENS_FR = {
+  Gluten: 'Gluten',
+  Milk: 'Lait',
+  Eggs: 'Œufs',
+  'Soy (in chocolate)': 'Soja (dans le chocolat)',
+  'Nuts (almonds)': 'Fruits à coque (amandes)',
+  'Nuts (hazelnuts, almonds)': 'Fruits à coque (noisettes, amandes)',
+};
+
+// Reusable French blocks
+const FR_DETREMPE = {
+  title: 'Détrempe',
+  items: [
+    'farine de force (T45 ou T55)',
+    'sucre en poudre',
+    'sel fin',
+    { n: 'levure fraîche', note: 'ou 7 g de levure sèche instantanée' },
+    'eau froide',
+    'lait entier froid',
+    'beurre doux, pommade',
+  ],
+};
+const FR_TOURAGE = { title: 'Beurre de tourage', items: ['beurre doux froid à 82 % de matière grasse (beurre de tourage)'] };
+const FR_DORURE = { title: 'Dorure', items: ['œuf', 'lait', 'pincée de sel'] };
+const FR_SUCREE = {
+  title: 'Pâte sucrée',
+  items: ['farine (T55)', 'beurre doux froid, en dés', 'sucre glace', 'poudre d’amande', 'œuf (1)', 'sel (une pincée)'],
+};
+
+const PRODUCTS_FR = {
+  croissant: {
+    short: 'Croustillant dehors, alvéolé dedans',
+    definition:
+      'Un croissant de pâte levée feuilletée au beurre. De fines couches de beurre sont enfermées dans la pâte et pliées encore et encore : au four, l’eau du beurre se change en vapeur et soulève les feuillets. On obtient une croûte qui s’effeuille et une mie alvéolée comme un nid d’abeille.',
+    origin:
+      'Son ancêtre est le kipferl autrichien, arrivé à Paris avec les boulangeries viennoises des années 1830 — d’où le mot « viennoiserie ». Le croissant feuilleté que nous connaissons s’est imposé dans les boulangeries françaises au début du XXe siècle. L’histoire d’un croissant inventé pour fêter une victoire sur les Ottomans en 1683 est une légende.',
+    taste: 'Feuilleté et craquant dehors, moelleux et filant dedans, avec un goût de beurre franc et très peu de sucre.',
+    yield: { unit: 'croissants', unit1: 'croissant' },
+    times: { prep: '1 h 15', rest: '14 h (une nuit)', bake: '16–18 min' },
+    components: [FR_DETREMPE, FR_TOURAGE, FR_DORURE],
+    steps: [
+      'Mélangez la farine, le sucre et le sel, puis ajoutez la levure d’un côté du bol, sans contact avec le sel. Ajoutez l’eau froide, le lait et le beurre pommade et pétrissez 4–5 min en vitesse lente, juste jusqu’à obtenir une pâte lisse. Elle doit rester fraîche (environ 24 °C) et ne pas devenir élastique.',
+      'Aplatissez-la en un rectangle de 2 cm d’épaisseur, filmez-la et réservez au réfrigérateur au moins 2 h, idéalement une nuit.',
+      'Tapez le beurre de tourage entre deux feuilles de papier cuisson pour former un carré de 17 × 17 cm et 1 cm d’épaisseur. Réfrigérez-le jusqu’à ce qu’il soit froid mais souple, de la même fermeté que la pâte.',
+      'Abaissez la pâte en un rectangle de 35 × 18 cm. Posez le beurre au centre, rabattez les deux extrémités pour qu’elles se rejoignent au milieu et soudez la jointure.',
+      'Abaissez en une bande de 60 × 20 cm et donnez un tour double (en portefeuille) : rabattez les deux extrémités au centre, puis pliez en deux. Filmez et réfrigérez 30 min.',
+      'Abaissez de nouveau à 60 × 20 cm et donnez un tour simple, en trois. Filmez et réfrigérez 30 min.',
+      'Abaissez la pâte en un rectangle de 60 × 25 cm, épais de 4–5 mm. Découpez 12 longs triangles de 9 cm de base.',
+      'Entaillez le milieu de chaque base sur 1 cm, étirez délicatement le triangle et roulez-le depuis la base sans appuyer. Disposez sur des plaques garnies de papier, la pointe en dessous.',
+      'Laissez pousser à 25–27 °C environ 2 h, jusqu’à ce que les croissants aient doublé et tremblent quand on secoue la plaque. Ne dépassez jamais 28 °C, sinon le beurre fond.',
+      'Dorez délicatement. Enfournez à 180 °C (chaleur tournante) 16–18 min, jusqu’à une belle couleur dorée. Laissez refroidir 15 min sur une grille.',
+    ],
+    tip: 'Tout doit rester froid. Si le beurre casse en éclats à l’abaisse, il est trop froid : attendez 5 min. S’il commence à percer, remettez la pâte 15 min au réfrigérateur.',
+  },
+  'pain-au-chocolat': {
+    en: 'Chocolatine, dans le Sud-Ouest',
+    short: 'Deux barres de chocolat noir roulées dans la pâte à croissant',
+    definition:
+      'Un rectangle de pâte à croissant roulé autour de deux bâtons de chocolat noir. C’est la même pâte levée feuilletée que le croissant, façonnée en petit paquet : chaque bouchée mêle feuilletage et chocolat fondant.',
+    origin:
+      'Il appartient à la famille des pâtisseries viennoises installées en France au XIXe siècle, devenues un classique du petit-déjeuner au XXe. Dans le Sud-Ouest et au Québec, on dit « chocolatine » — un débat que les Français prennent très au sérieux.',
+    taste: 'Un feuilletage beurré et croustillant, traversé de deux lignes de chocolat amer qui restent fondantes pendant des heures.',
+    yield: { unit: 'pains au chocolat', unit1: 'pain au chocolat' },
+    times: { prep: '1 h 15', rest: '14 h (une nuit)', bake: '16–18 min' },
+    components: [
+      FR_DETREMPE,
+      FR_TOURAGE,
+      { title: 'Garniture', items: ['bâtons de chocolat boulanger (environ 5 g chacun, 44–48 % de cacao)'] },
+      FR_DORURE,
+    ],
+    steps: [
+      'Préparez, reposez et tourez la pâte exactement comme pour les croissants : détrempe, une nuit au froid, beurre de 17 × 17 cm enfermé, puis un tour double et un tour simple, avec 30 min de réfrigérateur après chacun.',
+      'Abaissez la pâte en un rectangle de 4–5 mm d’épaisseur et découpez 12 rectangles de 8 × 15 cm.',
+      'Posez un bâton de chocolat sur un petit côté, rabattez la pâte dessus, ajoutez un second bâton et roulez jusqu’au bout. Disposez sur des plaques, jointure en dessous, et appuyez légèrement.',
+      'Laissez pousser à 25–27 °C environ 2 h, jusqu’à ce qu’ils aient doublé et tremblent.',
+      'Dorez et enfournez à 180 °C (chaleur tournante) 16–18 min, jusqu’à une belle couleur dorée. Laissez refroidir 15 min sur une grille.',
+    ],
+    tip: 'Placez la jointure bien au centre, en dessous : sur le côté, le pain au chocolat s’ouvre pendant la pousse.',
+  },
+  'chausson-aux-pommes': {
+    short: 'Pâte feuilletée et compote de pommes à la vanille',
+    definition:
+      'Un chausson de pâte feuilletée replié sur une compote de pommes, scellé par un bord cannelé, rayé d’un motif en feuille et lustré au sirop. Il doit son nom à sa forme de pantoufle. C’est l’une des viennoiseries classiques de toutes les boulangeries françaises, au petit-déjeuner comme au goûter.',
+    origin:
+      'La ville de Saint-Calais, dans la Sarthe, en fait remonter l’origine à 1630 : lors d’une épidémie, la châtelaine aurait distribué farine et pommes aux plus pauvres. Saint-Calais célèbre toujours la fête du chausson aux pommes chaque mois de septembre.',
+    taste: 'Des feuillets beurrés et craquants autour d’une compote fondante, acidulée et vanillée, sous un dessus laqué et collant.',
+    yield: { unit: 'chaussons', unit1: 'chausson' },
+    times: { prep: '1 h 15', rest: '3 h', bake: '30–35 min' },
+    components: [
+      { title: 'Pâte feuilletée', items: ['farine (T55)', 'sel fin', 'eau froide', 'beurre doux fondu', 'beurre doux froid à 82 % de matière grasse, pour le tourage'], note: 'Pressé ? Utilisez 600 g de pâte feuilletée pur beurre du commerce.' },
+      { title: 'Compote de pommes', items: [
+        'pommes, environ 5 (Golden, Reine des Reinettes ou Boskoop)',
+        'sucre en poudre',
+        'beurre doux',
+        { n: 'gousse de vanille, fendue', note: 'ou 1 c. à café d’extrait de vanille' },
+        'jus de citron (1 c. à soupe)',
+        'eau (2 c. à soupe)',
+        'pincée de cannelle (facultatif)',
+      ]},
+      { title: 'Dorure', items: ['jaune d’œuf', 'lait', 'pincée de sel'] },
+      { title: 'Sirop de brillance', items: ['sucre en poudre', 'eau'] },
+    ],
+    steps: [
+      'Préparez la détrempe : mélangez la farine, le sel, l’eau et le beurre fondu juste jusqu’à ce que la pâte se tienne. Formez une boule, incisez une croix profonde sur le dessus, filmez et réfrigérez 1 h.',
+      'Tapez le beurre de tourage entre deux feuilles de papier cuisson pour former un carré de 13 cm. Il doit être froid mais souple.',
+      'Abaissez la pâte à partir de la croix en quatre rabats, posez le beurre au centre et refermez les rabats pour l’enfermer complètement.',
+      'Abaissez en une bande de 45 × 15 cm, pliez en trois, tournez d’un quart et recommencez : ce sont deux tours simples. Filmez et réfrigérez 30 min. Recommencez deux fois, pour six tours au total — environ 729 couches de beurre.',
+      'Pendant ce temps, préparez la compote : épluchez, épépinez et coupez les pommes en dés de 1 cm. Faites-les cuire à couvert sur feu moyen avec le sucre, le beurre, la vanille, le jus de citron et l’eau 15–20 min, en remuant de temps en temps, jusqu’à ce qu’elles soient tendres mais gardent quelques morceaux. Découvrez les 5 dernières minutes pour évaporer le liquide. Retirez la gousse et laissez refroidir complètement au réfrigérateur — une garniture tiède fait fondre le feuilletage.',
+      'Abaissez la pâte à 3 mm et découpez 8 disques avec un emporte-pièce cannelé de 14 cm. Passez le rouleau au milieu de chaque disque pour l’allonger en un ovale d’environ 16 cm.',
+      'Humectez le bord d’une moitié au pinceau, déposez 60 g (une bonne cuillère à soupe) de compote froide sur cette moitié, rabattez l’autre moitié et appuyez fermement sur les bords pour souder. Retournez sur une plaque garnie de papier, côté lisse au-dessus.',
+      'Dorez, réfrigérez 30 min, puis dorez une seconde fois.',
+      'Avec la pointe d’un couteau, rayez un motif en feuille sans percer la pâte, puis faites 2–3 petits trous pour laisser échapper la vapeur.',
+      'Enfournez à 200 °C pendant 10 min, puis baissez à 180 °C et poursuivez 20–25 min, jusqu’à ce que les chaussons soient bien gonflés et dorés.',
+      'Faites bouillir le sucre et l’eau 1 min et badigeonnez les chaussons dès la sortie du four. Laissez refroidir 15 min : la compote est brûlante.',
+    ],
+    tip: 'C’est la seconde dorure, après le passage au froid, qui donne cette couleur profonde et régulière ; le sirop final donne la brillance.',
+  },
+  brioche: {
+    short: 'Brioche au beurre et aux œufs, en moule cannelé',
+    definition:
+      'Une pâte levée riche, mouillée aux œufs au lieu de l’eau et chargée en beurre, cuite dans un petit moule cannelé et coiffée d’une petite boule de pâte : la « tête ». C’est la brioche parisienne.',
+    origin:
+      'On cuit de la brioche en France depuis le Moyen Âge, et l’on attribue souvent sa richesse au beurre normand. La célèbre phrase « qu’ils mangent de la brioche » vient des Confessions de Rousseau, écrites avant que Marie-Antoinette ait pu la prononcer.',
+    taste: 'Légère et fondante, elle se détache en fils moelleux, sous une croûte brune et brillante au goût sucré d’œuf et de beurre.',
+    yield: { unit: 'brioches', unit1: 'brioche' },
+    times: { prep: '45 min', rest: '15 h (une nuit)', bake: '12–15 min' },
+    components: [
+      { title: 'Pâte à brioche', items: [
+        'farine de force (T45)',
+        'sucre en poudre',
+        'sel fin',
+        { n: 'levure fraîche', note: 'ou 4 g de levure sèche instantanée' },
+        'œufs froids (environ 3)',
+        'lait entier froid',
+        'beurre doux en dés, frais mais souple',
+      ]},
+      { title: 'Dorure', items: ['œuf', 'pincée de sel'] },
+      { title: 'Pour les moules', items: ['beurre pommade'] },
+    ],
+    steps: [
+      'Mettez la farine, le sucre, le sel et la levure dans la cuve d’un batteur, sans mettre la levure au contact du sel. Ajoutez les œufs et le lait et pétrissez 5 min en vitesse lente, puis 8–10 min en vitesse moyenne, jusqu’à ce que la pâte se décolle des parois.',
+      'Incorporez le beurre quelques dés à la fois, en attendant que chaque ajout soit absorbé. Pétrissez jusqu’à obtenir une pâte lisse et brillante, qui s’étire en un voile fin et translucide. Elle doit rester sous 25 °C.',
+      'Couvrez et laissez 1 h à température ambiante. Dégazez, couvrez et réfrigérez une nuit (environ 12 h).',
+      'Beurrez dix moules à brioche cannelés de 8 cm. Divisez la pâte froide en 10 pâtons d’environ 55 g et boulez-les serré.',
+      'Avec le tranchant de la main, roulez chaque boule au quart de sa longueur pour former une petite tête reliée par un cou fin. Déposez-la dans le moule, le corps en premier, puis enfoncez la tête au centre avec un doigt fariné.',
+      'Laissez pousser à environ 26 °C pendant 2 h, jusqu’à ce que les brioches aient doublé.',
+      'Dorez délicatement, attendez 10 min et dorez de nouveau. Enfournez à 180 °C 12–15 min, jusqu’à une couleur brun doré profond.',
+      'Démoulez aussitôt et laissez refroidir sur une grille.',
+    ],
+    tip: 'La pâte froide se façonne beaucoup mieux : travaillez-la à la sortie du réfrigérateur et, si elle ramollit, remettez-la 10 min au froid.',
+  },
+  eclair: {
+    short: 'Pâte à choux, crème au chocolat, glaçage brillant',
+    definition:
+      'Un long bâton de pâte à choux cuit creux, garni de crème pâtissière au chocolat et trempé dans un fondant au chocolat brillant. La pâte à choux cuit deux fois — sur le feu puis au four — et gonfle sous l’effet de la vapeur, ce qui laisse la place pour la crème.',
+    origin:
+      'La pâte à choux a été perfectionnée par les grands pâtissiers du XIXe siècle, Antonin Carême en tête, et l’éclair apparaît dans les livres de cuisine français au milieu de ce siècle. Pourquoi « éclair » ? Parce qu’il se mange en un éclair, disent les uns ; pour l’éclat de son glaçage, disent les autres.',
+    taste: 'Une coque légère au goût d’œuf, une crème au chocolat fraîche et soyeuse, et un glaçage sucré et brillant.',
+    yield: { unit: 'éclairs', unit1: 'éclair' },
+    times: { prep: '1 h', rest: '2 h', bake: '35–40 min' },
+    components: [
+      { title: 'Pâte à choux', items: ['eau', 'lait entier', 'beurre doux', 'sel fin', 'sucre en poudre', 'farine (T55)', 'œufs battus (environ 5)'] },
+      { title: 'Crème pâtissière au chocolat', items: ['lait entier', 'jaunes d’œufs (environ 5)', 'sucre en poudre', 'fécule de maïs', 'chocolat noir 64–70 %, haché', 'beurre doux'] },
+      { title: 'Glaçage au chocolat', items: ['fondant pâtissier blanc', 'chocolat noir 70 %, fondu', 'sirop de sucre ou eau, pour détendre'] },
+    ],
+    steps: [
+      'Portez à pleine ébullition l’eau, le lait, le beurre, le sel et le sucre. Hors du feu, versez toute la farine d’un coup et mélangez jusqu’à obtenir une pâte lisse.',
+      'Remettez sur feu moyen et remuez 1–2 min pour dessécher la pâte, jusqu’à ce qu’elle forme une boule et laisse un fin film au fond de la casserole.',
+      'Versez-la dans un bol et mélangez 1 min pour la tiédir. Ajoutez l’œuf petit à petit en mélangeant bien, jusqu’à ce que la pâte soit brillante et tombe de la spatule en formant un V épais. Vous n’aurez peut-être pas besoin de tout l’œuf.',
+      'Pochez des bâtons de 13–14 cm avec une douille cannelée de 18 mm sur une plaque garnie de papier, en les espaçant.',
+      'Enfournez à 165 °C (chaleur tournante) 35–40 min, jusqu’à ce qu’ils soient bien dorés et fermes. N’ouvrez pas le four pendant les 25 premières minutes, sinon ils retombent. Laissez refroidir sur une grille.',
+      'Pour la crème, faites chauffer le lait. Fouettez les jaunes, le sucre et la fécule, versez la moitié du lait chaud en fouettant, puis remettez le tout dans la casserole. Faites bouillir 2 min sans cesser de fouetter.',
+      'Hors du feu, ajoutez le chocolat et le beurre et mélangez jusqu’à ce que la crème soit lisse. Filmez au contact et réfrigérez 2 h.',
+      'Fouettez la crème froide pour la lisser. Percez trois petits trous sous chaque éclair et garnissez de 50 g de crème environ.',
+      'Faites tiédir le fondant avec le chocolat fondu à 35–37 °C, en le détendant avec un peu de sirop jusqu’à ce qu’il nappe comme une crème épaisse. Trempez le dessus de chaque éclair, lissez le bord du doigt et laissez figer 15 min.',
+    ],
+    tip: 'Ne dépassez pas 37 °C pour le fondant : plus chaud, il fige terne au lieu de briller.',
+  },
+  'tarte-aux-fraises': {
+    short: 'Pâte sucrée, crème vanille, fraises fraîches',
+    definition:
+      'Un fond de pâte sucrée croustillant garni de crème pâtissière à la vanille et couvert de fraises fraîches nappées d’un glaçage léger. C’est la tarte qui remplit les vitrines des boulangeries du printemps au début de l’été.',
+    origin:
+      'Les tartes aux fruits sur crème pâtissière se sont imposées dans la pâtisserie française au XIXe siècle. Les meilleures se font en pleine saison, d’avril à juillet, avec des variétés françaises parfumées comme la Gariguette ou la Mara des Bois.',
+    taste: 'Une pâte beurrée et sablée, une crème vanille fraîche et des fraises juteuses et légèrement acidulées sous un nappage brillant.',
+    yield: { unit: 'parts', unit1: 'part', size: 'une tarte de 24 cm' },
+    times: { prep: '50 min', rest: '3 h 30', bake: '20–25 min' },
+    components: [
+      FR_SUCREE,
+      { title: 'Crème pâtissière à la vanille', items: ['lait entier', 'gousse de vanille, fendue et grattée', 'jaunes d’œufs (environ 4)', 'sucre en poudre', 'fécule de maïs', 'beurre doux'] },
+      { title: 'Garniture', items: ['fraises (Gariguette ou Mara des Bois)', 'gelée de groseille ou nappage neutre'] },
+    ],
+    steps: [
+      'Sablez le beurre avec la farine, le sucre glace, la poudre d’amande et le sel jusqu’à obtenir une texture de sable. Ajoutez l’œuf et rassemblez la pâte sans la pétrir. Aplatissez, filmez et réfrigérez 1 h.',
+      'Abaissez la pâte à 3 mm et foncez un cercle ou un moule de 24 cm. Piquez le fond à la fourchette et réfrigérez 30 min.',
+      'Garnissez de papier cuisson et de billes de cuisson et enfournez à 170 °C (chaleur tournante) 15 min. Retirez le papier et les billes et poursuivez 5–10 min, jusqu’à une couleur dorée uniforme. Laissez refroidir complètement.',
+      'Préparez la crème pâtissière : faites chauffer le lait avec la gousse et les graines de vanille. Fouettez les jaunes, le sucre et la fécule, versez la moitié du lait chaud en fouettant, remettez le tout dans la casserole et faites bouillir 2 min en fouettant. Ajoutez le beurre, retirez la gousse, filmez au contact et réfrigérez 2 h.',
+      'Fouettez la crème froide pour la lisser et étalez-la dans le fond de tarte en une couche régulière de 1,5 cm.',
+      'Équeutez les fraises et coupez-les en deux dans la longueur. Disposez-les en cercles serrés, de l’extérieur vers le centre.',
+      'Faites tiédir la gelée avec une cuillère à café d’eau et badigeonnez-en les fraises. Réfrigérez 30 min et servez dans la journée.',
+    ],
+    tip: 'Badigeonnez le fond refroidi d’une fine couche de chocolat blanc fondu avant d’ajouter la crème : la pâte reste croustillante des heures.',
+  },
+  'mille-feuille': {
+    short: 'Trois feuilletages, crème vanille, glaçage marbré',
+    definition:
+      'Trois abaisses de pâte feuilletée bien cuite et croustillante, garnies de crème pâtissière à la vanille et recouvertes d’un fondant blanc marbré de chocolat. Six tours simples donnent environ 729 couches de beurre — d’où ses « mille feuilles ».',
+    origin:
+      'Les desserts de pâte feuilletée apparaissent dans les livres de cuisine français dès le XVIIe siècle. Le mille-feuille tel qu’on le vend aujourd’hui a pris forme dans le Paris du XIXe siècle, où l’on attribue souvent sa renommée au pâtissier Adolphe Seugnot. En Amérique du Nord, on l’appelle « Napoleon ».',
+    taste: 'Un feuilletage croquant et caramélisé contre une crème vanille onctueuse, sous un dessus sucré et lisse.',
+    yield: { unit: 'parts', unit1: 'part', size: 'un gâteau de 30 × 12 cm' },
+    times: { prep: '1 h 30', rest: '4 h', bake: '25–30 min' },
+    components: [
+      { title: 'Pâte feuilletée', items: ['farine (T55)', 'sel fin', 'eau froide', 'beurre doux fondu', 'beurre doux froid à 82 % de matière grasse, pour le tourage'], note: 'Pressé ? Utilisez 500 g de pâte feuilletée pur beurre du commerce.' },
+      { title: 'Crème pâtissière à la vanille', items: ['lait entier', 'gousse de vanille, fendue et grattée', 'jaunes d’œufs (environ 7)', 'sucre en poudre', 'fécule de maïs', 'beurre doux'] },
+      { title: 'Glaçage', items: ['fondant pâtissier blanc', 'chocolat noir, fondu'] },
+    ],
+    steps: [
+      'Préparez la pâte feuilletée à six tours simples, comme pour le chausson aux pommes, et réfrigérez-la 1 h.',
+      'Abaissez-la en un rectangle de 36 × 30 cm et 2 mm d’épaisseur. Piquez-la sur toute la surface et réfrigérez 30 min.',
+      'Enfournez à 180 °C (chaleur tournante) entre deux plaques — une dessus pour la garder plate — 25–30 min, jusqu’à une couleur ambrée à cœur. Un feuilletage pâle ramollit. Laissez refroidir, égalisez les bords et découpez 3 bandes de 12 × 30 cm.',
+      'Préparez la crème pâtissière comme pour la tarte aux fraises, filmez au contact et réfrigérez 2 h. Lissez-la au fouet et mettez-la dans une poche munie d’une douille unie de 12 mm.',
+      'Glacez d’abord la bande la plus plate : faites tiédir le fondant à 35–37 °C et étalez-le régulièrement. Aussitôt, pochez de fines lignes de chocolat dans la longueur, espacées de 1,5 cm, puis tirez la pointe d’un couteau en travers, en changeant de sens à chaque fois, pour former le marbrage. Laissez figer.',
+      'Montez le gâteau : une bande nature, une couche de crème pochée, la deuxième bande, encore de la crème, puis la bande glacée. Réfrigérez 1 h.',
+      'Coupez 8 parts avec un couteau-scie bien aiguisé, par petits mouvements de va-et-vient.',
+    ],
+    tip: 'Retournez les bandes de feuilletage avant le montage : le dessous, bien plat, donne un gâteau plus net.',
+  },
+  'paris-brest': {
+    short: 'Couronne de choux, crème praliné, amandes effilées',
+    definition:
+      'Une couronne de pâte à choux parsemée d’amandes effilées, ouverte et garnie de crème mousseline au praliné — une crème pâtissière montée au beurre et à la pâte de noisettes caramélisées — puis saupoudrée de sucre glace.',
+    origin:
+      'Créé en 1910 par Louis Durand, pâtissier à Maisons-Laffitte, en l’honneur de la course cycliste Paris–Brest–Paris. Sa forme ronde évoque une roue de vélo.',
+    taste: 'Un chou croustillant et grillé, et une crème riche et légère au goût de noisette caramélisée qui fond sur la langue.',
+    yield: { unit: 'couronnes individuelles', unit1: 'couronne' },
+    times: { prep: '1 h 15', rest: '2 h', bake: '35–40 min' },
+    components: [
+      { title: 'Pâte à choux', items: ['eau', 'lait entier', 'beurre doux', 'sel fin', 'sucre en poudre', 'farine (T55)', 'œufs battus (environ 2 et demi)', 'amandes effilées'] },
+      { title: 'Crème mousseline praliné', items: ['lait entier', 'jaunes d’œufs (environ 3)', 'sucre en poudre', 'fécule de maïs', 'beurre doux, pour la crème chaude', 'beurre doux très mou, à monter', 'praliné noisette (50 % de fruits secs)'] },
+      { title: 'Finition', items: ['sucre glace'] },
+    ],
+    steps: [
+      'Préparez la pâte à choux comme pour les éclairs : faites bouillir l’eau, le lait, le beurre, le sel et le sucre, ajoutez la farine, desséchez 1–2 min, puis incorporez l’œuf petit à petit jusqu’à ce que la pâte brille.',
+      'Tracez huit cercles de 8 cm sur du papier cuisson et retournez-le. Avec une douille cannelée de 14 mm, pochez une couronne sur chaque cercle, puis une seconde à l’intérieur, collée à la première. Parsemez généreusement d’amandes effilées et retirez l’excédent.',
+      'Enfournez à 165 °C (chaleur tournante) 35–40 min, jusqu’à une belle couleur dorée. Gardez le four fermé les 25 premières minutes. Laissez refroidir sur une grille.',
+      'Préparez une crème pâtissière avec le lait, les jaunes, le sucre et la fécule en la faisant bouillir 2 min. Hors du feu, incorporez les 40 premiers grammes de beurre. Filmez au contact et laissez revenir à température ambiante, environ 20 °C.',
+      'Fouettez la crème pour la lisser, puis ajoutez le beurre très mou et le praliné et fouettez 5 min, jusqu’à ce qu’elle soit pâle et aérienne.',
+      'Coupez les couronnes en deux dans l’épaisseur. Pochez la crème en hautes rosaces avec une douille cannelée sur les bases, reposez les chapeaux et saupoudrez de sucre glace.',
+    ],
+    tip: 'La crème et le beurre doivent être à la même température, autour de 20 °C, sinon la mousseline tranche. Si c’est le cas, chauffez brièvement le bol et fouettez de nouveau.',
+  },
+  'tarte-au-citron': {
+    short: 'Crème citron vive sous une meringue flambée',
+    definition:
+      'Un fond de pâte sucrée garni d’une crème au citron acidulée et beurrée, surmontée de meringue italienne pochée et dorée au chalumeau. La meringue italienne est cuite par un sirop de sucre chaud : elle est stable et garde sa forme une journée.',
+    origin:
+      'La meringue apparaît dans les livres de cuisine français à la fin du XVIIe siècle. La tarte au citron française, avec sa crème soyeuse enrichie de beurre, est un classique des vitrines du XXe siècle ; la version meringuée est sa variante la plus célèbre.',
+    taste: 'Un citron vif et franc adouci par le beurre, contre une meringue moelleuse aux bords caramélisés et une pâte croustillante.',
+    yield: { unit: 'parts', unit1: 'part', size: 'une tarte de 24 cm' },
+    times: { prep: '1 h', rest: '3 h 30', bake: '20–25 min' },
+    components: [
+      FR_SUCREE,
+      { title: 'Crème au citron', items: ['jus de citron frais (3–4 citrons)', 'citrons non traités, zestes finement râpés', 'sucre en poudre', 'œufs (3)', 'fécule de maïs', 'beurre doux en dés, frais'] },
+      { title: 'Meringue italienne', items: ['blancs d’œufs (environ 3)', 'sucre en poudre', 'eau'] },
+    ],
+    steps: [
+      'Préparez la pâte sucrée, foncez un cercle de 24 cm et faites-le cuire à blanc jusqu’à ce qu’il soit bien doré, comme pour la tarte aux fraises. Laissez refroidir complètement.',
+      'Frottez les zestes de citron dans le sucre du bout des doigts pour libérer leurs huiles. Ajoutez les œufs et la fécule en fouettant, puis le jus de citron.',
+      'Faites cuire sur feu moyen sans cesser de fouetter, jusqu’à ce que la crème épaississe et bouille. Laissez bouillir 1 min, puis passez-la au chinois dans un pichet.',
+      'Laissez-la redescendre à 40–45 °C, puis incorporez le beurre au mixeur plongeant jusqu’à ce qu’elle soit soyeuse. Versez dans le fond de tarte, lissez et réfrigérez 2 h.',
+      'Pour la meringue, faites chauffer le sucre et l’eau. Quand le sirop atteint 110 °C, commencez à fouetter les blancs. À 118 °C, versez le sirop en filet le long de la paroi du bol en fouettant à pleine vitesse.',
+      'Continuez de fouetter une dizaine de minutes, jusqu’à ce que la meringue soit épaisse, brillante et à peine tiède.',
+      'Pochez la meringue en petites pointes sur la crème avec une douille de 12 mm et dorez les pointes au chalumeau. Conservez au frais et dégustez sous 24 h.',
+    ],
+    tip: 'C’est en mixant le beurre dans une crème tiède, et non chaude, qu’on obtient cette texture lisse, presque mousseuse.',
+  },
+  macarons: {
+    short: 'Coques aux amandes, ganache framboise et chocolat blanc',
+    definition:
+      'Deux coques lisses de meringue aux amandes, bordées d’un petit pied dentelé (la « collerette »), réunies par une ganache framboise et chocolat blanc. Elles sont faites à la meringue italienne : un sirop chaud fouetté dans les blancs donne un appareil solide et brillant.',
+    origin:
+      'Les macarons simples aux amandes se cuisent depuis des siècles dans des villes comme Nancy ou Saint-Émilion. Le macaron double et garni — le macaron parisien — est apparu à Paris au début du XXe siècle ; la maison Ladurée l’attribue à Pierre Desfontaines.',
+    taste: 'Une fine coque croquante, un cœur moelleux et une garniture crémeuse et acidulée à la framboise.',
+    yield: { unit: 'macarons', unit1: 'macaron' },
+    times: { prep: '1 h 15', rest: '24 h', bake: '13–15 min' },
+    components: [
+      { title: 'Coques', items: ['poudre d’amande blanche très fine', 'sucre glace', 'blancs d’œufs, pour la pâte d’amande', 'sucre en poudre', 'eau', 'blancs d’œufs, pour la meringue', 'colorant alimentaire en poudre rouge framboise'] },
+      { title: 'Ganache framboise', items: ['chocolat blanc, haché', 'purée de framboise tamisée (environ 150 g de framboises)', 'crème liquide (35 % de matière grasse)', 'beurre doux, mou'] },
+    ],
+    steps: [
+      'Commencez par la ganache : portez la purée de framboise et la crème à frémissement, versez sur le chocolat blanc et mélangez depuis le centre jusqu’à ce qu’elle soit lisse. Ajoutez le beurre quand elle est redescendue à environ 35 °C. Filmez et réfrigérez au moins 3 h, jusqu’à ce qu’elle soit assez ferme pour être pochée.',
+      'Tamisez ensemble la poudre d’amande et le sucre glace. Mélangez avec les 55 premiers grammes de blancs et le colorant pour obtenir une pâte épaisse.',
+      'Faites chauffer le sucre en poudre et l’eau. Quand le sirop atteint 110 °C, commencez à fouetter les 55 g de blancs restants. À 118 °C, versez le sirop en filet sur les blancs en fouettant à pleine vitesse, et fouettez jusqu’à ce que la meringue soit brillante et redescendue à environ 50 °C.',
+      'Incorporez la meringue à la pâte d’amande en trois fois. Continuez à mélanger en écrasant l’appareil contre la paroi du bol (macaronage) jusqu’à ce qu’il tombe de la spatule en ruban épais et que la trace disparaisse en 30 secondes environ.',
+      'Pochez des disques de 3,5 cm avec une douille unie de 10 mm sur des plaques garnies de papier. Tapotez fermement les plaques sur le plan de travail pour chasser les bulles d’air.',
+      'Laissez croûter 20–30 min, jusqu’à ce que les coques ne collent plus au toucher.',
+      'Enfournez à 150 °C (chaleur tournante) 13–15 min. Laissez refroidir complètement avant de décoller les coques du papier.',
+      'Assortissez les coques par taille, pochez une belle noisette de ganache sur la moitié d’entre elles et refermez. Réfrigérez 24 h pour que les coques s’attendrissent, et servez à température ambiante.',
+    ],
+    tip: 'Vieillissez vos blancs : séparez-les un ou deux jours à l’avance et gardez-les couverts au réfrigérateur. La meringue sera plus stable.',
+  },
+  baguette: {
+    short: 'Farine, eau, sel, levure — rien d’autre',
+    definition:
+      'Un pain long et fin à la croûte craquante, à la mie crème et alvéolée et aux grignes bien levées. Selon le décret pain de 1993, la « baguette de tradition française » ne peut contenir que farine, eau, sel et levure ou levain — sans additif, et jamais surgelée.',
+    origin:
+      'Les pains longs se vendaient à Paris dès le XIXe siècle, et la baguette est devenue le pain quotidien des Français au XXe. En 2022, les savoir-faire artisanaux et la culture de la baguette de pain ont été inscrits au patrimoine culturel immatériel de l’UNESCO.',
+    taste: 'Une croûte fine et craquante aux notes grillées de noisette, et une mie moelleuse, élastique et légèrement sucrée, aux alvéoles irrégulières.',
+    yield: { unit: 'baguettes', unit1: 'baguette' },
+    times: { prep: '45 min', rest: '16 h (une nuit)', bake: '22–25 min' },
+    components: [
+      { title: 'Pâte', items: [
+        'farine de tradition (T65)',
+        'eau à environ 20 °C',
+        'eau ajoutée en fin de pétrissage (bassinage)',
+        'sel fin de mer',
+        { n: 'levure fraîche', note: 'ou 1 g de levure sèche instantanée' },
+      ]},
+      { title: 'Façonnage et cuisson', items: ['farine de riz ou semoule, pour fleurer', 'eau bouillante, pour la buée'] },
+    ],
+    steps: [
+      'Mélangez la farine et les 325 premiers grammes d’eau juste jusqu’à ce qu’il ne reste plus de farine sèche. Couvrez et laissez reposer 30–60 min (autolyse).',
+      'Ajoutez le sel, la levure émiettée et les 25 g d’eau restants. Pétrissez 5–8 min, jusqu’à obtenir une pâte lisse et extensible.',
+      'Couvrez et laissez 1 h 30 à environ 24 °C, en rabattant la pâte au bout de 30 et de 60 min.',
+      'Couvrez hermétiquement et réfrigérez 12–15 h.',
+      'Renversez la pâte froide sur le plan de travail et divisez-la en 3 pâtons d’environ 285 g. Préfaçonnez-les en boudins lâches et laissez reposer 30 min.',
+      'Façonnez des baguettes de 35–40 cm aux extrémités effilées. Posez-les soudure dessus sur une couche (toile de lin) farinée, en formant un pli entre chacune.',
+      'Laissez pousser 45–60 min à température ambiante, jusqu’à ce qu’un doigt fariné laisse une empreinte qui remonte lentement. Pendant ce temps, préchauffez le four à 250 °C pendant 45 min avec une pierre à pain ou une plaque retournée et une lèchefrite vide en bas.',
+      'Faites rouler les baguettes sur une pelle ou une planche, soudure dessous. Grignez chacune de 5 longues entailles qui se chevauchent, presque parallèles au pain, la lame inclinée.',
+      'Glissez-les sur la pierre chaude, versez l’eau bouillante dans la lèchefrite et fermez la porte. Faites cuire 10 min, ouvrez brièvement la porte pour laisser sortir la buée, puis poursuivez 12–15 min à 240 °C, jusqu’à une couleur brun doré profond.',
+      'Laissez refroidir au moins 20 min sur une grille. Écoutez : une bonne croûte chante en refroidissant.',
+    ],
+    tip: 'C’est la nuit au réfrigérateur qui fait le travail : elle développe le goût et la mie crème avec une simple pincée de levure.',
+  },
+  'pain-de-campagne': {
+    short: 'Au levain, un peu de seigle, croûte épaisse',
+    definition:
+      'Une grosse miche ronde au levain naturel, avec un peu de farine de seigle pour la profondeur. Croûte épaisse et craquante, mie élastique et alvéolée, légère acidité : elle se garde plusieurs jours.',
+    origin:
+      'Pendant des siècles, c’était le pain quotidien de la France rurale, cuit en grosses miches dans le four du village pour durer la semaine. Les boulangers parisiens l’ont remis à l’honneur au XXe siècle, en contrepoint rustique à la baguette blanche.',
+    taste: 'Une croûte très caramélisée, une mie moelleuse et élastique, une acidité douce et une note terreuse de seigle.',
+    yield: { unit: 'grosses miches', unit1: 'grosse miche', size: 'une miche d’environ 1 kg' },
+    times: { prep: '45 min', rest: '17 h (une nuit)', bake: '40–45 min' },
+    components: [
+      { title: 'Pâte', items: ['farine de blé (T65)', 'farine de seigle complète (T130 ou T170)', 'eau à environ 26 °C', 'levain actif (hydraté à 100 %)', 'sel fin de mer'] },
+      { title: 'Façonnage', items: ['farine de riz, pour le banneton'] },
+    ],
+    steps: [
+      'Rafraîchissez votre levain 4–6 h à l’avance pour qu’il soit bien bullé, à son pic.',
+      'Mélangez les deux farines avec l’eau jusqu’à ce qu’il ne reste plus de farine sèche. Couvrez et laissez reposer 1 h.',
+      'Ajoutez le levain et le sel et pressez-les dans la pâte en la repliant pendant 5 min, jusqu’à ce qu’elle soit lisse.',
+      'Laissez lever à environ 24 °C pendant 4 h. Pendant les 2 premières heures, rabattez la pâte toutes les 30 min.',
+      'Renversez la pâte et préfaçonnez-la en boule lâche. Laissez reposer 20 min.',
+      'Façonnez une boule bien serrée et déposez-la soudure dessus dans un banneton fariné à la farine de riz. Couvrez et réfrigérez 12 h.',
+      'Préchauffez le four à 250 °C pendant 45 min avec une cocotte en fonte et son couvercle à l’intérieur.',
+      'Renversez le pain froid sur du papier cuisson, grignez-le — en carré ou en croix — et déposez-le dans la cocotte chaude. Faites cuire 20 min couvercle fermé.',
+      'Retirez le couvercle, baissez à 230 °C et poursuivez 20–25 min, jusqu’à ce que la croûte soit brun châtaigne profond.',
+      'Laissez refroidir au moins 1 h sur une grille avant de trancher : la mie finit de se former.',
+    ],
+    tip: 'Cuisez-le plus foncé que vous ne le pensez. L’essentiel du goût est dans une croûte bien caramélisée.',
+  },
+};
+
+// ─────────────────────────────────────────────────────────────
+// Home page: a 3D ring of real photos on a glossy counter.
+// Drag to turn it, tap a photo to open the product.
+// ─────────────────────────────────────────────────────────────
+const TAU = Math.PI * 2;
+
+function rng(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function canvasTexture(w, h, draw, srgb = true) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
+function roundedRectPath(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+// Shown until (or instead of) a photo: warm gradient with the product name.
+function placeholderTexture(name) {
+  return canvasTexture(640, 800, (ctx, w, h) => {
+    const g = ctx.createRadialGradient(w * 0.5, h * 0.62, 20, w * 0.5, h * 0.55, h * 0.75);
+    g.addColorStop(0, '#d9963f'); g.addColorStop(0.55, '#7a3a12'); g.addColorStop(1, '#24170f');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#f2ede3';
+    ctx.font = '52px Gloock, Georgia, serif';
+    ctx.textAlign = 'center';
+    const words = name.split(' ');
+    const lines = [];
+    let line = '';
+    for (const wd of words) { const tl = line ? `${line} ${wd}` : wd; if (ctx.measureText(tl).width > w * 0.8) { lines.push(line); line = wd; } else line = tl; }
+    lines.push(line);
+    lines.forEach((l, i) => ctx.fillText(l, w / 2, h - 90 - (lines.length - 1 - i) * 60));
+  });
+}
+
+// Crop a photo texture to the card's aspect ratio, like CSS object-fit: cover.
+function coverCrop(tex, cardAspect, [fx, fy] = [0.5, 0.5]) {
+  const img = tex.image;
+  const a = img.width / img.height;
+  tex.repeat.set(1, 1); tex.offset.set(0, 0);
+  if (a > cardAspect) { tex.repeat.x = cardAspect / a; tex.offset.x = (1 - tex.repeat.x) * fx; }
+  else { tex.repeat.y = a / cardAspect; tex.offset.y = (1 - tex.repeat.y) * (1 - fy); }
+  tex.needsUpdate = true;
+}
+
+function makeCarousel(host, items, { onFront, onOpen, reduced }) {
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  } catch (e) {
+    return null;
+  }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  host.appendChild(renderer.domElement);
+  const canvas = renderer.domElement;
+  canvas.className = 'carousel-canvas';
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
+  const N = items.length, STEP = TAU / N;
+  const R = Math.max(3.1, (N * 1.75) / TAU);
+  const W = 1.5, H = 1.875, ASPECT = W / H;
+  const ring = new THREE.Group();
+  scene.add(ring);
+
+  const mask = canvasTexture(256, 320, (ctx, w, h) => {
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = '#fff'; roundedRectPath(ctx, 1, 1, w - 2, h - 2, 22); ctx.fill();
+  }, false);
+  const fadeMask = canvasTexture(256, 320, (ctx, w, h) => {
+    const g = ctx.createLinearGradient(0, h, 0, 0);
+    g.addColorStop(0, '#fff'); g.addColorStop(0.45, '#000'); g.addColorStop(1, '#000');
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+    roundedRectPath(ctx, 1, 1, w - 2, h - 2, 22); ctx.save(); ctx.clip(); ctx.fillStyle = g; ctx.fillRect(0, 0, w, h); ctx.restore();
+  }, false);
+
+  // Card geometry bent onto the ring
+  const geo = new THREE.PlaneGeometry(W, H, 24, 1);
+  const p = geo.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), a = x / R;
+    p.setXYZ(i, Math.sin(a) * R, y + H / 2 + 0.04, Math.cos(a) * R);
+  }
+  geo.computeVertexNormals();
+
+  const loader = new THREE.TextureLoader();
+  const cards = items.map((item, i) => {
+    const holder = new THREE.Group();
+    holder.rotation.y = i * STEP;
+    const mat = new THREE.MeshBasicMaterial({ map: placeholderTexture(item.name), alphaMap: mask, transparent: true, alphaTest: 0.02 });
+    const refl = new THREE.MeshBasicMaterial({ map: mat.map, alphaMap: fadeMask, transparent: true, opacity: 0.3, depthWrite: false });
+    const card = new THREE.Mesh(geo, mat);
+    const mirror = new THREE.Mesh(geo, refl);
+    mirror.scale.y = -1;
+    holder.add(card, mirror);
+    ring.add(holder);
+    card.userData.index = i;
+    if (item.src) {
+      loader.load(item.src, (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        coverCrop(tex, ASPECT, item.focus);
+        mat.map.dispose();
+        mat.map = tex; refl.map = tex;
+        mat.needsUpdate = true; refl.needsUpdate = true;
+        dirty = true;
+      });
+    }
+    return { card, mat, refl };
+  });
+
+  // Warm pool of light on the counter under the front photo
+  const glow = new THREE.Mesh(
+    new THREE.PlaneGeometry(6, 3).rotateX(-Math.PI / 2),
+    new THREE.MeshBasicMaterial({
+      map: canvasTexture(256, 128, (ctx, w, h) => {
+        const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+        g.addColorStop(0, 'rgba(233,164,64,0.55)'); g.addColorStop(1, 'rgba(233,164,64,0)');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }),
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    }),
+  );
+  glow.position.set(0, 0.001, R);
+  scene.add(glow);
+
+  // Flour drifting in the light
+  const FN = 220, fpos = new Float32Array(FN * 3), fspeed = new Float32Array(FN), fphase = new Float32Array(FN);
+  const r = rng(6);
+  for (let i = 0; i < FN; i++) {
+    fpos[i * 3] = (r() * 2 - 1) * 3.4; fpos[i * 3 + 1] = r() * 2.6; fpos[i * 3 + 2] = R - 1.4 + r() * 2.8;
+    fspeed[i] = 0.03 + r() * 0.07; fphase[i] = r() * TAU;
+  }
+  const fgeo = new THREE.BufferGeometry();
+  fgeo.setAttribute('position', new THREE.BufferAttribute(fpos, 3));
+  const flour = new THREE.Points(fgeo, new THREE.PointsMaterial({
+    map: canvasTexture(64, 64, (ctx, w) => {
+      const g = ctx.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
+      g.addColorStop(0, 'rgba(255,248,236,1)'); g.addColorStop(0.4, 'rgba(255,248,236,0.5)'); g.addColorStop(1, 'rgba(255,248,236,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, w, w);
+    }),
+    size: 0.035, transparent: true, opacity: 0.55, depthWrite: false,
+  }));
+  flour.frustumCulled = false;
+  scene.add(flour);
+
+  // State
+  let angle = 0, target = 0, velocity = 0, dragging = false, moved = 0, lastX = 0, lastT = 0;
+  let front = -1, visible = true, dirty = true, hovering = false, autoTimer = 0, last = performance.now();
+  const ndc = new THREE.Vector2(), ray = new THREE.Raycaster();
+  const frontIndex = () => (((Math.round(-target / STEP) % N) + N) % N);
+
+  function resize() {
+    const { width, height } = host.getBoundingClientRect();
+    if (!width || !height) return;
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    // Narrow screens: come closer so the front photo fills the frame.
+    const dist = camera.aspect < 0.9 ? 4.1 / Math.max(camera.aspect, 0.6) : 4.6;
+    camera.position.set(0, 0.95, R + dist);
+    camera.lookAt(0, 0.82, R - 0.4);
+    camera.updateProjectionMatrix();
+    dirty = true;
+  }
+  new ResizeObserver(resize).observe(host);
+  resize();
+
+  function goTo(i) {
+    const cur = frontIndex();
+    let d = ((i - cur) % N + N) % N;
+    if (d > N / 2) d -= N;
+    target -= d * STEP;
+    dirty = true;
+  }
+
+  function pick(e) {
+    const rect = canvas.getBoundingClientRect();
+    ndc.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+    ray.setFromCamera(ndc, camera);
+    const hit = ray.intersectObjects(cards.map((c) => c.card))[0];
+    return hit ? hit.object.userData.index : -1;
+  }
+
+  canvas.addEventListener('pointerdown', (e) => {
+    dragging = true; moved = 0; lastX = e.clientX; lastT = performance.now(); velocity = 0;
+    canvas.setPointerCapture(e.pointerId);
+    canvas.classList.add('is-dragging');
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!dragging) {
+      if (e.pointerType === 'mouse') canvas.style.cursor = pick(e) >= 0 ? 'pointer' : 'grab';
+      return;
+    }
+    const now = performance.now(), dx = e.clientX - lastX;
+    moved += Math.abs(dx);
+    const da = (dx / canvas.clientWidth) * 2.2;
+    angle += da; target = angle;
+    velocity = da / Math.max(1, now - lastT) * 16;
+    lastX = e.clientX; lastT = now;
+    dirty = true;
+  });
+  const end = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    canvas.classList.remove('is-dragging');
+    if (moved < 6) {
+      const i = pick(e);
+      if (i >= 0) { if (i === frontIndex()) onOpen(i); else goTo(i); }
+      return;
+    }
+    target = Math.round((angle + velocity * 10) / STEP) * STEP;
+    dirty = true;
+  };
+  canvas.addEventListener('pointerup', end);
+  canvas.addEventListener('pointercancel', end);
+  host.addEventListener('pointerenter', () => { hovering = true; });
+  host.addEventListener('pointerleave', () => { hovering = false; });
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; dirty = true; }).observe(host);
+
+  function tick(now) {
+    requestAnimationFrame(tick);
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    if (!visible || document.hidden) return;
+    if (!reduced && !dragging && !hovering) {
+      autoTimer += dt;
+      if (autoTimer > 4.2) { autoTimer = 0; target -= STEP; }
+    } else if (dragging || hovering) autoTimer = 0;
+    if (!dragging) {
+      const k = reduced ? 1 : Math.min(1, dt * 4.5);
+      angle += (target - angle) * k;
+    }
+    ring.rotation.y = angle;
+    for (let i = 0; i < N; i++) {
+      const facing = Math.cos(i * STEP + angle);
+      const lit = 0.18 + 0.82 * Math.pow(Math.max(0, facing), 2.2);
+      cards[i].mat.color.setScalar(lit);
+      cards[i].refl.opacity = 0.32 * lit;
+    }
+    if (!reduced) {
+      for (let i = 0; i < FN; i++) {
+        fpos[i * 3 + 1] += fspeed[i] * dt;
+        fpos[i * 3] += Math.sin(now * 0.0004 + fphase[i]) * 0.0012;
+        if (fpos[i * 3 + 1] > 2.6) fpos[i * 3 + 1] = 0;
+      }
+      fgeo.attributes.position.needsUpdate = true;
+    }
+    const f = frontIndex();
+    if (f !== front) { front = f; onFront(f); }
+    renderer.render(scene, camera);
+    dirty = false;
+  }
+  requestAnimationFrame(tick);
+
+  return {
+    goTo,
+    next: () => { target -= STEP; autoTimer = 0; },
+    prev: () => { target += STEP; autoTimer = 0; },
+    setNames(names) {
+      // Re-draw placeholders (for cards whose photo hasn't loaded) in the new language.
+      cards.forEach((c, i) => {
+        if (c.mat.map && c.mat.map.isCanvasTexture) {
+          c.mat.map.dispose();
+          c.mat.map = c.refl.map = placeholderTexture(names[i]);
+          c.mat.needsUpdate = c.refl.needsUpdate = true;
+        }
+      });
+    },
+  };
+}
+
+// ─────────────────────────────────────────────────────────────
+// Page logic: language, menu cards with 3D tilt, the 3D photo
+// ring on the home page, and the product page.
+// ─────────────────────────────────────────────────────────────
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const byId = (id) => document.getElementById(id);
+const PRODUCT = Object.fromEntries(PRODUCTS.map((p) => [p.id, p]));
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const photoSrc = (id, size) => (PHOTOS[id] ? `images/${id}-${size}.webp` : null);
+
+// ───────── Language
+let lang = (() => {
+  try {
+    const q = new URLSearchParams(location.search).get('lang');
+    if (q === 'en' || q === 'fr') return q;
+    const s = localStorage.getItem('do-lang');
+    if (s === 'en' || s === 'fr') return s;
+  } catch (e) { /* storage unavailable */ }
+  return 'fr';
+})();
+const t = (k) => UI[lang][k];
+const locale = () => (lang === 'fr' ? 'fr-FR' : 'en-GB');
+const photoAlt = (id) => PHOTOS[id]?.alt?.[lang] ?? PRODUCT[id].name;
+
+// Keep numbers and their units together on one line.
+function nb(s) {
+  return String(s)
+    .replace(/(\d) (?=(?:g|ml|kg|cm|mm|min|h|°C|%)(?!\p{L}))/gu, '$1 ')
+    .replace(/(\bh) (\d)/g, '$1 $2')
+    .replace(/(\d) × (\d)/g, '$1 × $2');
+}
+
+function localize(p) {
+  if (lang === 'en') return { ...p, sub: p.en };
+  const f = PRODUCTS_FR[p.id] || {};
+  const components = p.components.map((c, i) => {
+    const fc = f.components?.[i];
+    return {
+      ...c,
+      title: fc?.title ?? c.title,
+      note: fc ? fc.note : c.note,
+      items: c.items.map((it, j) => {
+        const fi = fc?.items?.[j];
+        if (fi == null) return it;
+        return typeof fi === 'string' ? { ...it, n: fi, note: undefined } : { ...it, n: fi.n, note: fi.note };
+      }),
+    };
+  });
+  return {
+    ...p,
+    sub: f.en ?? null,
+    short: f.short ?? p.short,
+    definition: f.definition ?? p.definition,
+    origin: f.origin ?? p.origin,
+    taste: f.taste ?? p.taste,
+    yield: { ...p.yield, ...f.yield },
+    times: f.times ?? p.times,
+    level: LEVELS_FR[p.level] ?? p.level,
+    allergens: p.allergens.map((a) => ALLERGENS_FR[a] ?? a),
+    components,
+    steps: f.steps ?? p.steps,
+    tip: f.tip ?? p.tip,
+  };
+}
+
+const categoryGloss = (c) => (lang === 'fr' ? CATEGORIES_FR[c.id] : c.gloss);
+
+// ───────── Static text and sections
+function applyLang() {
+  document.documentElement.lang = t('htmlLang');
+  document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = t(el.dataset.t); });
+  document.querySelectorAll('[data-t-label]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.tLabel)); });
+  const btn = byId('lang');
+  btn.textContent = t('langSwitch');
+  btn.setAttribute('aria-label', t('langSwitchLabel'));
+  btn.setAttribute('lang', lang === 'fr' ? 'en' : 'fr');
+  document.title = lang === 'fr'
+    ? `${CONFIG.name}, Creil — pains, viennoiseries et pâtisseries`
+    : `${CONFIG.name}, Creil — bread, viennoiseries and pastries`;
+  paintShelves();
+  renderVisit();
+  renderCredits();
+  updateHeroCaption();
+  if (D.open) { renderPaper(D.id, true); setStagePhoto(D.id); updateStageLabels(); }
+}
+
+function photoMarkup(id, size, cls) {
+  const src = photoSrc(id, size);
+  if (!src) return `<span class="${cls} is-empty"><span class="empty-name">${esc(PRODUCT[id].name)}</span><span class="glare"></span></span>`;
+  return `<span class="${cls}"><img src="${src}" alt="" width="800" height="1000" loading="lazy" decoding="async"><span class="glare"></span></span>`;
+}
+
+function renderShelves() {
+  const root = byId('shelves');
+  root.innerHTML = '';
+  for (const cat of CATEGORIES) {
+    const items = PRODUCTS.filter((p) => p.category === cat.id);
+    const sec = document.createElement('section');
+    sec.className = 'shelf';
+    sec.setAttribute('aria-labelledby', `shelf-${cat.id}`);
+    sec.innerHTML = `
+      <div class="shelf-head"><h3 id="shelf-${cat.id}">${esc(cat.name)}</h3><p data-gloss="${cat.id}"></p></div>
+      <div class="shelf-row"></div>`;
+    const row = sec.querySelector('.shelf-row');
+    for (const p of items) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'item';
+      b.dataset.id = p.id;
+      b.innerHTML = `${photoMarkup(p.id, 800, 'item-photo')}
+        <span class="tag"><span class="tag-name">${esc(p.name)}</span><span class="tag-short"></span></span>`;
+      row.appendChild(b);
+    }
+    root.appendChild(sec);
+  }
+  root.querySelectorAll('.item').forEach((item) => {
+    const id = item.dataset.id;
+    const photo = item.querySelector('.item-photo');
+    item.querySelector('img')?.addEventListener('error', () => {
+      photo.classList.add('is-empty');
+      photo.querySelector('img').remove();
+      photo.insertAdjacentHTML('afterbegin', `<span class="empty-name">${esc(PRODUCT[id].name)}</span>`);
+    });
+    item.addEventListener('click', () => openDetail(id, { fromEl: photo, returnFocus: item }));
+    if (!REDUCED) bindTilt(item, photo, 9);
+  });
+}
+
+// Tilt an element towards the pointer, with a moving highlight.
+function bindTilt(zone, el, max) {
+  let pressed = false;
+  const move = (e) => {
+    if (e.pointerType === 'touch' && !pressed) return;
+    const r = el.getBoundingClientRect();
+    const x = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const y = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+    el.style.setProperty('--ry', `${(x - 0.5) * 2 * max}deg`);
+    el.style.setProperty('--rx', `${(0.5 - y) * 2 * max * 0.8}deg`);
+    el.style.setProperty('--gx', `${x * 100}%`);
+    el.style.setProperty('--gy', `${y * 100}%`);
+    el.style.setProperty('--mx', (x - 0.5) * 2);
+    el.style.setProperty('--my', (y - 0.5) * 2);
+    el.classList.add('is-tilting');
+  };
+  const reset = () => {
+    pressed = false;
+    el.classList.remove('is-tilting');
+    el.style.setProperty('--rx', '0deg');
+    el.style.setProperty('--ry', '0deg');
+    el.style.setProperty('--mx', 0);
+    el.style.setProperty('--my', 0);
+  };
+  zone.addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') { pressed = true; move(e); } });
+  zone.addEventListener('pointermove', move);
+  zone.addEventListener('pointerleave', reset);
+  zone.addEventListener('pointerup', (e) => { if (e.pointerType === 'touch') reset(); });
+  zone.addEventListener('pointercancel', reset);
+}
+
+function paintShelves() {
+  for (const cat of CATEGORIES) {
+    const el = document.querySelector(`[data-gloss="${cat.id}"]`);
+    if (el) el.textContent = categoryGloss(cat);
+  }
+  document.querySelectorAll('.item').forEach((item) => {
+    const p = localize(PRODUCT[item.dataset.id]);
+    item.querySelector('.tag-short').textContent = nb(p.short);
+    const img = item.querySelector('img');
+    if (img) img.alt = photoAlt(p.id);
+  });
+}
+
+function renderVisit() {
+  byId('heroWhere').textContent = `${CONFIG.street}, ${CONFIG.city}`;
+  byId('address').innerHTML = `${esc(CONFIG.street)}<br>${esc(CONFIG.city)}`;
+  const todo = `<span class="todo">${esc(t('toConfirm'))}</span>`;
+  const tel = CONFIG.phone.replace(/[^\d+]/g, '');
+  const actions = [];
+  if (CONFIG.mapUrl) actions.push(`<a class="btn btn-primary" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${esc(t('directions'))}</a>`);
+  if (CONFIG.phone) actions.push(`<a class="btn btn-ghost" href="tel:${esc(tel)}">${esc(t('call'))}</a>`);
+  byId('visitActions').innerHTML = actions.join('');
+  const today = (new Date().getDay() + 6) % 7;
+  byId('hours').innerHTML = `<caption>${esc(t('hours'))}</caption><tbody>${t('days').map((d, i) => {
+    const v = CONFIG.hours[i];
+    const val = v === 'closed' ? esc(t('closed')) : v ? esc(nb(v)) : todo;
+    return `<tr${i === today ? ' class="today" aria-current="date"' : ''}><th scope="row">${esc(d)}</th><td>${val}</td></tr>`;
+  }).join('')}</tbody>`;
+  byId('phoneLine').innerHTML = `<span>${esc(t('phone'))}</span><span>${CONFIG.phone ? `<a href="tel:${esc(tel)}">${esc(CONFIG.phone)}</a>` : todo}</span>`;
+  byId('footerText').textContent = `© ${new Date().getFullYear()} ${CONFIG.name}, Creil. ${t('footer')}`;
+  byId('footerLinks').innerHTML = CONFIG.instagram ? `<a href="${esc(CONFIG.instagram)}" target="_blank" rel="noopener">Instagram</a>` : '';
+}
+
+const creditText = (c) => `${c.author}${c.source ? `, ${c.source}` : ''}${c.license ? ` (${c.license})` : ''}`;
+
+function renderCredits() {
+  const list = PRODUCTS.filter((p) => PHOTOS[p.id]?.credit);
+  const box = byId('credits');
+  if (!list.length) { box.hidden = true; return; }
+  box.hidden = false;
+  box.innerHTML = `<summary>${esc(t('credits'))}</summary><p>${esc(t('creditsNote'))}</p><ul>${list.map((p) => {
+    const c = PHOTOS[p.id].credit;
+    return `<li>${esc(p.name)} : <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(creditText(c))}</a></li>`;
+  }).join('')}</ul>`;
+}
+
+function injectStructuredData() {
+  const [, postal = '', locality = CONFIG.city] = CONFIG.city.match(/^(\d{5})\s+(.*)$/) || [];
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Bakery',
+    name: CONFIG.name,
+    address: { '@type': 'PostalAddress', streetAddress: CONFIG.street, postalCode: postal, addressLocality: locality, addressCountry: 'FR' },
+    servesCuisine: 'French',
+    url: location.href.split('#')[0],
+  };
+  if (CONFIG.phone) data.telephone = CONFIG.phone;
+  if (CONFIG.mapUrl) data.hasMap = CONFIG.mapUrl;
+  const s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(data);
+  document.head.appendChild(s);
+}
+
+// ───────── Home page 3D photo ring
+let carousel = null, heroFront = 0;
+function updateHeroCaption() {
+  const p = PRODUCTS[heroFront];
+  byId('heroName').textContent = p.name;
+  const fb = byId('heroFallback');
+  if (fb) { fb.src = photoSrc(p.id, 800) || ''; fb.alt = photoAlt(p.id); }
+}
+function heroOpenRect() {
+  // The front photo sits in the middle of the ring's frame.
+  const r = byId('heroView').getBoundingClientRect();
+  const h = r.height * 0.6, w = h * 0.8;
+  return { left: r.left + (r.width - w) / 2, top: r.top + r.height * 0.14, width: w, height: h };
+}
+function initHero() {
+  const host = byId('heroView');
+  carousel = makeCarousel(host, PRODUCTS.map((p) => ({ name: p.name, src: photoSrc(p.id, 800), focus: PHOTOS[p.id]?.focus })), {
+    reduced: REDUCED,
+    onFront: (i) => { heroFront = i; updateHeroCaption(); },
+    onOpen: (i) => openDetail(PRODUCTS[i].id, { fromRect: heroOpenRect(), returnFocus: byId('heroOpen') }),
+  });
+  if (!carousel) {
+    // No WebGL: a plain photo that changes with the arrows.
+    host.innerHTML = '<img id="heroFallback" class="hero-fallback" alt="">';
+    updateHeroCaption();
+  }
+  const go = (d) => {
+    if (carousel) { if (d > 0) carousel.next(); else carousel.prev(); }
+    else { heroFront = (heroFront + d + PRODUCTS.length) % PRODUCTS.length; updateHeroCaption(); }
+  };
+  byId('heroPrev').addEventListener('click', () => go(-1));
+  byId('heroNext').addEventListener('click', () => go(1));
+  byId('heroOpen').addEventListener('click', () => openDetail(PRODUCTS[heroFront].id, { fromRect: heroOpenRect(), returnFocus: byId('heroOpen') }));
+}
+
+// ───────── Product page
+const D = { open: false, id: null, count: 0, checked: new Set(), pushed: false };
+const dlg = byId('detail'), paper = byId('paper'), stage = byId('detailStage'), photoCard = byId('photoCard');
+
+function setStagePhoto(id) {
+  const src = photoSrc(id, 1400);
+  const img = byId('photoImg');
+  photoCard.classList.toggle('is-empty', !src);
+  photoCard.querySelector('.empty-name').textContent = PRODUCT[id].name;
+  if (src) {
+    if (img.getAttribute('src') !== src) img.src = src;
+    img.alt = photoAlt(id);
+    img.hidden = false;
+  } else {
+    img.removeAttribute('src');
+    img.hidden = true;
+  }
+  const c = PHOTOS[id]?.credit;
+  byId('photoCredit').innerHTML = c ? `${esc(t('photoBy'))} : <a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(creditText(c))}</a>` : '';
+}
+byId('photoImg').addEventListener('error', () => { photoCard.classList.add('is-empty'); byId('photoImg').hidden = true; });
+
+// Quantities
+const fmtNum = (v) => new Intl.NumberFormat(locale(), { maximumFractionDigits: 1 }).format(v);
+function fmtQty(q, u, f) {
+  if (q == null) return '';
+  let v = q * f;
+  if (u === 'g' || u === 'ml') {
+    v = v >= 100 ? Math.round(v / 5) * 5 : v >= 10 ? Math.round(v) : Math.round(v * 2) / 2;
+    return `${fmtNum(v)} ${u}`;
+  }
+  const r = Math.max(0.5, Math.round(v * 2) / 2);
+  const whole = Math.floor(r), half = r - whole >= 0.5;
+  return `${whole || ''}${half ? '½' : ''}`;
+}
+const scaleNote = (note, f) => (f === 1 || !note ? note : note.replace(/(\d+(?:[.,]\d+)?)\s?g\b/g, (m, n) => fmtQty(parseFloat(n.replace(',', '.')), 'g', f)));
+const yieldStep = (n) => (n >= 4 ? n / 2 : 1);
+
+function renderIngredients(p) {
+  const base = PRODUCT[p.id].yield.n;
+  const f = D.count / base;
+  const unit = D.count === 1 ? p.yield.unit1 : p.yield.unit;
+  const step = yieldStep(base);
+  const html = [];
+  html.push(`<div class="ing-head"><h3>${esc(t('ingredients'))}</h3>
+    <div class="scaler" role="group" aria-label="${esc(t('makes'))}">
+      <button type="button" data-scale="-1" aria-label="${esc(t('less'))}" ${D.count - step < step ? 'disabled' : ''}>−</button>
+      <output aria-live="polite">${esc(t('makes'))} ${fmtNum(D.count)} ${esc(unit)}</output>
+      <button type="button" data-scale="1" aria-label="${esc(t('more'))}" ${D.count + step > base * 4 ? 'disabled' : ''}>+</button>
+    </div></div>`);
+  if (f === 1 && p.yield.size) {
+    html.push(`<p class="component-note">${esc(nb(p.yield.size.charAt(0).toUpperCase() + p.yield.size.slice(1)))}.</p>`);
+  } else if (f !== 1) {
+    const orig = `${fmtNum(base)} ${base === 1 ? p.yield.unit1 : p.yield.unit}${p.yield.size ? `, ${p.yield.size}` : ''}`;
+    html.push(`<p class="scale-note">${lang === 'fr'
+      ? `Quantités multipliées par ${fmtNum(f)}. Les tailles et le nombre de pièces indiqués dans la méthode correspondent à la recette d’origine : ${esc(nb(orig))}.`
+      : `Quantities multiplied by ${fmtNum(f)}. Sizes and piece counts in the method are for the original recipe: ${esc(nb(orig))}.`}</p>`);
+  }
+  p.components.forEach((c, ci) => {
+    html.push(`<div class="component"><h4>${esc(c.title)}</h4><ul>`);
+    c.items.forEach((it, ii) => {
+      const key = `${ci}-${ii}`;
+      const note = scaleNote(it.note, f);
+      html.push(`<li><label><input type="checkbox" data-key="${key}" ${D.checked.has(key) ? 'checked' : ''}>
+        <span class="qty">${esc(fmtQty(it.q, it.u, f))}</span>
+        <span class="ing-name">${esc(nb(it.n))}${note ? `<span class="ing-note">${esc(nb(note))}</span>` : ''}</span></label></li>`);
+    });
+    html.push('</ul>');
+    if (c.note) html.push(`<p class="component-note">${esc(nb(c.note))}</p>`);
+    html.push('</div>');
+  });
+  return html.join('');
+}
+
+function renderPaper(id, keepState = false) {
+  const p = localize(PRODUCT[id]);
+  const cat = CATEGORIES.find((c) => c.id === p.category);
+  if (!keepState) { D.count = PRODUCT[id].yield.n; D.checked = new Set(); }
+  paper.innerHTML = `<div class="paper-inner">
+    <header class="paper-head">
+      <p class="paper-cat">${esc(cat.name)}</p>
+      <h2 id="detailTitle">${esc(p.name)}</h2>
+      <p class="paper-ipa" aria-hidden="true">${esc(p.ipa)}</p>
+      ${p.sub ? `<p class="paper-sub">${esc(p.sub)}</p>` : ''}
+    </header>
+    <section class="paper-block"><h3>${esc(t('whatIs'))}</h3><p class="paper-lede">${esc(nb(p.definition))}</p></section>
+    <section class="paper-block"><h3>${esc(t('origin'))}</h3><p>${esc(nb(p.origin))}</p></section>
+    <section class="paper-block"><h3>${esc(t('taste'))}</h3><p>${esc(nb(p.taste))}</p></section>
+    <dl class="facts">
+      <div><dt>${esc(t('prep'))}</dt><dd>${esc(nb(p.times.prep))}</dd></div>
+      <div><dt>${esc(t('rest'))}</dt><dd>${esc(nb(p.times.rest))}</dd></div>
+      <div><dt>${esc(t('bake'))}</dt><dd>${esc(nb(p.times.bake))}</dd></div>
+      <div><dt>${esc(t('level'))}</dt><dd>${esc(p.level)}</dd></div>
+    </dl>
+    <p class="allergens"><span>${esc(t('allergens'))}</span>${p.allergens.map((a) => `<span class="chip">${esc(a)}</span>`).join('')}</p>
+    <section class="ingredients" id="ingredients">${renderIngredients(p)}</section>
+    <section class="method"><h3>${esc(t('method'))}</h3><ol>${p.steps.map((s) => `<li><span>${esc(nb(s))}</span></li>`).join('')}</ol></section>
+    <aside class="tip"><h3>${esc(t('tip'))}</h3><p>${esc(nb(p.tip))}</p></aside>
+    <p class="recipe-note">${esc(t('recipeNote'))}</p>
+    <div class="paper-actions"><button class="btn btn-ink" type="button" id="btnPrint">${esc(t('print'))}</button></div>
+  </div>`;
+  byId('btnPrint').addEventListener('click', () => window.print());
+}
+
+paper.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-scale]');
+  if (!b || !D.id) return;
+  const base = PRODUCT[D.id].yield.n, step = yieldStep(base);
+  D.count = Math.min(base * 4, Math.max(step, D.count + step * Number(b.dataset.scale)));
+  byId('ingredients').innerHTML = renderIngredients(localize(PRODUCT[D.id]));
+  byId('ingredients').querySelector(`[data-scale="${b.dataset.scale}"]`)?.focus();
+});
+paper.addEventListener('change', (e) => {
+  const k = e.target.dataset?.key;
+  if (!k) return;
+  if (e.target.checked) D.checked.add(k); else D.checked.delete(k);
+});
+
+function setInert(on) {
+  for (const el of [byId('top'), byId('nav'), byId('footer'), document.querySelector('.skip')]) el.inert = on;
+}
+
+const idFromHash = () => { const m = location.hash.match(/^#\/([\w-]+)$/); return m && PRODUCT[m[1]] ? m[1] : null; };
+
+// The photo flies from where it was tapped into the product page, turning in 3D.
+function flyIn(from) {
+  if (REDUCED || !from) return;
+  const last = photoCard.getBoundingClientRect();
+  if (!last.width) return;
+  const dx = from.left + from.width / 2 - (last.left + last.width / 2);
+  const dy = from.top + from.height / 2 - (last.top + last.height / 2);
+  const sx = from.width / last.width, sy = from.height / last.height;
+  photoCard.animate([
+    { transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})` },
+    { transform: `translate(${dx * 0.35}px, ${dy * 0.35}px) scale(${(sx + 1) / 2}, ${(sy + 1) / 2}) rotateY(-16deg) rotateX(7deg)`, offset: 0.55 },
+    { transform: 'none' },
+  ], { duration: 850, easing: 'cubic-bezier(.2,.8,.2,1)' });
+}
+
+async function flipPhoto(id) {
+  if (!REDUCED) await photoCard.animate([{ transform: 'rotateY(0deg)' }, { transform: 'rotateY(90deg)' }], { duration: 200, easing: 'ease-in' }).finished.catch(() => {});
+  setStagePhoto(id);
+  if (!REDUCED) photoCard.animate([{ transform: 'rotateY(-90deg)' }, { transform: 'rotateY(0deg)' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' });
+}
+
+function openDetail(id, { fromEl = null, fromRect = null, returnFocus = null, push = true, replace = false, flip = false } = {}) {
+  if (!PRODUCT[id]) return;
+  const firstOpen = !D.open;
+  D.id = id;
+  renderPaper(id);
+  paper.scrollTop = 0;
+  dlg.scrollTop = 0;
+  if (push) { history.pushState({ detail: id }, '', `#/${id}`); D.pushed = true; }
+  else if (replace) history.replaceState(history.state?.detail ? history.state : null, '', `#/${id}`);
+  if (firstOpen) {
+    setStagePhoto(id);
+    D.returnFocus = returnFocus || document.activeElement;
+    D.open = true;
+    dlg.hidden = false;
+    setInert(true);
+    document.documentElement.style.overflow = 'hidden';
+    if (!REDUCED) {
+      dlg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });
+      paper.animate([{ transform: 'translateY(24px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 520, delay: 160, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' });
+    }
+    flyIn(fromRect || fromEl?.getBoundingClientRect());
+    paper.focus({ preventScroll: true });
+  } else if (flip) {
+    flipPhoto(id);
+  } else {
+    setStagePhoto(id);
+  }
+  updateStageLabels();
+}
+
+function updateStageLabels() {
+  byId('btnPrev').setAttribute('aria-label', t('prev'));
+  byId('btnNext').setAttribute('aria-label', t('next'));
+  byId('btnClose').setAttribute('aria-label', t('close'));
+}
+
+async function closeDetail({ fromPop = false } = {}) {
+  if (!D.open) return;
+  D.open = false;
+  if (!REDUCED) await dlg.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease-in' }).finished.catch(() => {});
+  dlg.hidden = true;
+  setInert(false);
+  document.documentElement.style.overflow = '';
+  if (!fromPop) {
+    if (D.pushed) history.back();
+    else history.replaceState(null, '', location.pathname + location.search);
+  }
+  D.pushed = false;
+  D.returnFocus?.focus?.({ preventScroll: true });
+}
+
+function step(dir) {
+  const i = PRODUCTS.findIndex((p) => p.id === D.id);
+  const next = PRODUCTS[(i + dir + PRODUCTS.length) % PRODUCTS.length].id;
+  openDetail(next, { push: false, replace: true, flip: true });
+}
+
+byId('btnClose').addEventListener('click', () => closeDetail());
+byId('btnPrev').addEventListener('click', () => step(-1));
+byId('btnNext').addEventListener('click', () => step(1));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && D.open) closeDetail(); });
+addEventListener('popstate', () => {
+  const id = idFromHash();
+  if (id) { D.pushed = false; openDetail(id, { push: false }); } else closeDetail({ fromPop: true });
+});
+if (!REDUCED) bindTilt(stage, photoCard, 10);
+
+byId('lang').addEventListener('click', () => {
+  lang = lang === 'fr' ? 'en' : 'fr';
+  try { localStorage.setItem('do-lang', lang); } catch (e) { /* ignore */ }
+  applyLang();
+});
+
+// ───────── Start
+renderShelves();
+applyLang();
+injectStructuredData();
+initHero();
+
+const nav = byId('nav');
+const onScroll = () => nav.classList.toggle('is-solid', scrollY > 40);
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+const startId = idFromHash();
+if (startId) openDetail(startId, { push: false });
+
+</script>
+</body>
+</html>

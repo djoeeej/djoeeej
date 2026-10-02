@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Boulangerie D.O, Creil — pains, viennoiseries et pâtisseries</title>
+<meta name="description" content="Boulangerie D.O, rue Gambetta à Creil : croissants, viennoiseries, pâtisseries et pains cuits sur place. Découvrez chaque pâtisserie, son histoire et sa recette complète.">
+<meta name="theme-color" content="#131b31">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Boulangerie D.O, Creil">
+<meta property="og:description" content="Croissants, pâtisseries et pains, cuits ici chaque matin. Découvrez chaque pâtisserie, son histoire et sa recette.">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23131b31'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='30' text-anchor='middle' fill='%23f2ede3'%3ED.O%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap">
+<style>
+/*STYLES*/
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<a class="skip" href="#vitrine" data-t="navMenu">La vitrine</a>
+<header class="nav" id="nav">
+  <a class="nav-mark" href="#top" aria-label="Boulangerie D.O">D.O</a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#vitrine" data-t="navMenu">La vitrine</a>
+    <a href="#visite" data-t="navVisit">Nous trouver</a>
+  </nav>
+  <button class="lang" id="lang" type="button" lang="en" aria-label="Read this site in English">EN</button>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero-copy">
+      <h1 class="lockup"><span class="lockup-small">Boulangerie</span><span class="lockup-big">D.O</span></h1>
+      <p class="hero-tagline" data-t="tagline">Croissants, pâtisseries et pains, cuits ici chaque matin.</p>
+      <p class="hero-where" id="heroWhere">Rue Gambetta, 60100 Creil</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#vitrine" data-t="heroBrowse">Voir la vitrine</a>
+        <a class="btn btn-ghost" href="#visite" data-t="heroVisit">Nous trouver</a>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <div class="hero-view" id="heroView"></div>
+      <div class="hero-caption">
+        <button class="icon-btn" type="button" id="heroPrev" data-t-label="carouselPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <p class="hero-label" aria-live="polite"><span class="hero-now" data-t="heroNow">En vitrine</span> <span class="hero-name" id="heroName"></span></p>
+        <button class="icon-btn" type="button" id="heroNext" data-t-label="carouselNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <button class="btn btn-ghost btn-small" type="button" id="heroOpen" data-t="heroOpen">Voir la recette</button>
+      </div>
+      <p class="hero-hint" data-t="heroHint"></p>
+    </div>
+  </section>
+
+  <section class="section" id="vitrine" aria-labelledby="vitrineTitle">
+    <div class="wrap">
+      <header class="section-head">
+        <h2 id="vitrineTitle" data-t="menuTitle">Ce que nous cuisons</h2>
+        <p data-t="menuIntro"></p>
+      </header>
+      <div id="shelves"></div>
+    </div>
+  </section>
+
+  <section class="section" id="visite" aria-labelledby="visiteTitle">
+    <div class="wrap visite-grid">
+      <div>
+        <h2 class="visit-title" id="visiteTitle" data-t="visitTitle">Nous trouver</h2>
+        <address class="address" id="address"></address>
+        <div class="visite-actions" id="visitActions"></div>
+      </div>
+      <div>
+        <table class="hours" id="hours"></table>
+        <div class="phone-line" id="phoneLine"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <span class="footer-mark">D.O</span>
+    <span id="footerText"></span>
+    <span id="footerLinks"></span>
+    <details class="credits" id="credits" hidden></details>
+  </div>
+</footer>
+
+<div class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="detail-stage" id="detailStage">
+    <div class="photo-scene">
+      <figure class="photo-card" id="photoCard">
+        <img id="photoImg" alt="" width="1400" height="1750" decoding="async">
+        <span class="empty-name"></span>
+        <span class="glare"></span>
+      </figure>
+    </div>
+    <p class="photo-credit" id="photoCredit"></p>
+    <div class="stage-nav">
+      <button class="icon-btn" type="button" id="btnPrev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="icon-btn" type="button" id="btnNext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+  </div>
+  <article class="detail-paper" id="paper" tabindex="-1"></article>
+  <button class="icon-btn detail-close" type="button" id="btnClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
+<noscript><p class="noscript">Ce site a besoin de JavaScript pour afficher la vitrine en 3D et les recettes.</p></noscript>
+
+<script type="module">
+/*SCRIPT*/
+</script>
+</body>
+</html>
