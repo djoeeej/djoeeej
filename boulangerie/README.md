@@ -12,6 +12,8 @@ Par défaut, chaque produit affiche une vraie photo sous licence libre issue de 
 
 Les photos sont aussi copiées dans le site lui-même par le workflow GitHub `.github/workflows/bakery-photos.yml` : à chaque modification de `PHOTOS`, il télécharge les photos, les recadre au format 4:5 en WebP dans `images/`, enregistre les crédits dans `src/photos.generated.js` et reconstruit `index.html`. Le site utilise alors ses propres copies, plus rapides, et ne dépend plus de Wikimedia. On peut aussi le lancer à la main depuis l’onglet Actions (« Run workflow »).
 
+Pour chercher d’autres photos, créez `tools/photo-search.json` (par exemple `{"brioche": "brioche à tête"}`) : le workflow fait une recherche sur Commons et dépose une planche numérotée par produit dans `tools/preview/`. Choisissez, mettez le nom du fichier en tête de liste dans `PHOTOS`, puis supprimez ces deux éléments.
+
 Pour mettre **vos propres photos** (recommandé : ce sont vos produits) :
 
 1. placez le fichier dans `images/`, par exemple `images/croissant.webp` (format portrait 4:5 idéal) ;

@@ -617,16 +617,16 @@ const PRODUCTS = [
 // that still exists is used. To use your own photo instead, put it in images/
 // and set  local: 'images/croissant.webp'  (your own photos need no credit).
 const PHOTOS = {
-  croissant: { commons: ['2018 01 Croissant IMG 0685.JPG', 'Croissants au beurre (18953292873).jpg', 'Croissant, whole.jpg'] },
+  croissant: { commons: ['Croissants au beurre (18953292873).jpg', 'Croissant, whole.jpg'] },
   'pain-au-chocolat': { commons: ['Pain au chocolat Luc Viatour.jpg', 'Pain au chocolat.JPG'] },
   'chausson-aux-pommes': { commons: ['Chaussons aux pommes.jpg', 'Chausson aux pommes.jpg'] },
-  brioche: { commons: ['Brioche.jpg', 'Brioche Nanterre (mars 2021).jpg'] },
+  brioche: { commons: ['Sicilian brioche.jpg', 'Brioche.jpg', 'Brioche Nanterre (mars 2021).jpg'] },
   eclair: { commons: ['Deux éclairs au chocolat.jpg', 'Éclairs au chocolat (13190996733).jpg'] },
-  'tarte-aux-fraises': { commons: ['Tarte aux fraises.jpg'] },
+  'tarte-aux-fraises': { commons: ['Strawberry pie by karenandbrademerson.jpg', 'Tarte aux fraises.jpg'] },
   'mille-feuille': { commons: ['Mille-feuille 20100916.jpg', 'Mille-feuille 02.jpg'] },
   'paris-brest': { commons: ['Paris-Brest IMG 0875.JPG', 'Paris-brest 1.jpg'] },
   'tarte-au-citron': { commons: ['Tarte au citron meringuée 02.jpg', 'Tarte au citron meringuée sur le comptoir du restaurant La Cocagne (Lyon).jpg', 'Tarte au citron meringuée crème chantilly.jpg'] },
   macarons: { commons: ['Macarons, French made mini cakes.JPG', 'French macaroons.jpg'] },
-  baguette: { commons: ['Baguette de pain, WikiCheese Lausanne.jpg', 'Baguette.jpg'] },
+  baguette: { commons: ['Boulangerie de Saint-Maurice-de-Beynost (Ain, France) - des baguettes de pain.JPG', 'Baguette de pain, WikiCheese Lausanne.jpg', 'Baguette.jpg'] },
   'pain-de-campagne': { commons: ['Boule de campagne 01.jpg', 'Miche de pain.JPG'] },
 };
