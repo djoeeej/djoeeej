@@ -4,11 +4,11 @@ const PHOTO_LOCAL = {
     "small": "images/croissant-640.webp",
     "large": "images/croissant-1200.webp",
     "credit": {
-      "author": "Daniela Kloth",
-      "license": "GFDL 1.2",
-      "url": "https://commons.wikimedia.org/wiki/File:2018_01_Croissant_IMG_0685.JPG"
+      "author": "Herry Wibisono (herryway)",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Croissants_au_beurre_(18953292873).jpg"
     },
-    "source": "File:2018 01 Croissant IMG 0685.JPG"
+    "source": "File:Croissants au beurre (18953292873).jpg"
   },
   "pain-au-chocolat": {
     "small": "images/pain-au-chocolat-640.webp",
@@ -34,11 +34,11 @@ const PHOTO_LOCAL = {
     "small": "images/brioche-640.webp",
     "large": "images/brioche-1200.webp",
     "credit": {
-      "author": "David.Monniaux",
+      "author": "Dedda71",
       "license": "CC BY-SA 3.0",
-      "url": "https://commons.wikimedia.org/wiki/File:Brioche.jpg"
+      "url": "https://commons.wikimedia.org/wiki/File:Sicilian_brioche.jpg"
     },
-    "source": "File:Brioche.jpg"
+    "source": "File:Sicilian brioche.jpg"
   },
   "eclair": {
     "small": "images/eclair-640.webp",
@@ -54,11 +54,11 @@ const PHOTO_LOCAL = {
     "small": "images/tarte-aux-fraises-640.webp",
     "large": "images/tarte-aux-fraises-1200.webp",
     "credit": {
-      "author": "Monchr",
-      "license": "CC BY 2.5",
-      "url": "https://commons.wikimedia.org/wiki/File:Tarte_aux_fraises.jpg"
+      "author": "Karen Fasimpaur",
+      "license": "CC BY 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Strawberry_pie_by_karenandbrademerson.jpg"
     },
-    "source": "File:Tarte aux fraises.jpg"
+    "source": "File:Strawberry pie by karenandbrademerson.jpg"
   },
   "mille-feuille": {
     "small": "images/mille-feuille-640.webp",
@@ -104,11 +104,11 @@ const PHOTO_LOCAL = {
     "small": "images/baguette-640.webp",
     "large": "images/baguette-1200.webp",
     "credit": {
-      "author": "Yann Forget",
-      "license": "CC BY-SA 4.0",
-      "url": "https://commons.wikimedia.org/wiki/File:Baguette_de_pain,_WikiCheese_Lausanne.jpg"
+      "author": "Benoît Prieur",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Boulangerie_de_Saint-Maurice-de-Beynost_(Ain,_France)_-_des_baguettes_de_pain.JPG"
     },
-    "source": "File:Baguette de pain, WikiCheese Lausanne.jpg"
+    "source": "File:Boulangerie de Saint-Maurice-de-Beynost (Ain, France) - des baguettes de pain.JPG"
   },
   "pain-de-campagne": {
     "small": "images/pain-de-campagne-640.webp",
