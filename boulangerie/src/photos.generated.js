@@ -34,7 +34,7 @@ const PHOTO_LOCAL = {
     "small": "images/brioche-640.webp",
     "large": "images/brioche-1200.webp",
     "credit": {
-      "author": "Wikimedia Commons",
+      "author": "David.Monniaux",
       "license": "CC BY-SA 3.0",
       "url": "https://commons.wikimedia.org/wiki/File:Brioche.jpg"
     },
@@ -54,7 +54,7 @@ const PHOTO_LOCAL = {
     "small": "images/tarte-aux-fraises-640.webp",
     "large": "images/tarte-aux-fraises-1200.webp",
     "credit": {
-      "author": "No machine-readable author provided. Monchr assumed (based on copyright claims).",
+      "author": "Monchr",
       "license": "CC BY 2.5",
       "url": "https://commons.wikimedia.org/wiki/File:Tarte_aux_fraises.jpg"
     },
