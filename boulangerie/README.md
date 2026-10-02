@@ -10,6 +10,8 @@ Tout est dans le bloc `CONFIG` en haut de `src/data.js` : numéro de rue, télé
 
 Par défaut, chaque produit affiche une vraie photo sous licence libre issue de **Wikimedia Commons**. Le navigateur du visiteur demande la photo à Commons avec son auteur et sa licence, qui sont crédités sous la photo et dans le pied de page (« Crédits photo »). La liste des fichiers est dans `PHOTOS` (`src/data.js`) ; pour chaque produit, plusieurs noms de fichiers sont indiqués et le premier qui existe est utilisé.
 
+Les photos sont aussi copiées dans le site lui-même par le workflow GitHub `.github/workflows/bakery-photos.yml` : à chaque modification de `PHOTOS`, il télécharge les photos, les recadre au format 4:5 en WebP dans `images/`, enregistre les crédits dans `src/photos.generated.js` et reconstruit `index.html`. Le site utilise alors ses propres copies, plus rapides, et ne dépend plus de Wikimedia. On peut aussi le lancer à la main depuis l’onglet Actions (« Run workflow »).
+
 Pour mettre **vos propres photos** (recommandé : ce sont vos produits) :
 
 1. placez le fichier dans `images/`, par exemple `images/croissant.webp` (format portrait 4:5 idéal) ;

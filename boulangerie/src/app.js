@@ -225,7 +225,9 @@ const stripHtml = (html) => {
 async function loadPhotos() {
   const wanted = [];
   for (const [id, entry] of Object.entries(PHOTOS)) {
+    // Your own photo, then the copy downloaded by the GitHub workflow, then Commons live.
     if (entry.local) PHOTO[id] = { small: entry.local, large: entry.local, credit: entry.credit ?? null };
+    else if (PHOTO_LOCAL[id]) PHOTO[id] = PHOTO_LOCAL[id];
     else if (entry.commons) wanted.push(...entry.commons.map((f) => `File:${f}`));
   }
   if (!wanted.length) return;
@@ -247,7 +249,7 @@ async function loadPhotos() {
   };
   const S = index(small), L = index(large);
   for (const [id, entry] of Object.entries(PHOTOS)) {
-    if (!entry.commons) continue;
+    if (!entry.commons || PHOTO[id]) continue;
     for (const f of entry.commons) {
       const ps = S.get(`File:${f}`), pl = L.get(`File:${f}`);
       const is = ps?.imageinfo?.[0], il = pl?.imageinfo?.[0];
