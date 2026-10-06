@@ -1,4 +1,4 @@
-# Application of AI in the Project – Video Script
+# The Application of AI in the Project
 
 Simple English, short sentences, easy to say on camera.
 **Lines in bold** are what you say. *Italic* notes are for you only.
