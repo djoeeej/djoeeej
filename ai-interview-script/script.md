@@ -79,15 +79,48 @@ Simple English, short sentences, easy to say on camera.
 
 ---
 
-## 6. Conclusion
+## 6. Application of AI in our project
+
+*Our project: "Baltic H₂ Gateway", AUVIA Team, Klaipėdos valstybinė kolegija, Portathon 2026, Port of Klaipėda Challenge 1. The port has a 2.25 MW electrolyser that makes about 127 tonnes of green hydrogen per year (about 500 kg per day). Our plan is to use it in hydrogen trucks on routes from the port.*
+
+**Now let me tell you how we used AI in our own project.**
+
+**Our team works on a project for the Port of Klaipėda. The port produces green hydrogen, about 127 tonnes per year, and our idea is to use this hydrogen in trucks that drive from the port to cities like Šiauliai and Kaunas, instead of diesel trucks.**
+
+### How we used AI
+
+**We used an AI assistant to help us build our calculation model in Excel.**
+
+**The model answers simple questions: Can a truck do the trip with one tank of hydrogen? How much hydrogen do all the trucks need? Is it enough, compared to what the port can produce? How much money does the port earn, and how much CO₂ do we save compared to diesel?**
+
+**AI helped us organise the formulas, build a dashboard with charts, and keep a list of sources for every number.**
+
+**But, like in the Google example, we did not trust it blindly. We checked the numbers ourselves: the truck data from Hyundai, the port's hydrogen output, and the distances on a map. AI did the hard work faster, but the decisions and the checking were done by us.**
+
+### How AI could help the project in the future
+
+**AI could also help the hydrogen project directly:**
+
+- **Planning truck routes: AI can find the best route and the best time to refuel, so trucks never run out of hydrogen.**
+- **Predicting demand: AI can predict how much hydrogen the trucks will need each day, so the station produces the right amount, not too much and not too little.**
+- **Using cheap green electricity: the electrolyser needs a lot of electricity. AI can predict when wind and solar power are cheapest and run the machine at those times.**
+- **Safety and maintenance: sensors and AI can detect a problem or a hydrogen leak early, before it becomes dangerous, and tell us when a machine needs repair.**
+
+**So AI is not only a chatbot. It can be a real tool for clean energy and for a greener port.**
+
+*Tip: the four "future" points are ideas, not things the port already does. Say "AI could…", not "AI does…".*
+
+---
+
+## 7. Conclusion
 
 **To conclude: AI is a powerful tool, and as we heard today, many people use it every day.**
 
-**It helps us learn, work, and create faster.**
+**It helps us learn, work, and create faster. In our project it helped us build our hydrogen model, and in the future it could help run a cleaner port.**
 
 **But AI is not always right. As the Google example shows, it can say false things with total confidence, and even a giant company can lose billions because of one mistake.**
 
-**So my advice is simple: use AI as a helper, not as the final answer. Always check important information with reliable sources.**
+**So my advice is simple: use AI as a helper, not as the final answer. Always check important information with reliable sources, like we did in our project.**
 
 **Thank you for watching. See you next time!**
 
@@ -99,3 +132,4 @@ Simple English, short sentences, easy to say on camera.
 - McCarthy, J. et al. (1955). *A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence.*
 - ESO (2005). "Yes, it is the image of an exoplanet" (2M1207b, first direct image of an exoplanet, taken 2004 with the VLT).
 - Reuters (8 Feb 2023). "Alphabet shares dive after Google AI chatbot Bard flubs answer in ad."
+- Project numbers: `klaipeda-h2/Klaipeda_H2_Route_Model.xlsx` (Inputs and Guide & Sources sheets: Port of Klaipėda / Manifold Times, Jun 2026; Hyundai XCIENT Fuel Cell EU spec).
